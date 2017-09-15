@@ -1,0 +1,36 @@
+<%
+  if @presenter.payment_group.present?
+    klass1, klass2 = 'col-md-9', 'col-md-3'
+  else
+    klass1, klass2 = 'col-md-12', 'hidden'
+  end
+%>
+
+<section class="content">
+  <div class ="row">
+    <div class="col-md-12">
+      <section id="panel_filter">
+        <%= render partial: 'panel_filter'%>
+      </section>
+    </div>
+  </div>
+
+  <!-- Panel de registros-->
+  <div class ="row">
+    <div class="<%= klass1 %>" id="js-panel_service_registers">
+      <%= render partial: 'service_registers/service_register_tabs',
+        locals: {
+        presenter: @presenter
+      } %>
+  </div>
+
+  <!-- Panel de servicios en pago en estado BORRADOR -->
+  <div class="<%= klass2 %>" id="js-panel_services">
+    <% if @presenter.payment_group %>
+      <%= render partial: 'services/panel_edit_services',
+        locals: {
+          payment_group: @presenter.payment_group
+      } %>
+    <% end %>
+  </div>
+</section>

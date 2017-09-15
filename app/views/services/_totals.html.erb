@@ -1,0 +1,33 @@
+<div class="info-box">
+  <span class="info-box-icon bg-aqua">
+    <i><%= payment_group.currency_symbol %></i>
+  </span>
+
+  <div class="info-box-content">
+    <span class="info-box-text">Total </span>
+    <span class="info-box-number" id="js-paymentTotal">
+      <%= number_with_precision(
+        payment_group.total,
+        precision: 2
+      ) %>
+    </span>
+  </div>
+</div>
+
+<% if payment_group.has_euros? %>
+  <div class="info-box">
+    <span class="info-box-icon bg-aqua">
+      <i>€</i>
+    </span>
+
+    <div class="info-box-content">
+      <span class="info-box-text">Total </span>
+      <span class="info-box-number">
+        <%= number_with_precision(
+          payment_group.total_euros,
+          precision: 2
+        ) %>
+      </span>
+    </div>
+  </div>
+<% end %>

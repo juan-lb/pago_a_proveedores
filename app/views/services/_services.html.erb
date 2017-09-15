@@ -1,0 +1,20 @@
+<table
+  id="services_ready_table"
+  class="table table-bordered table-condensed tableSection">
+  <thead>
+    <tr>
+      <th>Reserva</th>
+      <th>Monto</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @payment_group.present? %>
+      <%= render partial: 'services/service', collection: @payment_group.services %>
+
+      <% if !@payment_group.in_process? %>
+        <%= render partial: 'service_registers/difference' %>
+      <% end %>
+
+    <% end %>
+  </tbody>
+</table>

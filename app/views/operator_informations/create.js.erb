@@ -1,0 +1,4 @@
+row = $('#<%= dom_id @operator_information.operator %>');
+row.find('#js-email').html('<%= best_in_place @operator_information, :email, as: :input, inner_class: 'bip-input' %>');
+
+$("#modal").modal("toggle");

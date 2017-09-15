@@ -1,0 +1,50 @@
+image: ruby:2.3
+
+services:
+  - mysql:5.7
+
+variables:
+  MYSQL_ROOT_PASSWORD: root
+
+cache:
+  paths:
+    - vendor/ruby
+
+before_script:
+  - apt-get update -q && apt-get install nodejs -yqq
+  - ruby -v                                   # Print out ruby version for debugging
+  - gem install bundler  --no-ri --no-rdoc    # Bundler is not installed with the image
+  - bundle install -j $(nproc) --path vendor  # Install dependencies into ./vendor/ruby
+
+  # database.yml
+  - 'echo "default: &default"                >  config/database.yml'
+  - 'echo "  adapter: mysql2"                >> config/database.yml'
+  - 'echo "  encoding: utf8"                 >> config/database.yml'
+  - 'echo "  pool: 5"                        >> config/database.yml'
+  - 'echo "  username: root"                 >> config/database.yml'
+  - 'echo "  password: root"                 >> config/database.yml'
+  - 'echo "  host: mysql"                    >> config/database.yml'
+  - 'echo "test:"                            >> config/database.yml'
+  - 'echo "  <<: *default"                   >> config/database.yml'
+  - 'echo "  database: gitlabci_test"        >> config/database.yml'
+  - 'echo "development:"                     >> config/database.yml'
+  - 'echo "  <<: *default"                   >> config/database.yml'
+  - 'echo "  database: gitlabci_development" >> config/database.yml'
+
+  # settings.rb
+
+  - echo "ENV['APTOUR_URL'] = 'http://localhost:3001'" > config/initializers/settings.rb
+  - echo "ENV['OPERATOR_API_URL'] = 'http://10.0.0.169:9092/api/v1'" >> config/initializers/settings.rb
+  - echo "ENV['AGENCY_API_URL']   = 'http://10.0.0.169:9093/api/v1'" >> config/initializers/settings.rb
+  - echo "ENV['MO_SERVICES_URL']   = 'http://10.0.0.19:4002/api/v2/services'" >> config/initializers/settings.rb
+  - echo "ENV['MO_SERVICES_TOKEN'] = 'Token token=afbadb4ff8485c0adcba486b4ca90cc4'" >> config/initializers/settings.rb
+  - echo "ENV['CURRENCY_API_URL'] = 'http://10.0.0.169:9101/api/v1/'" >> config/initializers/settings.rb
+
+test:
+  script:
+    - bundle exec rake db:create #RAILS_ENV=gitlabci
+    - bundle exec rake db:migrate RAILS_ENV=test
+    - bundle exec rake test
+  artifacts:
+    paths:
+      - coverage/

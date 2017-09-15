@@ -1,0 +1,14 @@
+<tr class="js-account">
+  <!-- nombre -->
+  <td><%= account[:name] %></td>
+
+  <!-- monto en dólares -->
+  <td class="js-USD-col js-currency-col">
+    <%= number_to_currency account[:usd], unit: '' %>
+  </td>
+
+  <!-- monto en pesos -->
+  <td class="js-ARS-col js-currency-col">
+    <%= number_to_currency account[:ars], unit: '' %>
+  </td>
+</tr>

@@ -1,0 +1,117 @@
+<h5>Servicios del operador
+  <strong> <%= @presenter.operator.name %> </strong>
+  asociados a la reserva (<strong><%= @reserve.reserve_id %></strong>):
+</h5>
+
+<table id="registers_table" class="table table-bordered table-responsive table-condensed size13">
+  <thead>
+    <tr>
+      <th width="40%">Detalle</th>
+      <th>Fecha Pago</th>
+      <th>Fecha In</th>
+      <th>Fecha Out</th>
+      <th>Localizador</th>
+      <th width="10%">A pagar</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if @presenter.services.empty? %>
+      <tr>
+        <td colspan="8" class="align-center">
+          No hay elementos para mostrar.
+        </td>
+      </tr>
+    <% else %>
+      <%= render partial: 'service_register',
+        collection: @presenter.services,
+        as:         :service_register
+      %>
+
+      <tr>
+        <td colspan="5"></td>
+        <td>
+          <strong>
+            <%= number_with_precision(@presenter.total, precision: 2) %>
+          </strong>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if @presenter.services.any? %>
+  <%= form_tag add_services_service_registers_path,
+    method: :post,
+    remote: true do
+  %>
+
+    <%= hidden_field_tag 'register_filter[operator_id]',
+      @presenter.operator.aptour_id
+    %>
+
+    <% @presenter.services.each do | value | %>
+      <%= hidden_field_tag 'register_filter[register_ids][]',
+        value.id
+      %>
+    <% end %>
+
+    <%= button_tag(
+      type:  'submit',
+      class: 'btn btn-success btn-sm',
+      style: 'margin-left: 85%;',
+      id:    'js-add_all_to_payment_group',
+      data: {
+        disable_with: t(:wait)
+      }) do
+    %>
+      <i class="fa fa-check-square-o">Agregar todos al pago</i>
+    <% end if @presenter.draft_payment? %>
+  <% end %>
+
+  <hr/>
+<% end %>
+
+<h5>Servicios de otros operadores asociados a la reserva (<strong><%= @reserve.reserve_id %></strong>):</h5>
+
+<table class="table table-bordered table-responsive table-condensed size13">
+  <thead>
+    <tr>
+      <th width="40%">Detalle</th>
+      <th>Operador</th>
+      <th>Fecha Pago</th>
+      <th>Fecha In</th>
+      <th>Fecha Out</th>
+      <th>Localizador</th>
+      <th width="10%">A pagar</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if @presenter.other_services.empty? %>
+      <tr>
+        <td colspan="9" class="align-center">
+          No hay elementos para mostrar.
+        </td>
+      </tr>
+    <% else %>
+      <%= render partial: 'service_register',
+        collection: @presenter.other_services,
+        as:         :service_register,
+        locals: {
+          operator_name: true
+        }
+      %>
+
+      <tr>
+        <td colspan="6"></td>
+        <td>
+          <strong>
+            <%= number_with_precision(@presenter.other_services_total, precision: 2) %>
+          </strong>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+
+</table>

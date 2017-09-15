@@ -1,0 +1,31 @@
+.color-red {
+  color: #dd4b39;
+}
+
+.color-green {
+  color: #00a65a;
+}
+
+.color-yellow {
+  color: #F39C10;
+}
+
+.color-violet {
+  color: #71025c;
+}
+
+.color-white {
+  color: white;
+}
+
+.background-color-light-yellow {
+  background-color: #FFFFE5;
+}
+
+.background-color-dark-yellow {
+  background-color: #FFFF88;
+}
+
+.background-color-light-red {
+  background-color: #FFCCCC!important;
+}

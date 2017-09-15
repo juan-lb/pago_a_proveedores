@@ -1,0 +1,130 @@
+<section class="content">
+
+  <%= simple_form_for @report,
+    url: export_payment_group_report_path(
+      @payment_group,
+      format: :pdf
+    ),
+    html: {target: '_blank'},
+    method: :post do |f|
+  %>
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <div class='row'>
+          <div class="col-md-10">
+            <h4>Reporte del pago #<%= @payment_group.id %></h4>
+            <h5>
+              Operador:
+              <strong>
+                <%= @payment_group.operator_name %>
+              </strong>
+            </h5>
+
+            <% if @payment_group.closed? %>
+              <h5>
+                Cuenta:
+                <strong>
+                  <%= @payment_group.payment.account.public_name %>
+                </strong>
+              </h5>
+            <% end %>
+
+            <h5>
+              Total:
+              <strong>
+                <%= @payment_group.currency_symbol %>
+                <%= number_with_precision(
+                  @payment_group.payment.total_debt,
+                  precision: 2
+                ) %>
+              </strong>
+            </h5>
+          </div>
+
+          <div class="col-md-2">
+            <%= f.input :printable_column,
+              collection: [
+                ["Importe (U$D | AR$)", 1],
+                ['Euros (€)', 2]
+              ],
+              include_blank: false,
+              required: true
+            %>
+          </div>
+        </div>
+      </div>
+
+      <div class="box-body">
+        <div class='row'>
+          <div class="col-md-12">
+            <%= render partial: 'payment_groups/reports/table' %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <%= f.input :swift,
+              placeholder: 'Coloque aquí el SWIFT enviado por el banco'
+            %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <%= f.input :note,
+              placeholder: 'Ingrese nota o mensaje para el operador'
+            %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-5">
+            <%= link_to @payment_group,
+              class: 'btn btn-default' do %>
+              <i class="fa fa-arrow-left"></i>
+              Volver
+            <% end %>
+
+            <%= link_to update_locators_payment_group_path(@payment_group),
+              method: :post,
+              title: 'Actualiza los localizadores de los servicios con MiddleOffice',
+              class:  'btn btn-primary' do %>
+              <i class="fa fa-cloud-download"></i>
+              Actualizar localizadores
+            <% end %>
+          </div>
+
+          <div class="pull-right margin-right-7">
+            <span id="js-last_email_date">
+              <% if @payment_group.payment_group_report.last_email_date %>
+                <span class="btn btn-default default-cursor bold">
+                  Último envío:
+                  <%= @payment_group.payment_group_report.
+                    last_email_date
+                  %>
+                </span>
+              <% end %>
+            </span>
+
+            <%= link_to payment_report_form_payment_group_path(@payment_group),
+              class:  'btn btn-primary margin-left-5',
+              remote: true do %>
+                <i class="fa fa-envelope-o"></i>
+                Enviar reporte
+            <% end %>
+
+            <%= button_tag(
+                type: 'submit',
+                class: 'btn btn-primary',
+                data: {no_turbolink: true }
+              ) do
+            %>
+              <i class="fa fa-download"></i>
+              Exportar a PDF
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</section>

@@ -1,0 +1,66 @@
+<section class="js-tab">
+  <span class="cool-primary-label margin-right-5">
+    <span class="cool-label-text">
+      Total AR$:
+      <strong>
+        <%= number_to_currency(total_ars, unit: '') %>
+      </strong>
+    </span>
+  </span>
+
+  <span class="cool-success-label margin-right-5">
+    <span class="cool-label-text">
+      Total U$D:
+      <strong>
+        <%= number_to_currency(total_usd, unit: '') %>
+      </strong>
+    </span>
+  </span>
+
+  <span class="cool-primary-label margin-right-5">
+    <span class="cool-label-text">
+      Seleccionado AR$:
+      <strong class="js-selected-ars-sum">
+        <%= number_to_currency(0, unit: '') %>
+      </strong>
+    </span>
+  </span>
+
+  <span class="cool-success-label margin-right-5">
+    <span class="cool-label-text">
+      Seleccionado U$D:
+      <strong class="js-selected-usd-sum">
+        <%= number_to_currency(0, unit: '') %>
+      </strong>
+    </span>
+  </span>
+
+  <table class="table table-condensed table-bordered background-white">
+    <thead>
+      <tr>
+        <th>
+          <input type="checkbox" data-behavior="select_all_checkboxes"
+            data-checkboxes-parent=".payment_groups_<%= type %>">
+        </th>
+        <th>Fecha</th>
+        <th>Operador</th>
+        <th>Moneda</th>
+        <th class="align-right">Deuda</th>
+        <th class="align-right">Crédito</th>
+        <th class="align-right">Calculado</th>
+        <th class="align-right">Retención</th>
+        <th class="align-right">TOTAL</th>
+      </tr>
+    </thead>
+    <tbody id="payment_groups" class="payment_groups_<%= type %>">
+      <%= render payment_groups %>
+      <% if payment_groups.empty?%>
+        <tr>
+          <td colspan="8">Lo siento, no se encontraron resultados.</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= will_paginate payment_groups %>
+</section>

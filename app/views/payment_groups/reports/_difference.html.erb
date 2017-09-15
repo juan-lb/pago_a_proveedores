@@ -1,0 +1,11 @@
+<% if @difference.present? %>
+  <tr>
+    <% if @payment_group.payment.present? && @payment_group.payment.principal_reserve_id.present? %>
+      <td colspan='6'>Excedente en reserva <%= @payment_group.payment.principal_reserve_id %></td>
+    <% else %>
+      <td colspan='6'>Excedente (sin reserva asignada)</td>
+    <% end %>
+    <td class="align-right"><%= service.payment_group.currency_symbol %> <%=number_with_precision(@difference, precision: 2) %></td>
+    <td class="align-right">€ <%= best_in_place @report, :euros_difference, label: false %></td>
+  </tr>
+<% end %>

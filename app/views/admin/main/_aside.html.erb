@@ -1,0 +1,25 @@
+<aside class="main-sidebar">
+  <section class="sidebar">
+    <ul class="sidebar-menu">
+        <li
+          data-toggle="tooltip"
+          data-placement="right"
+          title="Perfiles">
+          <%= link_to :admin_profiles do %>
+            <i class="fa fa-user"></i>
+            <span><%= t :profiles %></span>
+          <% end %>
+        </li>
+
+        <li
+          data-toggle="tooltip"
+          data-placement="right"
+          title="Volver a navegación">
+          <%= link_to :root do %>
+            <i class="fa fa-arrow-left"></i>
+            <span>Volver</span>
+          <% end %>
+        </li>
+    </ul>
+  </section>
+</aside>

@@ -1,0 +1,47 @@
+<h4>Retenciones</h4>
+
+<div class="row">
+  <div class="col-md-5">
+    <%= f.input :ig_retention,
+      class:    'form-control',
+      readonly: true
+    %>
+  </div>
+
+  <div
+    class="col-md-1"
+    style="margin: 30px 0px 0px -20px;">
+    <%= button_tag type: 'button',
+      id:    'js-edit_retention_amount',
+      class: 'btn btn-xs btn-default' do
+    %>
+      <i class="fa fa-pencil"></i>
+    <% end %>
+  </div>
+
+  <div class='col-md-5 margin-top-25'>
+    <div>Monto para completar pago: </div>
+    <strong>
+      <%= @payment_group.currency_symbol %>
+      <span id="js-reminding_amount">
+        <%= number_with_precision(
+          @payment_group.total - @payment_group.payment.ig_retention,
+          precision: 2
+        ) %>
+      </span>
+    </strong>
+
+    <% if @payment_group.currency == 'D' %>
+      <br/>
+      <strong>
+        AR$
+        <span id="js-reminding_amount_in_ars">
+          <%= number_with_precision(
+            (@payment_group.total - @payment_group.payment.ig_retention) * @payment_group.payment.cotization,
+            precision: 2
+          ) %>
+        </span>
+      </strong>
+    <% end %>
+  </div>
+</div>

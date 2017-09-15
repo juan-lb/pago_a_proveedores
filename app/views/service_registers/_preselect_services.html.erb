@@ -1,0 +1,32 @@
+<center>
+  <p>
+    <i
+      class="fa fa-spinner fa-pulses"
+      alt="Loading..."
+      id="ajax-loader"
+      title="Loading...">
+    </i>
+  </p>
+
+  <p class="text-muted">
+    Aguarde mientras preseleccionamos los servicios...
+  </p>
+
+  <%= form_tag service_registers_path,
+    id: 'js-destroy-form',
+    method: :post,
+    target: (:blank if open_on_new_tab) do %>
+
+    <%= hidden_field_tag 'register_filter[operator_id]',
+      @operator_aptour_id
+    %>
+
+    <% register_ids.each do |reg| %>
+      <%= hidden_field_tag 'register_filter[register_ids][]', reg %>
+    <% end %>
+  <% end %>
+
+</center>
+
+<%= javascript_tag "$('#js-destroy-form').submit();" %>
+<%= javascript_tag "setTimeout(function() { $('#modal-second').modal('hide'); }, 2000);" %>

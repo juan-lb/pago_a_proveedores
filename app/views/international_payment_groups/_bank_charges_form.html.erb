@@ -1,0 +1,80 @@
+<div class="modal-header" id="js-paymentReport">
+  <button
+    type="button"
+    class="close"
+    data-dismiss="modal">
+    &times;
+  </button>
+  <h4 class="modal-title"> Carga de gastos bancarios </h4>
+</div>
+
+<div class="modal-body">
+  <%= simple_form_for @payment_group.payment,
+    url:    load_bank_charges_international_payment_group_path(@payment_group),
+    method: :put,
+    remote: true do |f| %>
+
+    <div class="container-fluid">
+
+      <span id="js-cotization" data-value="<%= Cotizator.new.usd_cotization %>"/>
+
+      <div class="row">
+        <div class="col-md-4">
+          <%= f.label :commission %>
+          <%= f.number_field :commission,
+            class:    'form-control js-formulaInput',
+            min:      0,
+            step:     0.01,
+            required: true
+          %>
+        </div>
+
+        <div class="col-md-4">
+          <%= f.label :iva %>
+          <%= f.number_field :iva,
+            as:    :decimal,
+            class: 'form-control js-formulaInput'
+          %>
+        </div>
+
+        <div class="col-md-4">
+          <%= f.label :iibb_perception %>
+          <%= f.number_field :iibb_perception,
+            class: 'form-control js-formulaInput'
+          %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <%= f.label :payment_method %>
+          <%= f.select :bank_account,
+            Account.filter_with_category(@payment_group.category),
+            {include_blank: 'Elija una cuenta'},
+            {class: 'form-control'}
+          %>
+        </div>
+
+        <div class="col-md-4">
+          <%= f.input :cotization, class: 'form-control' %>
+        </div>
+
+        <div class="col-md-4 text-right text-danger bold margin-top-25">
+          Los montos de comisión, IVA y percepción de IIBB se ingresan teniendo en cuenta la moneda del banco seleccionado
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2 col-md-offset-10">
+          <%= f.submit "Cargar gastos",
+            data: {
+              disable_with: "Enviando...",
+              confirm: '¿Estás seguro?'
+            },
+            class: 'btn btn-success margin-top-25'
+          %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

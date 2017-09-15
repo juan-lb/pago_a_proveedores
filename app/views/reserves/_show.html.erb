@@ -1,0 +1,74 @@
+<div class="modal-header">
+  <button
+    type="button"
+    class="close"
+    data-dismiss="modal">
+    &times;
+  </button>
+  <h4>Reserva <strong>#<%= @reserve.reserve_id %></strong></h4>
+</div>
+
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+          <li class="active">
+            <a href="#details"
+               data-toggle="tab"
+               aria-expanded="true">
+              Detalles
+            </a>
+          </li>
+
+          <li>
+            <a href="#payments"
+               data-toggle="tab"
+               aria-expanded="true">
+              Cobros
+            </a>
+          </li>
+
+          <li>
+            <a href="#services"
+               data-toggle="tab"
+               aria-expanded="true">
+              Servicios
+            </a>
+          </li>
+
+          <li>
+            <a href="#observations"
+               data-toggle="tab"
+               aria-expanded="true">
+              Observaciones
+            </a>
+          </li>
+        </ul>
+
+        <div class="tab-content">
+          <!-- Detalles de la reserva -->
+          <div class="tab-pane active" id="details">
+            <%= render partial: 'details' %>
+          </div>
+
+          <!-- Cobros de la reserva -->
+          <div class="tab-pane" id="payments">
+            <%= render partial: 'payments' %>
+          </div>
+
+          <!-- Servicios de la reserva -->
+          <div class="tab-pane" id="services">
+            <%= render partial: 'service_registers' %>
+            <%= render partial: 'localized_services' %>
+          </div>
+
+          <!-- Observaciones de la reserva -->
+          <div class="tab-pane" id="observations">
+            <%= render partial: 'observations' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

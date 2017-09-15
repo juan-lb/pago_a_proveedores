@@ -1,0 +1,35 @@
+<div class="box box-primary">
+  <div class="box-header with-border">
+    <h3 class="box-title">Importación de servicios</h3>
+  </div>
+
+  <div class="box-body">
+    <div class="row">
+      <div class="col-md-6">
+        <p class="bold">
+          Montos límites de créditos a importar:
+        </p>
+      </div>
+
+      <div class="col-md-3">
+        <%= label @setting, 'Dólares' %>
+        <br/>
+        <%= best_in_place @setting, :max_usd_credit_dif,
+          as:          :input,
+          class:       'bold',
+          inner_class: 'bip-input'
+        %>
+      </div>
+
+      <div class="col-md-3">
+        <%= label @setting, 'Pesos' %>
+        <br/>
+        <%= best_in_place @setting, :max_ars_credit_dif,
+          as:          :input,
+          class:       'bold',
+          inner_class: 'bip-input'
+        %>
+      </div>
+    </div>
+  </div>
+</div>

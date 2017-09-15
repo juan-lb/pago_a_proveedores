@@ -1,0 +1,33 @@
+$('#modal').find('.modal-content').html("<%= j render partial: 'payment_report_form' %>");
+$('#modal').modal();
+
+// Inicialización de MultipleEmails input
+$('#js-toInput').multiple_emails();
+
+<%
+  user_email = current_user.email_from
+  operator_email =
+    if @payment_group.operator.information.nil?
+      nil
+    else
+      @payment_group.operator.information.email
+    end
+%>
+
+input = $('#js-toInput');
+
+<% unless user_email.nil? %>
+  $('.multiple_emails-ul').html("<li class='multiple_emails-email'><span class='email_name' data-email='<%= user_email %>'><%= user_email %></span></li>");
+  input.val('["<%= user_email %>"]')
+<% end %>
+
+<% unless operator_email.blank? %>
+  $('.multiple_emails-ul').append("<li class='multiple_emails-email'><span class='email_name' data-email='<%= operator_email %>'><%= operator_email %></span></li>");
+  if(input.val() == '')
+    input.val('["<%= operator_email %>"]')
+  else
+    input.val('["<%= user_email + ", " + operator_email %>"]')
+
+<% end %>
+
+$('.multiple_emails-input').focus()

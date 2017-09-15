@@ -1,0 +1,32 @@
+<h4>Gastos bancarios</h4>
+
+<div class="row">
+  <div class="col-md-4">
+    <%= f.input :commission_total,
+      as:    :decimal,
+      class: 'form-control'
+    %>
+  </div>
+
+  <div class="col-md-4">
+    <%= f.label :commission %>
+    <%= f.number_field :commission,
+      class: 'form-control js-formulaInput',
+      min:   0,
+      step:  0.01
+    %>
+  </div>
+
+  <div class="col-md-4">
+    <%= f.input :iva,
+      as:    :decimal,
+      class: 'form-control'
+    %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12 text-right text-danger bold">
+    Los montos de comisión se ingresan teniendo en cuenta la moneda del banco seleccionado
+  </div>
+</div>

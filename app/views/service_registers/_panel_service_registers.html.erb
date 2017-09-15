@@ -1,0 +1,164 @@
+<% total_ars = service_registers.reduce(0) { |sum, s| sum + s.dif } %>
+<% total_usd = service_registers.reduce(0) { |sum, s| sum + s.difus } %>
+
+<div class="box">
+  <div class="box-body box-body-scroll">
+    <h5 style="margin-top: 2px; margin-left: 12em; position: absolute;">
+      <span class="cool-primary-label margin-right-5">
+        <span class="cool-label-text">
+          Parcial AR$:
+          <strong id="js-selectedARS-<%= type %>">
+            <%= number_to_currency(0, unit: '') %>
+          </strong>
+        </span>
+      </span>
+
+      <span class="cool-success-label margin-right-5">
+        <span class="cool-label-text">
+          Parcial U$D:
+            <strong id="js-selectedUSD-<%= type %>">
+              <%= number_to_currency(0, unit: '') %>
+            </strong>
+        </span>
+      </span>
+
+      <span class="cool-primary-label margin-right-5">
+        <span class="cool-label-text">
+          Total AR$:
+          <strong id="js-totalARS-<%= type %>">
+            <%= number_to_currency(total_ars, unit: '') %>
+          </strong>
+        </span>
+      </span>
+
+      <span class="cool-success-label">
+        <span class="cool-label-text">
+          Total U$D:
+          <strong id="js-totalUSD-<%= type %>">
+            <%= number_to_currency(total_usd, unit: '') %>
+          </strong>
+        </span>
+      </span>
+    </h5>
+
+    <%= form_tag add_services_service_registers_path,
+      method: :post,
+      remote: true do
+    %>
+      <div class="pull-right">
+        <span
+          class="btn btn-primary"
+          data-behavior="exportExcel"
+          title="Descargar Excel">
+           <i class="fa fa-download"></i>
+        </span>
+      </div>
+
+      <% if service_registers.any? %>
+        <% operator_id = service_registers.first.id_ope %>
+        <%= hidden_field_tag 'register_filter[operator_id]',
+          operator_id
+        %>
+      <% end %>
+
+      <% unless @presenter.payment_group.present? &&
+          @presenter.payment_group.is_refund? &&
+           type == 'debit'
+      %>
+        <%= button_tag(
+          type: 'submit',
+          class: 'btn btn-success btn-sm',
+          style: 'margin-bottom: 5px; position: absolute;',
+          data: {
+            behavior: "addServiceToPaymentGroup-#{type}",
+            cost: 0
+          }) do
+        %>
+          <i class="fa fa-check-square-o"> Agregar seleccionados</i>
+        <% end %>
+      <% end %>
+
+      <% if type == 'credit' %>
+        <span class="pull-right" style="position: absolute; margin-left: 52.5em;">
+          <%= check_box_tag 'refund', 'refund', false,
+            class:    'tgl tgl-flip',
+            id:       'refund',
+            checked:  @presenter.payment_group.present? && @presenter.payment_group.is_refund?,
+            disabled: @presenter.payment_group.present?
+          %>
+          <label
+            class="tgl-btn"
+            data-tg-off="Pago"
+            data-tg-on="Devolución"
+            for="refund">
+          </label>
+        </span>
+      <% end %>
+
+      <br><br>
+
+      <table
+        id="registers_table"
+        class="table table-bordered table-responsive tableSection">
+        <thead>
+          <tr>
+            <th colspan="3">
+              <input
+                type="text"
+                placeholder="Filtrar número de file"
+                class="js-searchRegister form-control"
+                style="margin: -5px; margin-left: 2px;"/>
+            </th>
+            <th colspan="2" class="text-center label-info">Depositado</th>
+            <th colspan="2" class="text-center label-info">Saldo</th>
+            <th colspan="2"></th>
+            <th colspan="4" class="text-center label-info">Fechas</th>
+            <th colspan="3"></th>
+          </tr>
+
+          <tr>
+            <th>
+              <%= check_box_tag "checkbox_service_registers_#{type}",
+                false,
+                false,
+                data: {
+                  behavior: "selectAllRegisters-#{type}"
+                }
+              %>
+            </th>
+            <th>Reserva</th>
+            <th>Estado</th>
+            <th>AR$</th>
+            <th>U$D</th>
+            <th>AR$</th>
+            <th>U$D</th>
+            <th>A pagar</th>
+            <th>Titular</th>
+            <th>In</th>
+            <th>Pago</th>
+            <th>Seña</th>
+            <th>Out</th>
+            <th>Localizador</th>
+            <th>Agencia</th>
+            <th>Detalle</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% if service_registers.nil? || service_registers.empty? %>
+            <tr>
+              <td colspan="13" class="align-center">
+                No hay elementos para mostrar.
+              </td>
+            </tr>
+          <% else %>
+            <%= render service_registers,
+              type:        type,
+              preselected: preselected_service_registers
+            %>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+</div>

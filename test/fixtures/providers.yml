@@ -1,0 +1,12 @@
+# == Schema Information
+#
+# Table name: providers
+#
+#  id        :integer          not null, primary key
+#  aptour_id :integer
+#  name      :string(255)
+#
+
+one:
+  name: 'Proveedor 1'
+  aptour_id: 1

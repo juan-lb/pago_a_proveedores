@@ -1,0 +1,67 @@
+<% @payment_group ||= payment_group %>
+
+<div class="box box-primary collapsed-box">
+
+  <div class="box-header with-border">
+    <div class="row">
+      <div class="col-md-12">
+        <h3 class="box-title">Datos Bancarios</h3>
+      </div>
+    </div>
+
+    <div class="box-tools pull-right">
+      <button
+        class="btn btn-box-tool"
+        data-widget="collapse">
+        <i class="fa fa-plus"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="box-body">
+    <div class="row">
+      <div class="col-md-12">
+
+        <% if @payment_group.operator.bank_accounts.any? %>
+          <!-- Cuentas bancarias nacionales -->
+          <h4 class="bold">Nacionales</h4>
+          <dl class="dl">
+            <% @payment_group.operator.bank_accounts.each do |acc| %>
+              <div>
+                <span class="bold">Banco: </span>
+                <span><%= acc[:bank] %></span>
+              </div>
+              <div>
+                <span class="bold">Número: </span>
+                <span><%= acc[:number] %></span>
+              </div>
+              <div>
+                <span class="bold">CBU: </span>
+                <span><%= acc[:cbu] %></span>
+              </div>
+              <div>
+                <span class="bold">CUIT: </span>
+                <span><%= acc[:cuit] %></span>
+              </div>
+              <div>
+                <span class="bold">Titular: </span>
+                <span><%= acc[:holder] %></span>
+              </div>
+              <hr/>
+            <% end %>
+          </dl>
+        <% end %>
+
+        <% if @payment_group.operator.detail.present? %>
+          <!-- Cuentas bancarias internacionales -->
+          <h4 class="bold">Internacionales</h4>
+          <dl class="dl">
+            <pre><%= @payment_group.operator.detail %></pre>
+          </dl>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+
+</div>

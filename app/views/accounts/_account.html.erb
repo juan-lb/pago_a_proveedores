@@ -1,0 +1,51 @@
+<tr class="js-account" id="<%= dom_id(account) %>">
+  <!-- nombre -->
+  <td>
+    <%= account.name %>
+  </td>
+
+  <!-- moneda -->
+  <td>
+    <%= account.currency %>
+  </td>
+
+  <!-- categoría -->
+  <td class="link">
+    <%= best_in_place account, :category,
+      as: :select,
+      collection: {
+        "1" => Const::NATIONAL_ACCOUNT_CATEGORY,
+        "2" => Const::INTERNATIONAL_ACCOUNT_CATEGORY,
+        "3" => Const::NAT_INTER_ACCOUNT_CATEGORY
+      }
+    %>
+  </td>
+
+  <!-- tipo -->
+  <td>
+    <%= account.account_type %>
+  </td>
+
+  <!-- nombre para mostrar -->
+  <td class="link">
+    <%= best_in_place account, :name_to_show %>
+  </td>
+
+  <!-- proveedor -->
+  <td class="link">
+    <%= best_in_place account, :provider_aptour_id,
+      as: :select,
+      collection: account_providers
+    %>
+  </td>
+
+  <!-- eliminar -->
+  <td>
+    <%= link_to icon(:trash), account_path(account.account_api_id),
+      method: :delete,
+      data: {
+        confirm: '¿Estás seguro?'
+      }
+    %>
+  </td>
+</tr>

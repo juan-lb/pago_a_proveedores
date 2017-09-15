@@ -1,0 +1,23 @@
+[
+  {
+    "id_res": 379294,
+    "numero": 1,
+    "nombre": "WAYNE BRUCE                     ",
+    "titular": true,
+    "aci": 1
+  },
+  {
+    "id_res": 379294,
+    "numero": 2,
+    "nombre": "GRAYSON RICHARD                ",
+    "titular": false,
+    "aci": 1
+  },
+  {
+    "id_res": 379294,
+    "numero": 3,
+    "nombre": "DRAKE TIMOTHY              ",
+    "titular": false,
+    "aci": 1
+  }
+]

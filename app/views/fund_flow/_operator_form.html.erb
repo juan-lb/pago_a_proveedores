@@ -1,0 +1,18 @@
+<div id="js-operator-form">
+  <%= form_for FundFlowFilter.new,
+    url:    operator_fund_flow_index_path,
+    method: :get,
+    html:   {id: 'js-operator-form'},
+    remote: true do |f| %>
+
+    <%= f.hidden_field :from, value: @presenter.filter.from %>
+    <%= f.hidden_field :to, value: @presenter.filter.to %>
+
+    <%= f.select :operator_aptour_id,
+      @presenter.filter.operators,
+      @presenter.filter.selected_operator,
+      class: 'operator_select2',
+      data: {behavior: 'selectOperator'}
+    %>
+  <% end %>
+</div>

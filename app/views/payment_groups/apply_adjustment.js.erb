@@ -1,0 +1,7 @@
+$('#modal').modal('hide');
+
+$('#js-panel_services').html('<%= j render partial: "services/panel_edit_services", locals: {payment_group: @payment_group.reload} %>')
+
+App.service_registers.showPaymentGroupTab()
+App.init()
+$.AdminLTE.boxWidget.activate()

@@ -1,0 +1,76 @@
+.hidden {
+  display: none;
+}
+
+.background-white {
+  background-color: white;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+#table-scroll {
+  max-height: 35em;
+  overflow-y: auto;
+}
+
+.link {
+  cursor: pointer;
+  color: #00aedb;
+}
+
+.inline {
+  display: inline-block;
+}
+
+.margin-left-25 {
+  margin-left: 25px;
+}
+
+.margin-left-10 {
+  margin-left: 10px;
+}
+
+.margin-right-10 {
+  margin-right: 10px;
+}
+
+.margin-right-5 {
+  margin-right: 5px;
+}
+
+.margin-top-25 {
+  margin-top: 25px;
+}
+
+.margin-top-5 {
+  margin-top: 5px;
+}
+
+.padding-right-0 {
+  padding-right: 0px;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
+}
+
+.best_in_place {
+  cursor: pointer;
+  color: #00aedb;
+}
+
+.hand-cursor {
+  cursor: pointer;
+}
+
+.default-cursor {
+  cursor: default;
+}
+
+.bip-input {
+  width: 80%;
+  height: 26px;
+  line-height: 26px;
+}

@@ -1,0 +1,41 @@
+<% type = @payment_group.category == 1 ? "national_payment_groups" : "international_payment_groups" %>
+
+<section class="content">
+  <div class="row">
+    <div class="col-md-7">
+      <div class="col-md-12">
+        <section id="panel_effect_payment">
+          <% if @payment_group.sent? %>
+            <%= render partial: "#{type}/panel_effect_payment",
+              locals: {
+                type: type
+              }
+            %>
+          <% else %>
+            <%= render partial: 'payments/payment',
+              locals: {
+                payment: @payment_group.payment
+              }
+            %>
+          <% end %>
+        </section>
+      </div>
+
+      <div class="col-md-12">
+        <section id="panel_transfers">
+          <% if @payment_group.closed? %>
+            <%= render partial: 'payments/transfers' %>
+          <% end %>
+        </section>
+      </div>
+    </div>
+
+    <div class="col-md-5">
+      <div class="col-md-12">
+        <section id="panel_information">
+          <%= render partial: 'information_payment_group'%>
+        </section>
+      </div>
+    </div>
+  </div>
+</section>

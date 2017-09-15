@@ -1,0 +1,6 @@
+modal = $('#modal');
+modal.modal('show');
+modal.find('.modal-title').text("Buscar registros por número de file");
+modal.find('.modal-body').html("<%= j render partial: 'by_file_number_form' %>");
+modal.find('.modal-body').append("<div id='js-byFileNumberResults'></div>");
+modal.find('.panel-footer').remove();

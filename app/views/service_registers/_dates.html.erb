@@ -1,0 +1,50 @@
+<% klass1 = '' %>
+<% klass2 = '' %>
+<% klass3 = '' %>
+<% klass4 = '' %>
+
+<% type = @presenter.filter.fec_type %>
+<% if type == 'near_expiring_date' || type == '' %>
+  <% type = service_register.near_expiring_date_type %>
+<% else %>
+  <% type = @presenter.filter.fec_type %>
+<% end %>
+
+<% case type
+when 'fec_sal'
+  klass1 = 'bold'
+when 'fec_pag'
+  klass2 = 'bold'
+when 'fec_sen'
+  klass3 = 'bold'
+when 'fec_out'
+  klass4 = 'bold'
+end %>
+
+<!-- fecha de in -->
+<td class="<%= klass1 %>">
+  <%= service_register.fec_sal %>
+</td>
+
+<!-- fecha de pago -->
+<td class="<%= klass2 %>">
+  <%= service_register.ps == 'S' ? '-' : service_register.fec_pag %>
+</td>
+
+<!-- fecha de seña -->
+<td class="<%= klass3 %>">
+  <% if service_register.ps == 'S' %>
+    <span
+      class="text-yellow"
+      title="Seña de pago">
+      <%= service_register.fec_sen %>
+    </span>
+  <% else %>
+    -
+  <% end %>
+</td>
+
+<!-- fecha de out -->
+<td class="<%= klass4 %>">
+  <%= service_register.fec_out %>
+</td>

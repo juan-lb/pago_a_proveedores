@@ -1,0 +1,120 @@
+<div class="fluid-container">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th class="label-default text-center">Moneda</th>
+            <th class="label-default text-center">Venta</th>
+            <th class="label-default text-center">Depositado</th>
+            <th class="label-default text-center">Pagado a operadores</th>
+            <th class="label-default text-center">Saldo</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>AR$</td>
+            <td>
+              <%= number_to_currency @reserve.debt.abs, unit: '' %>
+            </td>
+            <td>
+              <%= number_to_currency @reserve.paid.abs, unit: '' %>
+            </td>
+            <td>
+              <%= number_to_currency @presenter.ars_operators_payments, unit: '' %>
+            </td>
+            <td>
+              <%= number_to_currency (@reserve.debt.abs - @presenter.ars_operators_payments), unit: '' %>
+            </td>
+          </tr>
+          <tr>
+            <td>U$D</td>
+            <td>
+              <%= number_to_currency @reserve.debt_usd.abs, unit: '' %>
+            </td>
+            <td>
+              <%= number_to_currency @reserve.paid_usd.abs, unit: '' %>
+            </td>
+            <td>
+              <%= number_to_currency @presenter.usd_operators_payments, unit: '' %>
+            </td>
+            <td>
+              <%= number_to_currency (@reserve.debt_usd.abs - @presenter.usd_operators_payments), unit: '' %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row" id="js-operatorsPayments">
+    <div class="col-md-10 col-md-offset-1">
+      <table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th class="label-default text-center">Operador</th>
+            <th class="label-primary text-center">Pagado AR$</th>
+            <th class="label-primary text-center">Saldo AR$</th>
+            <th class="label-success text-center">Pagado U$D</th>
+            <th class="label-success text-center">Saldo U$D</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @presenter.operators_payments.each do |payment|  %>
+            <tr>
+              <td>
+                <%= payment[:operator_name] %>
+              </td>
+              <td>
+                <%= number_with_precision payment[:ars_paid] %>
+              </td>
+              <td>
+                <%= number_with_precision payment[:ars_balance] %>
+              </td>
+              <td>
+                <%= number_with_precision payment[:usd_paid] %>
+              </td>
+              <td>
+                <%= number_with_precision payment[:usd_balance] %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <% if @presenter.operator_payment %>
+    <div class="row margin-top-10">
+      <div class="col-md-4">
+        <strong>
+          Pagado a <%= @presenter.operator.name %> por esta reserva
+        </strong>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <table class="table text-center">
+          <thead>
+            <tr>
+              <th>AR$</th>
+              <th>U$D</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <%= number_with_precision @presenter.operator_payment[:ars_paid] %>
+              </td>
+              <td>
+                <%= number_with_precision @presenter.operator_payment[:usd_paid] %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,164 @@
+es:
+  brand: 'Pago a Proveedores'
+  welcome: 'Bienvenido'
+  lead:  'Sistema de Pago a Proveedores'
+  wait: 'Espere...'
+  service_registers: 'Registros de servicio'
+  information: 'Información'
+  administration: 'Administración'
+  import: 'Importar'
+  importation: 'Importación'
+  importations: 'Importaciones'
+  settings: 'Opciones'
+
+  logout: 'Cerrar sesión'
+  unauthorized: 'No está autorizado'
+
+  profile: 'Perfil'
+  user: 'Usuario'
+  created_by: 'Creado por'
+  profiles: 'Perfiles'
+  no_role_assigned: 'No tenes rol asignado'
+
+  new: 'Nuevo'
+  edit: 'Editar'
+  confirm: 'Estás seguro?'
+  status: 'Estado'
+  filter: 'Filtrar'
+  created_at: 'Creado el'
+  updated_at: 'Actualizado'
+  updated: 'Actualizado correctamente'
+  delete: 'Borrar'
+
+  operator: 'Operador'
+  operators: 'Operadores'
+  payment_groups: 'Pagos'
+  service: 'Servicio'
+  draft_payment_group: 'Pago Borrador'
+  refund_payment_group: 'Devolución'
+  in_process_payment_group: 'Pago en proceso'
+  payment: 'Pago'
+  principal_reserve: 'Reserva principal'
+  cotization: 'Cotización'
+  total_payment: 'Monto a pagar'
+  principal_reserve_id: 'Reserva principal'
+  payed: 'Pagado'
+  payed_in_origin_currency: 'Pagado en moneda origen'
+  payed_in_destionation_currency: 'Pagado en moneda destino'
+  debt: 'Se debía'
+  about_payment: 'Acerca del pago'
+  payment_method: 'Cuenta'
+  payment_method_number: 'Identificación de pago'
+  moves: 'Créditos'
+  reserve: 'Reserva'
+  impact_aptour: 'Impacto en aptour'
+
+  operator_category:
+    national: Nacional
+    international: Internacional
+
+
+  will_paginate:
+    previous_label: 'Anterior'
+    next_label: 'Siguiente'
+    page_gap: '...'
+
+  permissions:
+    imports: Importaciones
+    operators: Detalles de operadores
+    reserves: Detalles de reservas
+    service_registers: Listado de registros de servicios y armado de pagos
+    services: Edición de servicios
+    payment_groups: Listado y envío de pagos
+    international_payment_groups: Detalle de pagos internacionales
+    national_payment_groups: Detalle de pagos nacionales
+    refund_payment_groups: Devoluciones
+    statistics: Estadísticas
+    fund_flow: Flujo de fondos
+    agency_payments: Pagos de agencias
+    settings: Configuraciones del sistema
+    accounts: Configuración de cuentas del sistema
+  simple_form:
+    labels:
+      register_filter:
+        fec_type: 'Fecha'
+        from: 'Desde'
+        to: 'Hasta'
+        order_by: 'Ordenar por'
+        status_service: 'Estado de servicio'
+        beeper: 'Localizador'
+        traveller: 'Titular'
+        reserve: 'Reserva'
+      service_filter:
+        days: 'Días'
+        from: 'Desde'
+        to: 'Hasta'
+        operator_category: 'Categoría'
+      operator_filter:
+        from: 'Desde'
+        to: 'Hasta'
+      payment_group_filter:
+        operator_category: 'Categoría'
+        from: 'Desde'
+        to: 'Hasta'
+        reserve: 'Reserva'
+        leg_ope: 'Localizador'
+        passenger: 'Titular'
+      statistics_filter:
+        operator_category: 'Categoría'
+        from: 'Desde'
+        to: 'Hasta'
+        order_by: 'Ordenar por'
+        order_as: 'Ordenar como'
+        from_2: 'Desde (fin de comparación)'
+        to_2: 'Hasta(fin de comparación)'
+      fund_flow_filter:
+        operator_category: 'Categoría'
+        operator_cc: 'Cuenta corriente'
+        operator_aptour_id: 'Operador'
+        from: 'Desde'
+        to: 'Hasta'
+      operators_positive_balances_filter:
+        category: 'Categoría'
+      operators_filter:
+        name: 'Nombre'
+        category: 'Categoría'
+      payment:
+        total_payment: 'Monto a pagar'
+        cotization: 'Cotización'
+        payment_method: 'Cuenta'
+        payment_method_number: 'Identificación de pago'
+        commission_total: 'Importe total'
+        commission: 'Comisión'
+        iva: 'IVA'
+        iibb_perception: 'Percepción IIBB'
+        iva_perception: 'Percepción IVA'
+        ig_retention: 'Ganancias'
+        eur_cotization: 'Cotización EUR'
+      service:
+        reserve_id: 'Reserva'
+        amount: 'Monto'
+        leg_ope: 'Localizador'
+      payment_group_report:
+        note: 'Nota'
+        printable_column: 'Columna a imprimir'
+      setting:
+        ig_limit: 'Límite'
+        ig_aliquot: 'Alícuota'
+        ig_base: 'Base'
+      profile:
+        role: 'Rol'
+        operator_category: 'Categoría de operadores'
+        report_message: 'Mensaje para el reporte'
+        aptour_initials: Iniciales Aptour
+        email_from: Email para envío de reporte de pago
+      possible_payments_manager:
+        from: 'Desde'
+        to: 'Hasta'
+        days: 'Días (**)'
+        statuses: 'Estados (**)'
+      payable_manager:
+        operator_category: 'Categoría de operadores (*)'
+        from: 'Desde'
+        to: 'Hasta'
+        days: 'Días (**)'

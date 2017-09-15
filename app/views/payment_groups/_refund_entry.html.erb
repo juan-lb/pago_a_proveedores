@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= label_tag :operator_id, "Selección de operador" %>
+    <%= select_tag :operator_id, Operator.all,
+      class: 'operator_select2'
+    %>
+  </div>
+  <div class="col-md-3">
+    <div class="pull-right">
+      <span class="btn btn-default" data-behavior="displayHelp">
+        <i class="fa fa-question-circle"></i>
+        Ayuda
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="row margin-top-10">
+  <div class="col-md-6 col-md-offset-3">
+    <%= label_tag :principal_reserve_id, 'Reserva principal',
+      class: 'control-label'
+    %>
+    <%= select_tag :principal_reserve_id, [],
+      class: 'form-control'
+    %>
+  </div>
+</div>
+
+<div class="row margin-top-10">
+  <div class="col-md-12 text-center">
+    <p class="text-red bold">
+      La suma de servicios no puede superar el total del pago.
+      <span title="El excedente se importará como un débito de la reserva principal.">
+        <i class="fa fa-question-circle text-danger"></i>
+      </span>
+    </p>
+    <p class="text-red bold">
+      No utilizar cuenta AJUSTE DÓLARES para pagar o compensar servicios nominados en AR$.
+      <span title="Si necesita compensar o devolver servicios nominados en AR$, utilice cuenta AJUSTE.">
+        <i class="fa fa-question-circle text-danger"></i>
+      </span>
+    </p>
+  </div>
+</div>
+
+<div class="row margin-top-10">
+  <div class="col-md-12">
+    <div class="box box-solid box-primary">
+      <div class="box-header">
+        <h3 class="box-title" style="color: white;">Servicios</h3>
+        <div class="box-tools pull-right">
+          <button
+            class="btn btn-box-tool"
+            data-widget="collapse">
+            <i class="fa fa-minus"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="box-body">
+        <div class="col-md-12">
+          <div class="col-md-12" id="js-services"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

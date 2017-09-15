@@ -1,0 +1,231 @@
+<% reserves = @payment_group.services.debits.pluck(:reserve_id).uniq %>
+
+<section id="panel-effect_payment">
+  <div class="box box-primary">
+    <div class="box-header with-border">
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="box-title"> Detalle del pago </h3>
+          <div class="box-tools pull-right">
+            <span
+              class="btn btn-sm btn-primary"
+              <%= 'disabled' if @payment_group.adjustment %>
+              data-behavior="enableFakeMode">
+              OPERAR <b>PAGO FICTICIO</b>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="js-usd_cotization"
+      style="display: none;">
+      <%= @usd_cotization %>
+    </div>
+
+    <div class="box-body">
+      <div class="row">
+        <div class="col-md-6 custom-notice-col">
+          <div class="info-box">
+            <span
+              class="info-box-icon bg-red"
+              id="js-debt_box">
+              <i><%= @payment_group.currency_symbol %></i>
+            </span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Se debe</span>
+              <span
+                class="info-box-number"
+                id="js-total_debt"
+                data-payment_currency="<%= @payment_group.currency %>"
+                data-total="<%= @payment_group.total.abs %>">
+                <%= number_with_precision(
+                  @payment_group.payment.total_debt,
+                  precision: 2
+                ) %>
+              </span>
+            </div>
+            <p class="color-red hidden" id="js-error-debt-message">
+              El monto a pagar debe ser mayor a cero
+            </p>
+          </div>
+        </div>
+
+        <% if @payment_group.has_euros? %>
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <div class="info-box">
+              <span class="info-box-icon bg-green">
+                <i>€</i>
+              </span>
+              <div class="info-box-content">
+                <span class="info-box-text">Monto en euros</span>
+                <span class="info-box-number">
+                  <%= number_with_precision(
+                    @payment_group.total_euros,
+                    precision: 2
+                  ) %>
+                </span>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <%= render partial: 'payment_groups/associated_payment_group' %>
+
+      </br>
+
+      <%= simple_form_for @payment_group.payment,
+        url:    [:finished, @payment_group],
+        method: :put do |f|
+      %>
+        <div class="row">
+          <!-- cuenta bancaria -->
+          <div class="col-md-5">
+            <%= f.label  :payment_method, class: 'control-label' %>
+            <%= f.select :payment_method,
+              Account.filter_with_category(@payment_group.category),
+              {include_blank: 'Elija una cuenta'},
+              {
+                required: true,
+                class:   'form-control'
+              }
+            %>
+          </div>
+
+          <!-- cotización -->
+          <div class="col-md-2">
+            <%= f.input :cotization,
+              class: 'form-control',
+              readonly: true
+            %>
+          </div>
+
+          <!-- total a pagar -->
+          <div class="col-md-5">
+            <%= f.input :total_payment,
+              as:          :decimal,
+              class:       'form-control',
+              readonly:    true,
+              placeholder: 'Ingrese el monto a pagar'
+            %>
+          </div>
+        </div>
+
+        <div class="row">
+          <%= f.hidden_field :total_debt,
+            value: @payment_group.payment.total_debt
+          %>
+
+          <!-- reserva principal -->
+          <div class="col-md-7">
+            <%= f.label :principal_reserve_id, t(:principal_reserve),
+              class: 'control-label'
+            %>
+            <%= f.select :principal_reserve_id, reserves,
+              {selected: reserves.first},
+              class: 'form-control'
+            %>
+          </div>
+
+          <!-- identificación del pago -->
+          <div class="col-md-5">
+            <%= f.input :payment_method_number,
+              class: 'form-control'
+            %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3">
+            <!-- cotización del euro -->
+            <%= f.input :eur_cotization,
+              as: :float,
+              class: 'form-control',
+              input_html: {
+                value: Cotizator.new.eur_cotization
+              }
+            %>
+          </div>
+        </div>
+
+        <!-- Gastos bancarios -->
+        <%= render partial: "#{type}/international_bank_charges",
+          locals: {f: f}
+        %>
+
+        <!-- Opciones para pago ficticio -->
+        <%= render partial: 'payment_groups/fake_payment_options',
+          locals: {f: f}
+        %>
+
+        <div class="row margin-top-25">
+          <div class="col-md-4">
+            <div class="btn-group dropup">
+              <span type="button" class="btn btn-default">
+                <i class="fa fa-file-excel-o"></i>
+                Exportación Excel
+              </span>
+              <button
+                type="button"
+                class="btn btn-default dropdown-toggle"
+                data-toggle="dropdown"
+                aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li>
+                  <%= link_to "Moneda original (#{@payment_group.currency_symbol})", export_to_excel_payment_group_path(
+                      @payment_group,
+                      format: :xlsx
+                    ),
+                    target: 'blank'
+                  %>
+                </li>
+
+                <li>
+                  <%= link_to 'Euro (€)', export_to_excel_payment_group_path(
+                      @payment_group,
+                      in_euros: true,
+                      format: :xlsx
+                    ),
+                    target: 'blank'
+                  %>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <%= link_to [:processed, @payment_group],
+              method: :put,
+              class:  'btn btn-default' do
+            %>
+              <i class="fa fa-pencil"></i>
+              Modificar pago
+            <% end %>
+          </div>
+
+          <div class="col-md-3 col-md-offset-2">
+            <%= f.button :button, "",
+              disabled: @payment_group.payment.payment_method.blank?,
+              data: {
+                disable_with: t(:wait),
+                confirm: 'Estás seguro?',
+                no_turbolink: true
+              },
+              class: 'btn btn-primary',
+              id:    'js-btn-payment' do
+            %>
+              <i class="fa fa-upload"></i>
+              Cargar pago
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,101 @@
+# == Schema Information
+#
+# Table name: services
+#
+#  id                 :integer          not null, primary key
+#  reserve_id         :integer
+#  agency_id          :integer
+#  leg_ope            :string(255)
+#  service_number     :integer
+#  amount_in_cents    :integer
+#  date               :datetime
+#  date_out           :datetime
+#  viajeroresponsable :string(255)
+#  operator_id        :integer
+#  payment_group_id   :integer
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  is_valid           :boolean          default(TRUE)
+#  euros              :float(24)
+#  details            :text(65535)
+#  operator_aptour_id :integer
+#  currency           :string(255)
+#  date_in            :datetime
+#  seller_aptour_id   :string(4)
+#  provider_aptour_id :integer
+#
+
+service_one:
+  reserve_id: 1
+  agency_id: puerto_aereo
+  leg_ope: 'leg_one'
+  service_number: 1
+  amount_in_cents: 10000000
+  date: "2016-09-20"
+  date_out: "2016-09-20"
+  viajeroresponsable: 'Christian Castro'
+  operator_aptour_id: 1 # National
+  payment_group: payment_group_one
+  is_valid: true
+  euros: 0
+  seller_aptour_id: 7
+
+service_two:
+  reserve_id: 2
+  agency_id: puerto_aereo
+  leg_ope: 'leg_two'
+  service_number: 1
+  amount_in_cents: 10000000
+  date: "2016-09-20"
+  date_out: "2016-09-20"
+  viajeroresponsable: 'Patricio Rey'
+  operator_aptour_id: 1 # National
+  payment_group: payment_group_one
+  is_valid: true
+  euros: 0
+  seller_aptour_id: 7
+
+service_three:
+  reserve_id: 2
+  agency_id: puerto_aereo
+  leg_ope: 'leg_three'
+  service_number: 1
+  amount_in_cents: 10000000
+  date: "2016-09-20"
+  date_out: "2016-09-20"
+  viajeroresponsable: 'Patricio Rey'
+  operator_aptour_id: 1 # National
+  payment_group: payment_group_two
+  is_valid: true
+  euros: 0
+  seller_aptour_id: 10
+
+service_four:
+  reserve_id: 2
+  agency_id: puerto_aereo
+  leg_ope: 'leg_four'
+  service_number: 1
+  amount_in_cents: 10000000
+  date: "2016-09-20"
+  date_out: "2016-09-20"
+  viajeroresponsable: 'Patricio Rey'
+  operator_aptour_id: 2 # International
+  payment_group: payment_group_three
+  is_valid: true
+  euros: 0
+  seller_aptour_id: 100
+
+service_five:
+  reserve_id: 2
+  agency_id: puerto_aereo
+  leg_ope: 'leg_five'
+  service_number: 1
+  amount_in_cents: -20000000
+  date: "2016-09-20"
+  date_out: "2016-09-20"
+  viajeroresponsable: 'Bruce Wayne'
+  operator_aptour_id: 2 # International
+  payment_group: payment_group_seven
+  is_valid: true
+  euros: 0
+  seller_aptour_id: 100

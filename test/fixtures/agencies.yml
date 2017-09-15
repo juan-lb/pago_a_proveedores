@@ -1,0 +1,29 @@
+# == Schema Information
+#
+# Table name: agencies
+#
+#  id        :integer          not null, primary key
+#  name      :string(255)
+#  aptour_id :integer
+#  color     :string(255)
+#
+
+puerto_aereo:
+  name: 'Puerto Aéreo'
+  aptour_id: 1
+  color: "green"
+
+green:
+  name: 'Verde'
+  aptour_id: 1
+  color: "green"
+
+red:
+  name: 'Rojo'
+  aptour_id: 1
+  color: "red"
+
+yellow:
+  name: 'Amarillo'
+  aptour_id: 1
+  color: "yellow"

@@ -1,0 +1,17 @@
+<tr class="<%= service.is_valid ? '' : 'row_marked' %>">
+
+  <!-- Número de file -->
+  <td>
+    <%= service.reserve_id %>
+  </td>
+
+  <!-- Monto -->
+  <td class="align-right">
+    <% if service.euros.present? %>
+      (€ <%= service.euros %>)
+    <% end %>
+    <%= service.payment_group.currency_symbol %>
+    <%=number_with_precision(service.amount)%>
+  </td>
+
+</tr>

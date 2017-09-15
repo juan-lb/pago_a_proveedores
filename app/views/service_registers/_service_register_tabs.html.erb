@@ -1,0 +1,85 @@
+<%
+  if @presenter.filter.credits_tab.present?
+    debits_class  = ''
+    credits_class = 'active'
+  else
+    debits_class  = 'active'
+    credits_class = ''
+  end
+%>
+
+<section id="js-service_register_tabs">
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+
+      <!--Enlace a tab de DÉBITOS-->
+      <li class="<%= debits_class %>">
+        <a
+          href="#deudas"
+          data-toggle="tab"
+          aria-expanded="true">
+          Deudas
+        </a>
+      </li>
+
+      <!-- Enlace a tab de CRÉDITOS -->
+      <% if @presenter.filter.credits_tab.present? %>
+        <li class="active">
+          <a
+            href="#afavor"
+            data-toggle="tab"
+            aria-expanded="true">
+            Créditos
+          </a>
+        </li>
+      <% else %>
+        <li>
+          <%= link_to 'Créditos',
+            credits_service_registers_path(
+              register_filter: @presenter.params[:register_filter]
+            ),
+            data: {
+              behavior: 'ajax-tab',
+              'target-tab' => '#afavor',
+              'fetch-only-once' => true
+            }
+          %>
+        </li>
+      <% end %>
+
+      <li class="pull-right">
+        <button
+          class="btn btn-box-tool"
+          id="js-full_view_btn">
+          <i class="fa fa-outdent size20"></i>
+        </button>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <!-- Tab de DÉBITOS -->
+      <div class="tab-pane <%= debits_class %>" id="deudas">
+        <%= render partial: 'service_registers/panel_service_registers',
+          locals: {
+            favor:                         false,
+            type:                          "debit",
+            service_registers:             presenter.debits,
+            preselected_service_registers: presenter.preselected
+          }
+        %>
+      </div>
+
+      <!-- Tab de CRÉDITOS -->
+      <div class="tab-pane <%= credits_class %>" id="afavor">
+        <%= render partial: 'service_registers/panel_service_registers',
+          locals: {
+            favor:                         true,
+            type:                          "credit",
+            service_registers:             presenter.credits,
+            preselected_service_registers: presenter.preselected
+          } if @presenter.filter.credits_tab.present?
+        %>
+      </div>
+    </div>
+  </div>
+</section>

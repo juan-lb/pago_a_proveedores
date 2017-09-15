@@ -1,0 +1,77 @@
+<%
+  if @payment_group.closed?
+    message = Const::PAYMENT_REPORT_MAIL_BODY.sub('*', @payment_group.payment.account.name_to_show)
+  else
+    message = Const::SENT_PAYMENT_REPORT_MAIL_BODY
+  end
+%>
+
+<div class="modal-header" id="js-paymentReport">
+  <button
+    type="button"
+    class="close"
+    data-dismiss="modal">
+    &times;
+  </button>
+  <h4 class="modal-title"> Envío de reporte de pago </h4>
+</div>
+
+<div class="modal-body">
+  <%= form_for PaymentReport.new,
+    url:    send_payment_report_payment_group_path(@payment_group),
+    method: :post,
+    remote: true do |f| %>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <%= f.label 'Cuerpo del mensaje' %>
+          <%= f.text_area :message,
+            class:    'form-control',
+            value:    message,
+            required: true
+          %>
+        </div>
+      </div>
+
+      <div class="row margin-top-5">
+        <div class="col-md-4">
+          <%= f.label 'Remitente' %>
+          <%= f.text_field :sender,
+            class:       'form-control',
+            placeholder: 'Ingrese su nombre completo',
+            required:    true
+          %>
+        </div>
+
+        <div class="col-md-4">
+          <%= f.label 'Destinatario' %>
+          <%= f.text_field :to,
+            id:    'js-toInput',
+            class: 'form-control'
+          %>
+        </div>
+      </div>
+
+      <div class="row margin-top-5">
+        <div class="col-md-12">
+          <%= f.label 'SWIFT' %>
+          <%= f.text_area :swift,
+            class:       'form-control',
+            placeholder: 'Ingrese SWIFT enviado por el banco',
+            required:    true
+          %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2 col-md-offset-10">
+          <%= f.submit "Enviar reporte",
+            data:  { disable_with: "Enviando..." },
+            class: 'btn btn-success margin-top-25'
+          %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

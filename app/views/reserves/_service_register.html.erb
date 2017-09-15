@@ -1,0 +1,41 @@
+<% amount = service_register.dif == 0 ? service_register.difus : service_register.dif %>
+<% operator_name ||= false %>
+
+<tr>
+  <!-- detalle -->
+  <td>
+    <%= (service_register.deta.nil? ? '-' : service_register.deta) %>
+  </td>
+
+  <% if operator_name %>
+    <td>
+      <%= service_register.nom_ope.strip %>
+    </td>
+  <% end %>
+
+  <!-- fecha de pago -->
+  <td>
+    <%= l(service_register.fecha.to_date) unless service_register.fecha.nil? %>
+  </td>
+
+  <!-- fecha de in -->
+  <td>
+    <%= l(service_register.fec_in.to_date) unless service_register.fec_in.nil? %>
+  </td>
+
+  <!-- fecha de out -->
+  <td>
+    <%= l(service_register.fec_sal.to_date) %>
+  </td>
+
+  <!-- localizador -->
+  <td>
+    <%= service_register.leg_ope %>
+  </td>
+
+  <!-- saldo a pagar -->
+  <td>
+    <%= number_with_precision(amount) %>
+    <%= service_register.currency_symbol %>
+  </td>
+</tr>

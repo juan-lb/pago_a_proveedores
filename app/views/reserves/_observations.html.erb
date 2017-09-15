@@ -1,0 +1,9 @@
+<% unless @reserve.observations.blank? %>
+  <pre class="size11">
+    <span class="text-muted italic">
+      <%= @reserve.observations %>
+      </span>
+  </pre>
+<% else %>
+  <span class="text-muted italic">-</span>
+<% end %>

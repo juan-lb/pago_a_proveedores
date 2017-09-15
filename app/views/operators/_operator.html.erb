@@ -1,0 +1,53 @@
+<tr class="js-operator" id="<%= dom_id(operator) %>">
+  <!-- nombre -->
+  <td>
+    <%= operator.name %>
+  </td>
+
+  <!-- categoría -->
+  <td>
+    <%= operator.category %>
+  </td>
+
+  <!-- cuenta corriente -->
+  <td>
+    <%= human_boolean operator.has_current_account %>
+  </td>
+
+  <!-- retenciones -->
+  <td>
+    <%= human_boolean operator.has_ig_retention %>
+  </td>
+
+  <!-- email -->
+  <td id="js-email">
+    <% if operator.information %>
+      <%= best_in_place operator.information, :email,
+        as: :input,
+        inner_class: 'bip-input'
+      %>
+    <% else %>
+      <%= link_to new_operator_information_path(operator_aptour_id: operator.aptour_id),
+        class: 'btn btn-primary btn-xs',
+        remote: true do %>
+        <i class="fa fa-save"></i>
+        Generar
+      <% end %>
+    <% end %>
+  </td>
+
+  <!-- importar -->
+  <td class="text-center">
+  <%= link_to load_imports_path(operator_id: operator.aptour_id),
+    class: 'btn btn-default btn-xs btn-add',
+    'data-turbolinks': false,
+    data: {
+      disable_with: t(:wait),
+      behavior: 'import',
+      confirm: 'Esto bloqueará el sistema por el tiempo en el que transcurra la operación. ¿Estás seguro?'
+    } do %>
+    <i class="fa fa-download"></i>
+    Importar
+  <% end %>
+  </td>
+</tr>

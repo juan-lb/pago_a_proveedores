@@ -1,0 +1,49 @@
+<section
+  id="js-fakeModeOptions"
+  class="<%= @payment_group.adjustment ? '' : 'hidden' %>">
+  <div class="row margin-top-10" style="padding: 0.5em;">
+    <div class="col-md-8 col-md-offset-2">
+      <hr/>
+    </div>
+  </div>
+
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active" data-behavior="displayIncome">
+        <a href="#income"
+          data-toggle="tab"
+          aria-expanded="true">
+          Asiento de ingreso
+        </a>
+      </li>
+
+      <li data-behavior="displayServiceRegisters">
+        <a href="#refund"
+          data-toggle="tab"
+          aria-expanded="true">
+          Devolución de reservas
+        </a>
+      </li>
+
+      <% unless @payment_group.adjustment %>
+        <li class="pull-right margin-top-5">
+          <div
+            class="btn btn-danger btn-sm"
+            data-behavior="disableFakeMode">
+            VOLVER A <b>PAGO REAL</b>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="tab-content">
+    <div class="tab-pane active" id="income">
+      <%= render partial: 'income_entry', locals: {f: f} %>
+    </div>
+
+    <div class="tab-pane" id="refund">
+      <%= render partial: 'refund_entry', locals: {f: f} %>
+    </div>
+  </div>
+</section>

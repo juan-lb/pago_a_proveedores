@@ -1,0 +1,61 @@
+<div class="modal-header" id="js-paymentReport">
+  <button
+    type="button"
+    class="close"
+    data-dismiss="modal">
+    &times;
+  </button>
+  <h4 class="modal-title"> Aplique de ajuste general </h4>
+</div>
+
+<div class="modal-body">
+  <%= form_tag apply_adjustment_payment_group_path(@payment_group),
+    method: :post,
+    remote: true do |f| %>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <p>El <strong>aplique de ajuste</strong> sirve para aplicar al pago un ajuste de ingreso tal como un convenio por marketing. El porcentaje ingresado se aplica a todos los servicios del pago, y genera un nuevo pago en estado ENVIADO vinculado al que se está modificando, con los valores precargados para poder realizar un asiento de ingreso a través de una moneda de <strong>ajuste</strong>.</p>
+          <p><strong class="text-danger">¡Atención!</strong> Una vez aplicado el ajuste, ya no podrán editarse los servicios involucrados. Si necesita editarlos, realícelo antes de aplicar el ajuste.</p>
+        </div>
+      </div>
+
+      <div class="row margin-top-10">
+        <div class="col-md-3 col-md-offset-2">
+          <%= label_tag 'Porcentaje a aplicar' %>
+          <div class="input-group">
+            <span class="input-group-addon text-bold">%</span>
+              <%= number_field_tag :coefficient,
+                {},
+                {
+                  class:    'form-control',
+                  min:      0,
+                  max:      100,
+                  step:     0.01,
+                  required: true
+                }
+              %>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <%= label_tag 'Identificación de pago de ajuste' %>
+          <%= text_field_tag :payment_comment, 'MARKETING',
+            {class: 'form-control'}
+          %>
+        </div>
+
+        <div class="col-md-2">
+          <%= submit_tag "Guardar",
+            data:  {
+              disable_with: 'Procesando...',
+              confirm:      '¿Confirmar acción?'
+            },
+            class: 'btn btn-success margin-top-25'
+          %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

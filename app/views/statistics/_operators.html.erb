@@ -1,0 +1,153 @@
+<% international_category = @presenter.filter.operator_category == 'international' %>
+<% national_category = @presenter.filter.operator_category == 'national' %>
+
+<div class="fluid-container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="box box-warning">
+        <div class="box-header with-border">
+          <h3 class="box-title">Monto</h3>
+          <div class="box-tools pull-right">
+            <button
+              class="btn btn-box-tool"
+              data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="box-body">
+          <table class="table table-bordered table-responsive tablesorter js-statisticsTable">
+            <thead>
+              <tr>
+                <th>Operador</th>
+                <% unless international_category %>
+                  <th>AR$</th>
+                <% end %>
+                <th>U$D</th>
+                <% unless national_category %>
+                  <th>EUR</th>
+                <% end %>
+              </tr>
+            </thead>
+
+            <tbody class="tablesorter-infoOnly">
+              <% usd = @presenter.amount_by_operators.
+                  values.
+                  reduce(0) { |sum,each| sum + each[:usd] }.
+                  round
+
+                 usd_to_ars = usd * @presenter.usd_cotization
+              %>
+
+              <tr class="bold">
+                <td>TOTAL</td>
+
+                <% unless international_category %>
+                  <td><%= number_to_currency(
+                    @presenter.amount_by_operators.
+                      values.reduce(0) {|sum,each| sum + each[:ars]}.
+                      round,
+                    unit: '')
+                  %></td>
+                <% end %>
+
+                <td>
+                  <%= number_to_currency(usd, unit: '')%>
+                  <% if national_category %>
+                    <i
+                      class="fa fa-money text-success"
+                      data-cotization="<%= @presenter.usd_cotization %>"
+                      title="<%= number_to_currency(usd_to_ars) %>">
+                    </i>
+                    <i
+                      class="fa fa-exchange text-primary"
+                      title="Cotización: <%= @presenter.usd_cotization.round(2) %>"
+                      >
+                    </i>
+                  <% end %>
+                </td>
+
+                <% unless national_category %>
+                  <td><%= number_to_currency(
+                    @presenter.amount_by_operators.
+                      values.reduce(0) {|sum,each| sum + each[:eur]}.
+                      round,
+                    unit: '')
+                  %></td>
+                <% end %>
+
+              </tr>
+            </tbody>
+
+            <tbody>
+              <% @presenter.amount_by_operators.values.each do |o| %>
+                <tr>
+                  <td><%= o[:name] %></td>
+                  <% unless international_category %>
+                    <td><%= number_to_currency o[:ars].round, unit: '' %></td>
+                  <% end %>
+                  <td><%= number_to_currency o[:usd].round, unit: '' %></td>
+                  <% unless national_category %>
+                    <td><%= number_to_currency o[:eur].round, unit: '' %></td>
+                  <% end %>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="overlay hidden js-loadingStatistics">
+          <i class="fa fa-refresh fa-spin"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="box box-warning">
+        <div class="box-header with-border">
+          <h3 class="box-title">Cantidad</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool"
+              data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="box-body">
+          <table class="table table-bordered table-responsive tablesorter js-statisticsTable">
+            <thead>
+              <tr>
+                <th>Operador</th>
+                <th>Cantidad</th>
+              </tr>
+            </thead>
+
+            <tbody class="tablesorter-infoOnly">
+              <tr class="bold">
+                <td>TOTAL</td>
+                <td><%= @presenter.quantity_by_operators.
+                  values.reduce(0) { |sum,each| sum + each[:quantity] }
+                %></td>
+              </tr>
+            </tbody>
+
+            <tbody>
+              <% @presenter.quantity_by_operators.values.each do |o| %>
+                <tr>
+                  <td><%= o[:name] %></td>
+                  <td><%= o[:quantity] %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="overlay hidden js-loadingStatistics">
+          <i class="fa fa-refresh fa-spin"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

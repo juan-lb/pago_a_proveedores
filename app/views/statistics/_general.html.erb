@@ -1,0 +1,184 @@
+<% national_category = @presenter.filter.operator_category == 'national' %>
+
+<div class="fluid-container">
+  <% if comparison_mode %>
+    <div class="row">
+      <div class="col-md-12">
+
+        <% ars = [ {name: 'AR$', data: @presenter.total_ars_by_month.map { |each| [each[:label],each[:total].to_s] } } ] %>
+        <% usd = [ {name: 'U$D', data: @presenter.total_usd_by_month.map { |each| [each[:label],each[:total].to_s] } } ] %>
+        <% eur = [ {name: 'EUR', data: @presenter.total_eur_by_month.map { |each| [each[:label],each[:total].to_s] } } ] %>
+
+        <%= column_chart usd+eur,
+          library: {
+            colors: ['#4CAF50','#F44336'],
+            width:  '1000',
+            title:  'Monto de pagos efectuados por mes'
+          }
+        %>
+
+        <%= column_chart ars,
+          library: {
+            colors: ['#2196F3'],
+            width:  '1000',
+            title:  'Monto de pagos efectuados por mes'
+          } if ars.first[:data].any?
+        %>
+
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+
+        <% ars_count = [ {name: 'AR$', data: @presenter.total_ars_by_month.map { |each| [each[:label],each[:quantity].to_s] } } ] %>
+        <% usd_count = [ {name: 'U$D', data: @presenter.total_usd_by_month.map { |each| [each[:label],each[:quantity].to_s] } } ] %>
+        <% eur_count = [ {name: 'EUR', data: @presenter.total_eur_by_month.map { |each| [each[:label],each[:quantity].to_s] } } ] %>
+
+        <%= bar_chart ars_count+usd_count+eur_count,
+          library: {
+            colors: ['#2196F3','#4CAF50','#F44336'],
+            width:  '1000',
+            title:  'Cantidad de pagos efectuados por mes'
+          },
+          stacked: true
+        %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="box box-warning">
+        <div class="box-header with-border">
+          <h3 class="box-title">Monto</h3>
+          <div class="box-tools pull-right">
+            <button
+              class="btn btn-box-tool"
+              data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="box-body">
+          <table class="table table-hover js-statisticsTable">
+            <thead>
+              <tr>
+                <th>Moneda</th>
+                <th>Monto</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% if @presenter.total_ars > 0 %>
+                <tr>
+                  <td>AR$</td>
+                  <td>
+                    <%= number_to_currency @presenter.total_ars.round %>
+                  </td>
+                </tr>
+              <% end %>
+              <% if @presenter.total_usd > 0 %>
+                <tr>
+                  <td>U$D</td>
+                  <td>
+                    <%= number_to_currency @presenter.total_usd.round, unit: 'U$D' %>
+                  </td>
+                </tr>
+
+                <% if national_category %>
+                  <tr>
+                    <td>U$D pesificado</td>
+                    <td>
+                      <%= number_to_currency (@presenter.total_usd * @presenter.usd_cotization).round, unit: 'U$D' %>
+                      <i
+                        class="fa fa-exchange text-primary"
+                        title="Cotización promedio: <%= @presenter.usd_cotization.round(2) %>">
+                      </i>
+                    </td>
+                  </tr>
+                <% end %>
+              <% end %>
+              <% if @presenter.total_eur > 0 %>
+                <tr>
+                  <td>EUR</td>
+                  <td>
+                    <%= number_to_currency @presenter.total_eur.round, unit: 'EUR' %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="overlay hidden js-loadingStatistics">
+          <i class="fa fa-refresh fa-spin"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="box box-warning">
+        <div class="box-header with-border">
+          <h3 class="box-title">Cantidad</h3>
+          <div class="box-tools pull-right">
+            <button
+              class="btn btn-box-tool"
+              data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="box-body">
+          <table class="table table-hover js-statisticsTable">
+            <thead>
+              <tr>
+                <th>Moneda</th>
+                <th>Cantidad</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% if @presenter.ars_payment_groups.count > 0 %>
+                <tr>
+                  <td>AR$</td>
+                  <td>
+                    <%= @presenter.ars_payment_groups.count %>
+                  </td>
+                </tr>
+              <% end %>
+              <% if @presenter.usd_payment_groups.count > 0 %>
+                <tr>
+                  <td>U$D</td>
+                  <td>
+                    <%= @presenter.usd_payment_groups.count %>
+                  </td>
+                </tr>
+              <% end %>
+              <% if @presenter.eur_payment_groups.count > 0 %>
+                <tr>
+                  <td>EUR</td>
+                  <td>
+                    <%= @presenter.eur_payment_groups.count %>
+                  </td>
+                </tr>
+              <% end %>
+              <tr>
+                <td><b>Todos</b></td>
+                <td>
+                  <b><%= @presenter.payment_groups.count %></b>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="overlay hidden js-loadingStatistics">
+          <i class="fa fa-refresh fa-spin"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<%= custom_form_for @presenter.filter,
+  url:    operators_path,
+  method: :get do |f|
+%>
+  <div class="row">
+    <div class="col-md-3">
+      <%= f.label :name, class: 'control-label' %>
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
+
+    <div class="col-md-3">
+      <%= f.label  :category, class: 'control-label' %>
+      <%= f.select :category,
+        Profile::OPERATOR_CATEGORY,
+        {
+          selected:      @presenter.filter.category,
+          include_blank: true
+        },
+        {class: 'form-control'}
+      %>
+    </div>
+
+    <div class="col-md-4 margin-top-25">
+      <%= link_to operators_path,
+        class: 'btn btn-default' do %>
+        <i class="fa fa-eraser"></i>
+        Borrar filtro
+      <% end %>
+      <%= f.button :button, t(:filter),
+        data:  {disable_with: t(:wait)},
+        class: 'btn btn-primary margin-left-10' do |b|
+      %>
+      <i class="fa fa-filter"></i>
+      Filtrar
+    <% end %>
+    </div>
+  </div>
+<% end %>

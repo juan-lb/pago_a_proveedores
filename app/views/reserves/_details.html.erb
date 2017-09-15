@@ -1,0 +1,37 @@
+<dl class="dl">
+  <dt>Vendedor:
+    <span class="text-muted">
+      <%= @reserve.user %>
+    </span>
+  </dt>
+
+  <dt>
+    Operativo:
+    <span class="text-muted">
+      <%= @reserve.operative %>
+    </span>
+  </dt>
+
+  <dt>
+    Titular:
+    <span class="text-muted">
+      <%= @presenter.current_service.viajeroresponsable %>
+    </span>
+  </dt>
+
+  <dt>
+    Pasajeros:
+    <% @presenter.passengers.each do |pax| %>
+      <div class="text-muted margin-left-10">
+        <%= pax %>
+      </div>
+    <% end %>
+  </dt>
+
+  <dt>
+    Detalle:
+    <span class="text-muted italic">
+      <%= @reserve.client_details %>
+    </span>
+  </dt>
+</dl>

@@ -1,0 +1,11 @@
+<%
+  open_on_new_tab    = @open_on_new_tab || false
+  operator_aptour_id = @operator_aptour_id ||
+    @payment_group.operator_aptour_id
+%>
+
+modal = $('#modal-second');
+
+modal.find('.modal-dialog').addClass('modal-md').removeClass('modal-lg');
+modal.find('.modal-body').html('<%= j render partial: "service_registers/preselect_services", locals: { operator_aptour_id: operator_aptour_id, register_ids: @register_ids, open_on_new_tab: @open_on_new_tab } %>');
+modal.modal({backdrop: 'static', keyboard: false});

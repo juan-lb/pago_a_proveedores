@@ -1,0 +1,28 @@
+<tr
+  class="js-operatorPositiveBalance table-sorter"
+  data-has_credit="<%= operator_positive_balance[:ars] + operator_positive_balance[:usd] > 0 %>"
+  id="js-operator-<%= operator_positive_balance[:id] %>">
+
+  <!-- nombre -->
+  <td>
+    <%= link_to operator_positive_balance[:name],
+      service_registers_path(
+        register_filter: {
+          operator_id: operator_positive_balance[:id],
+          credits_tab: true
+        }
+      ),
+      target: 'blank'
+    %>
+  </td>
+
+  <!-- balance en dólares -->
+  <td>
+    <%= number_to_currency operator_positive_balance[:usd], unit: '' %>
+  </td>
+
+  <!-- balance en pesos-->
+  <td>
+    <%= number_to_currency operator_positive_balance[:ars], unit: '' %>
+  </td>
+</tr>

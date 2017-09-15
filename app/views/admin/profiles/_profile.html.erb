@@ -1,0 +1,6 @@
+<%= content_tag :li, class: ['list-group-item'] do %>
+  <%= link_to(profile.email, [:admin, profile]) %>
+  <span class="pull-right">
+    <%= link_to icon(:pencil), [:edit, :admin, profile] %>
+  </span>
+<% end %>

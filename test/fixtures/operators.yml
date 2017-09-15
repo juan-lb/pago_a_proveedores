@@ -1,0 +1,60 @@
+# == Schema Information
+#
+# Table name: operators
+#
+#  id                  :integer          not null, primary key
+#  name                :string(255)
+#  aptour_id           :integer
+#  category            :integer
+#  has_current_account :boolean          default(FALSE)
+#  has_ig_retention    :boolean          default(FALSE)
+#  detail              :text(65535)
+#  address             :string(255)
+#  cuit                :string(255)
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  business_name       :string(255)
+#  bank_accounts       :text(65535)
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+national:
+  name: National Operator
+  aptour_id: 1
+  category: <%= Operator.categories[:national] %>
+  has_current_account: false
+  has_ig_retention: true
+  detail: A detail
+  address: An address
+  cuit: '30-54442979-1'
+
+international:
+  name: International Operator
+  aptour_id: 2
+  category: <%= Operator.categories[:international] %>
+  has_current_account: true
+  has_ig_retention: true
+  detail: Super detail
+  address: Super address
+  cuit: ''
+
+without_service_registers:
+  name: International Useless Operator
+  aptour_id: 3
+  category: <%= Operator.categories[:international] %>
+  has_current_account: true
+  has_ig_retention: true
+  detail: Super detail
+  address: Super address
+  cuit: ''
+
+without_service_registers:
+  name: Another
+  aptour_id: 4
+  category: <%= Operator.categories[:national] %>
+  has_current_account: true
+  has_ig_retention: true
+  detail: Super detail
+  address: Super address
+  cuit: ''

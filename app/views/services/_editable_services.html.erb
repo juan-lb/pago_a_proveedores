@@ -1,0 +1,102 @@
+<%= form_tag remove_services_service_registers_path,
+  method: :post,
+  remote: true do
+%>
+
+  <%= hidden_field_tag 'register_filter[operator_id]',
+    payment_group.operator_aptour_id
+  %>
+
+  <div class="row">
+    <div class="col-md-6 bold">
+      Filtrar reservas
+    </div>
+    <div class="col-md-6">
+      <input
+        type="text"
+        placeholder="Número de file"
+        id="js-searchReserve"
+        class="form-control"
+        style="margin-top: -5px; margin-bottom: 5px;"/>
+    </div>
+  </div>
+
+  <%= button_tag(
+    type:  'submit',
+    class: 'btn btn-default btn-sm',
+    style: 'margin-bottom: 5px;',
+    data: {
+      behavior: 'removeServiceFromPaymentGroup',
+      disable_with: t(:wait)
+    }) do %>
+    <i class="fa fa-check-square-o">
+      Quitar seleccionados
+    </i>
+  <% end %>
+
+  <% if @payment_group.is_credit && !@payment_group.is_refund? %>
+    <%= link_to "Pasar a Devolución",
+      change_to_refund_payment_group_path(
+        @payment_group,
+        old_params: params
+      ),
+      class: 'btn btn-primary btn-sm pull-right',
+      style: 'margin-bottom: 5px;',
+      method: :put,
+      remote: true
+    %>
+  <% elsif !@payment_group.is_credit %>
+    <% if @payment_group.has_associated_payment_group? %>
+      <%= link_to 'Ir a pago de ajuste',
+        [@payment_group.payment_group],
+        class:  'btn btn-success btn-sm pull-right',
+        style:  'margin-bottom: 5px;',
+        target: 'blank'
+      %>
+    <% else %>
+      <%= link_to 'Aplicar ajuste',
+        apply_adjustment_form_payment_group_path(
+          @payment_group
+        ),
+        class:  'btn btn-primary btn-sm pull-right',
+        style:  'margin-bottom: 5px;',
+        remote: true
+      %>
+    <% end %>
+  <% end %>
+
+  <% unless @payment_group.is_valid? %>
+    <br/>
+    <div class="label-danger text-center" style="padding: 5px; border-radius: 5px;">
+      <strong>
+        ¡Atención! Existen servicios que en Aptour pudieron haber sido eliminados o modificados, los cuales se encuentran marcados en rojo...
+      </strong>
+      <i class="fa fa-plus-circle" title="Normalice la situación en caso de ser necesario. Verifique que los servicios no hayan sido editados o eliminados. En caso de haber sido eliminados, borre los servicios correspondientes del pago."></i>
+    </div>
+  <% end %>
+
+  <table
+       id="services_table"
+       class="table table-bordered tableSection">
+
+    <thead>
+      <tr>
+        <th><%= check_box_tag "checkbox_services", false %></th>
+        <th class="hand-cursor">Reserva</th>
+        <th class="sorter-false">Monto</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= render partial: 'services/editable_service',
+        collection: payment_group.services,
+        as:         :service,
+        locals: {
+          payment_group: payment_group
+        } if payment_group.present?
+      %>
+    </tbody>
+  </table>
+
+<% end %>

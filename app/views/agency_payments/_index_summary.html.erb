@@ -1,0 +1,95 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="box box-success">
+      <div class="box-header">
+        <div class="box-title bold">
+          Resumen
+        </div>
+
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse">
+            <i class="fa fa-minus"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="box-body">
+        <div class="col-md-3">
+          <div class="info-box">
+            <span
+               class="info-box-icon bg-green hand-cursor"
+               title="Mostrar sólo dólares"
+               data-behavior="filter" data-currency="USD">
+              <i class="fa fa-dollar" data-currency="USD"></i>
+            </span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Dólares</span>
+              <span class="info-box-number">
+                <%= number_to_currency @manager.total_usd, unit: '' %>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="info-box">
+            <span
+               class="info-box-icon bg-aqua hand-cursor"
+               title="Mostrar sólo pesos"
+               data-behavior="filter"
+               data-currency="ARS">
+              <i class="fa fa-dollar" data-currency="ARS"></i>
+            </span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Pesos</span>
+              <span class="info-box-number">
+                <%= number_to_currency @manager.total_ars, unit: '' %>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="info-box">
+            <span
+               class="info-box-icon bg-yellow hand-cursor"
+               title="Mostrar todos los recibos"
+               data-behavior="filter"
+               data-currency="all">
+              <i class="fa fa-list-alt" data-currency="all"></i>
+            </span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Recibos</span>
+              <span class="info-box-number">
+                <%= @manager.receipts.size %>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="info-box">
+            <span class="info-box-icon bg-red">
+              <i class="fa fa-clock-o"></i>
+            </span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Fecha</span>
+              <span class="info-box-number">
+                <%= @manager.from %> - <%= @manager.to %>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="overlay hidden js-loadingData">
+        <i class="fa fa-refresh fa-spin"></i>
+      </div>
+    </div>
+  </div>
+</div>
+

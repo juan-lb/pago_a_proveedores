@@ -1,0 +1,115 @@
+<%
+  status = @presenter.filter.status
+  tab_class = {
+    draft:     status == Const::PAYMENT_STATUS_DRAFT ? 'active' : '',
+    processed: status == Const::PAYMENT_STATUS_IN_PROCESS ? 'active' : '',
+    sent:      status == Const::PAYMENT_STATUS_SENT ? 'active' : '',
+    closed:    status == Const::PAYMENT_STATUS_CLOSED ? 'active' : ''
+  }
+%>
+
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title"><%= t(:filter) %></h3>
+
+          <div class="box-tools pull-right">
+            <button
+              class="btn btn-box-tool"
+              data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="box-body">
+          <div class="col-md-12">
+            <%= render partial: 'payment_groups/filter' %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+          <!-- Pagos en estado BORRADOR -->
+          <li class="<%= tab_class[:draft] %>">
+            <a href="#draft" data-toggle="tab">
+              Borradores (<%= @presenter.count(:draft) %>)
+            </a>
+          </li>
+
+          <!-- Pagos en estado PROCESADO -->
+          <li class="<%= tab_class[:processed] %>">
+            <a href="#in_process" data-toggle="tab">
+              En proceso (<%= @presenter.count(:in_process) %>)
+            </a>
+          </li>
+
+          <!-- Pagos en estado ENVIADO -->
+          <li class="<%= tab_class[:sent] %>">
+            <a href="#sent" data-toggle="tab">
+              Enviados (<%= @presenter.count(:sent) %>)
+            </a>
+          </li>
+
+          <!-- Pagos en estado CARGADO -->
+          <li class="<%= tab_class[:closed] %>">
+            <a href="#closed" data-toggle="tab">
+              Cargados (<%= @presenter.count(:closed) %>)
+            </a>
+          </li>
+        </ul>
+
+        <div class="tab-content">
+          <div class="tab-pane <%= tab_class[:draft] %>" id="draft">
+            <%= render partial: 'payment_groups/payment_groups',
+              locals: {
+                payment_groups: @presenter.payment_groups(:draft),
+                total_ars: @presenter.total_ars(:draft),
+                total_usd: @presenter.total_usd(:draft),
+                type: 'draft'
+              }
+            %>
+          </div>
+
+          <div class="tab-pane <%= tab_class[:processed] %>" id="in_process">
+            <%= render partial: 'payment_groups/payment_groups',
+              locals: {
+                payment_groups: @presenter.payment_groups(:in_process),
+                total_ars: @presenter.total_ars(:in_process),
+                total_usd: @presenter.total_usd(:in_process),
+                type: 'in_process'
+              }
+            %>
+          </div>
+
+          <div class="tab-pane <%= tab_class[:sent] %>" id="sent">
+            <%= render partial: 'payment_groups/payment_groups',
+              locals: {
+                payment_groups: @presenter.payment_groups(:sent),
+                total_ars: @presenter.total_ars(:sent),
+                total_usd: @presenter.total_usd(:sent),
+                type: 'sent'
+              }
+            %>
+          </div>
+
+          <div class="tab-pane <%= tab_class[:closed] %>" id="closed">
+            <%= render partial: 'payment_groups/payment_groups',
+              locals: {
+                payment_groups: @presenter.payment_groups(:closed),
+                total_ars: @presenter.total_ars(:closed),
+                total_usd: @presenter.total_usd(:closed),
+                type: 'closed'
+              }
+            %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,26 @@
+<div class="fluid-container">
+  <div class="row">
+    <%= form_tag by_file_number_service_registers_path,
+      method: :post,
+      remote: true do
+    %>
+      <div class="col-md-4 col-md-offset-2">
+        <label for="file_number">
+          Número de file
+        </label>
+
+        <%= text_field_tag :file_number, nil,
+          class:    'form-control',
+          required: true
+        %>
+      </div>
+
+      <div class="col-md-2 col-md-offset-1">
+        <%= submit_tag 'Buscar',
+          class: 'btn btm-xs btn-primary margin-top-24'
+        %>
+      </div>
+
+    <% end %>
+  </div>
+</div>

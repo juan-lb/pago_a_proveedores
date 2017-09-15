@@ -1,0 +1,132 @@
+wb = xlsx_package.workbook
+wb.styles do |s|
+  general_header = ['Moneda', 'Monto', 'Cantidad']
+  general_data   = [
+    [
+      'U$D',
+      @view.number_to_currency(@presenter.total_usd.round, unit: ''),
+      @presenter.usd_payment_groups.count
+    ],
+    [
+      'AR$',
+      @view.number_to_currency(@presenter.total_ars.round, unit: ''),
+      @presenter.ars_payment_groups.count
+    ],
+    [
+      'EUR',
+      @view.number_to_currency(@presenter.total_eur.round, unit: ''),
+      @presenter.eur_payment_groups.count]
+  ]
+
+  operators_quantity_header = ['Operador', 'Cantidad']
+  operators_quantity_data   = @presenter.quantity_by_operators.values.
+    map do |each|
+      [
+        each[:name],
+        each[:quantity]
+      ]
+    end
+
+  category = @presenter.filter.operator_category
+
+  operators_amount_header = ['Operador', 'U$D', 'AR$', 'EUR'].
+    reject {|x| x == 'AR$' && category == 'international'}.
+    reject {|x| x == 'EUR' && category == 'national'}
+  operators_amount_data   = @presenter.amount_by_operators.values.
+    map do |each|
+      data = [
+        each[:name],
+        @view.number_to_currency(each[:ars].round, unit: '')
+      ]
+
+      if category != 'international'
+        data << @view.number_to_currency(each[:ars].round, unit: '')
+      end
+
+      if category != 'national'
+        data << @view.number_to_currency(each[:eur].round, unit: '')
+      end
+
+      data
+    end
+
+  banks_quantity_header = ['Banco', 'Cantidad']
+  banks_quantity_data   = @presenter.quantity_by_bank.values.
+    map do |each|
+      [
+        each[:name],
+        each[:quantity]
+      ]
+    end
+
+  banks_amount_header = ['Banco', 'U$D', 'AR$', 'EUR'].
+    reject {|x| x == 'AR$' && category == 'international'}.
+    reject {|x| x == 'EUR' && category == 'national'}
+  banks_amount_data   = @presenter.amount_by_bank.values.
+    map do |each|
+      data = [
+        each[:name],
+        @view.number_to_currency(each[:ars].round, unit: '')
+      ]
+
+      if category != 'international'
+        data << @view.number_to_currency(each[:ars].round, unit: '')
+      end
+
+      if category != 'national'
+        data << @view.number_to_currency(each[:eur].round, unit: '')
+      end
+
+      data
+    end
+
+  create_excel s
+
+  wb.add_worksheet do |sheet|
+    period = "#{@presenter.filter.from} - #{@presenter.filter.selected_to}"
+
+    excel_header sheet, 'Estadísticas de pagos', 5
+    excel_empty_rows sheet, 1
+    sheet.add_row ['Fecha', Date.today.to_s], style: @bold
+    sheet.add_row ['Periodo', period], style: @bold
+    excel_empty_rows sheet, 1
+
+    # Estadísticas generales
+    sheet.add_row ['ESTADÍSTICAS GENERALES'], style: @bold
+    excel_empty_rows sheet, 1
+    excel_table_head sheet, general_header
+    excel_table_body_with_style sheet, general_data, @centered_table
+
+    excel_empty_rows sheet, 2
+
+    # Estadísticas por operador
+    sheet.add_row ['ESTADÍSTICAS POR OPERADOR'], style: @bold
+    excel_empty_rows sheet, 1
+    excel_table_head sheet, operators_quantity_header
+    excel_table_body_with_style sheet, operators_quantity_data, @centered_table
+    excel_empty_rows sheet, 1
+    excel_table_head sheet, operators_amount_header
+    excel_table_body_with_style sheet, operators_amount_data, @centered_table
+
+    excel_empty_rows sheet, 2
+
+    # Estadísticas por banco
+    sheet.add_row ['ESTADÍSTICAS POR BANCO'], style: @bold
+    excel_empty_rows sheet, 1
+    excel_table_head sheet, banks_quantity_header
+    excel_table_body_with_style sheet, banks_quantity_data, @centered_table
+    excel_empty_rows sheet, 1
+    excel_table_head sheet, banks_amount_header
+    excel_table_body_with_style sheet, banks_amount_data, @centered_table
+
+
+    # Logo de Aero
+    img = File.expand_path(Rails.root+'app/assets/images/small_logo.png')
+    sheet.add_image(:image_src => img, :end_at => true) do |image|
+      image.width = 136
+      image.height = 77
+      image.start_at 0, 1
+    end
+  end
+
+end

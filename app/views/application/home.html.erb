@@ -1,0 +1,29 @@
+<section class="content size13">
+  <div class="row">
+    <% if current_user.has_permissions? :service_registers %>
+      <!-- Pagos posibles -->
+      <div class="col-md-12" id="possible_payments">
+        <%= render partial: 'service_registers/possible_payments',
+          locals: {
+            manager: @possible_payments_manager
+          }
+        %>
+      </div>
+
+      <!-- OK para pagar -->
+      <div class="col-md-12" id="possible_payments">
+        <%= render partial: 'service_registers/payable' %>
+      </div>
+
+      <!-- Con pasajeros entrando en los próximos días -->
+      <div class="col-md-6" id="coming_entries">
+        <%= render partial: 'service_registers/coming_entries' %>
+      </div>
+    <% end %>
+
+    <!-- Accesos directos -->
+    <div class="col-md-6" id="shortcuts">
+      <%= render partial: 'shortcuts' %>
+    </div>
+  </div>
+</section>

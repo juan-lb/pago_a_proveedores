@@ -1,0 +1,56 @@
+<div class="col-md-6">
+  <div class="box box-primary">
+    <div class="box-header">
+      <div class="box-title">
+        Filtrar
+      </div>
+    </div>
+
+    <div class="box-body" style="padding-bottom: 1.5em;">
+      <%= custom_form_for @presenter.filter,
+          url: positive_balances_operators_path,
+          method: :get do |f|
+      %>
+        <div class="row">
+          <div class="col-md-4">
+            <%= f.label :category %>
+            <%= f.select :category,
+              Profile::OPERATOR_CATEGORY,
+              {
+                selected: @presenter.filter.category,
+                include_blank: true
+              },
+              {
+                class: 'form-control'
+              }
+            %>
+          </div>
+
+          <div class="col-md-4">
+            <%= f.label :name, "Nombre"  %>
+            <%= f.text_field :name, class: 'form-control' %>
+          </div>
+          <div class="col-md-2 margin-top-25">
+            <%= link_to positive_balances_operators_path,
+              class: 'btn btn-default' do %>
+              <i class="fa fa-eraser"></i>
+              Borrar filtro
+            <% end %>
+          </div>
+          <div class="col-md-2 margin-top-25">  
+            <%= f.button :button, t(:filter),
+                data: {
+                  disable_with: t(:wait),
+                  behavior: 'filter_statistics'
+                },
+                class: 'btn btn-primary margin-left-10' do |b|
+            %>
+              Filtrar
+            <% end %>
+          </div>
+        </div>
+
+      <% end %>
+    </div>
+  </div>
+</div>

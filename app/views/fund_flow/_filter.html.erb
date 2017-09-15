@@ -1,0 +1,51 @@
+<%= custom_form_for @presenter.filter,
+  url:    fund_flow_index_path,
+  method: :get do |f|
+%>
+  <div class="row">
+    <div class="col-md-2">
+      <%= f.label :operator_category, class: 'control-label' %>
+      <%= f.select :operator_category,
+        Profile::OPERATOR_CATEGORY,
+        {
+          selected: @presenter.filter.operator_category,
+          include_blank: 'Seleccione categoría'
+        },
+        {class: 'form-control'}
+      %>
+    </div>
+
+    <div class="col-md-2">
+      <%= f.label :operator_cc, class: 'control-label' %>
+      <%= f.select :operator_cc,
+        FundFlowFilter::OPERATOR_CC,
+        {selected: @presenter.filter.operator_cc},
+        {class: 'form-control'}
+      %>
+    </div>
+
+    <div class="col-md-2">
+      <%= datepicker_input f, :from, class: 'form-control' %>
+    </div>
+
+    <div class="col-md-2">
+      <%= datepicker_input f, :to, class: 'form-control' %>
+    </div>
+
+    <div class="col-md-2 text-right margin-top-25">
+      <%= link_to fund_flow_index_path,
+        class: 'btn btn-default',
+        title: 'Borrar filtros' do %>
+        <i class="fa fa-eraser"></i>
+      <% end %>
+      <%= f.button :button, t(:filter),
+        data: {
+          disable_with: t(:wait)
+        },
+        class: 'btn btn-primary margin-left-10' do |b| %>
+        <i class="fa fa-filter"></i>
+        Filtrar
+      <% end %>
+    </div>
+  </div>
+<% end %>

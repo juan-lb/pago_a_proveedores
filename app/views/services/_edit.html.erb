@@ -1,0 +1,67 @@
+<div class="modal-header" id="js-balanceDetail">
+  <button
+    type="button"
+    class="close"
+    data-dismiss="modal">
+    &times;
+  </button>
+
+  <h4 class="modal-title">
+    Edición de <%= (@service.amount > 0 ? 'Débito' : 'Crédito') %>
+  </h4>
+</div>
+
+<div class="modal-body">
+  <div class ="row">
+    <%= simple_form_for @service, url: update_service_service_path(@service), remote: true do |f| %>
+      <div class="col-md-3">
+        <div class="form-group">
+          <div class="controls">
+            <%= f.input :reserve_id, class: "form-control", disabled: true %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <div class="form-group">
+          <div class="controls">
+            <%= f.input :amount, class: "form-control", input_html: { value: f.object.amount } %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <div class="form-group">
+          <div class="controls">
+            <% if f.object.euros.present? %>
+              <%= f.input :euros, class: "form-control", input_html: { value: f.object.euros.abs } %>
+            <% else %>
+              <%= f.input :euros, class: "form-control" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="form-group">
+          <div class="controls">
+            <%= f.input :leg_ope, class: "form-control", input_html: { value: f.object.leg_ope } %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-1">
+        <%= f.button :button, { data: { disable_with: t(:wait) }, class: 'btn btn-success margin-top-25' } do |b| %>
+          <i class="fa fa-refresh"></i>
+          Modificar
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <p><%= @service.amount > 0 ? '' : "El valor ingresado no puede superar el valor original: debe estar entre 0,1 y #{@service.service_register.service_dif.abs} "%></p>
+    </div>
+  </div>
+</div>

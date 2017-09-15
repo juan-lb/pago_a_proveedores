@@ -1,0 +1,66 @@
+<% service_currency = service.currency_type %>
+<% correct_currency = service_currency == payment_group.currency %>
+
+<tr class="js-editableService <%= service.is_valid ? '' : 'row_marked' %>"
+    data-currency="<%= service_currency %>"
+    data-reserve="<%= service.reserve_id %>"
+    data-cost="<%= service.amount %>">
+
+  <!-- checkbox -->
+  <td class="shrink">
+    <%= check_box_tag "register_filter[register_ids][]",
+      service.id,
+      false,
+      class: 'checkbox_tag'
+    %>
+  </td>
+
+  <!-- número de file -->
+  <td class="shrink">
+    <% if service.is_valid? %>
+      <%= link_to service.reserve_id,
+        reserve_path(service.reserve_id,
+        service_id: service.id,
+        operator_aptour_id: service.operator_aptour_id),
+        data: {
+          disable_with: t(:wait)
+        },
+        remote: true
+      %>
+    <% else %>
+      <span class="text-white">
+        <%= service.reserve_id %>
+      </span>
+    <% end %>
+  </td>
+
+  <!-- monto -->
+  <td class="align-right <%= correct_currency ? '' : 'text-danger bold' %> <%= service.is_valid ? '' : 'text-white' %>">
+    <span
+      <% unless correct_currency %>
+        title="Moneda incorrecta para el pago"
+      <% end %>>
+      <%= currency_symbol(service_currency) %>
+      <%= number_with_precision(service.amount) %>
+    </span>
+  </td>
+
+  <!-- editar servicio -->
+  <td class="align-right" width="20%">
+    <% if payment_group.has_associated_payment_group? %>
+      <i class="fa fa-edit text-gray" title="Opción deshabilitada por haber sido aplicado ajuste"></i>
+    <% else %>
+      <%= link_to edit_service_path(
+          service.id,
+          {register_filter: params[:register_filter]}
+        ),
+        method: :get,
+        data: {
+          remote: true
+        } do %>
+        <i class="fa fa-edit <%= service.is_valid ? '' : 'text-white' %>"></i>
+      <% end %>
+    <% end %>
+  </td>
+
+</tr>

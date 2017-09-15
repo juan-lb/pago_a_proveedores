@@ -1,0 +1,169 @@
+<%= custom_form_for @presenter.filter,
+  url:    statistics_path,
+  method: :get do |f|
+%>
+  <div class="row" id="js-filterBody">
+    <div class="col-md-2">
+      <%= f.label  :operator_category, class: 'control-label' %>
+      <%= f.select :operator_category,
+        Profile::OPERATOR_CATEGORY,
+        {
+          selected: @presenter.filter.operator_category,
+          include_blank: true
+        },
+        {class: 'form-control'}
+      %>
+    </div>
+
+    <%
+      if @presenter.filter.from
+        from_date = @presenter.filter.from.to_date
+        if @presenter.filter.comparison_mode
+          selected  = "#{from_date.month}_#{from_date.year}"
+        else
+          selected = ''
+        end
+      end
+    %>
+
+    <div class="col-md-2">
+      <label class="control-label" id="js-periodLabel">Periodo</label>
+      <select id="js-selectDateRange" class="form-control">
+        <option value="noDate"></option>
+        <optgroup label="Rangos">
+          <option value="lastWeek">Última semana</option>
+          <option value="lastMonth">Último mes</option>
+          <option value="lastYear">Último año</option>
+        </optgroup>
+        <optgroup label="Meses">
+          <% last_months.each do |month| %>
+            <option value="month"
+                <% if selected == "#{month[:number]}_#{month[:year]}"%>
+                  selected='selected'
+                <% end %>
+                data-month="<%= month[:number] %>"
+                data-year="<%= month[:year] %>">
+              <%= month_name(month[:number]) + " " + month[:year].to_s %>
+            </option>
+          <% end %>
+        </optgroup>
+      </select>
+    </div>
+
+    <% regular_mode_klass = @presenter.filter.comparison_mode ? 'hidden' : '' %>
+
+    <div class="col-md-2 js-regularMode <%= regular_mode_klass %>">
+      <%= datepicker_input f, :from, class: 'form-control' %>
+    </div>
+
+    <div class="col-md-2 js-regularMode <%= regular_mode_klass %>">
+      <%= datepicker_input f, :to, class: 'form-control'%>
+    </div>
+
+    <div class="col-md-2 js-regularMode <%= regular_mode_klass %>">
+      <%= f.label  :order_by, class: 'control-label' %>
+      <%= f.select :order_by,
+        StatisticsFilter::ORDER_BY,
+        {},
+        {class: 'form-control'}
+      %>
+    </div>
+
+    <div class="col-md-2 js-regularMode <%= regular_mode_klass %>">
+      <%= f.label  :order_as, class: 'control-label' %>
+      <%= f.select :order_as,
+        StatisticsFilter::ORDER_AS,
+        {},
+        {class: 'form-control'}
+      %>
+    </div>
+
+    <div class="js-comparisonMode <% unless @presenter.filter.comparison_mode %>hidden<% end %>">
+
+      <%
+        if @presenter.filter.from_2
+          from_date = @presenter.filter.from_2.to_date
+          if @presenter.filter.comparison_mode
+            selected  = "#{from_date.month}_#{from_date.year}"
+          else
+            selected = ''
+          end
+        end
+      %>
+
+      <div class="col-md-2">
+        <label class="control-label">Periodo (fin)</label>
+        <select id="js-selectDateRange2" class="form-control">
+          <option value="noDate"></option>
+          <optgroup label="Rangos">
+            <option value="lastWeek">Última semana</option>
+            <option value="lastMonth">Último mes</option>
+            <option value="lastYear">Último año</option>
+          </optgroup>
+          <optgroup label="Meses">
+            <% last_months.each do |month| %>
+              <option value="month"
+                  <% if selected == "#{month[:number]}_#{month[:year]}"%>
+                    selected='selected'
+                  <% end %>
+                  data-month="<%= month[:number] %>"
+                  data-year="<%= month[:year] %>">
+                <%= month_name(month[:number]) + " " + month[:year].to_s %>
+              </option>
+            <% end %>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="col-md-2 hidden">
+        <%= datepicker_input f, :from_2, class: 'form-control' %>
+      </div>
+
+      <div class="col-md-2 hidden">
+        <%= datepicker_input f, :to_2, class: 'form-control' %>
+      </div>
+
+    </div>
+
+    <div class="col-md-2 margin-top-25 js-comparisonMode <% unless @presenter.filter.comparison_mode %>hidden<% end %>">
+      <span
+        class="btn btn-danger btn-sm"
+        data-behavior="disableComparisonMode">
+          Deshabilitar modo de comparación de meses
+      </span>
+    </div>
+  </div>
+
+  <div class="row margin-top-5">
+    <div class="pull-right">
+      <span
+        class="btn btn-success btn-sm margin-right-10"
+        data-behavior="enableComparisonMode" <% if @presenter.filter.comparison_mode %>disabled<% end %>>
+        <i class="fa fa-bar-chart"></i>
+        Modo de comparación de meses
+      </span>
+
+      <%= link_to statistics_path,
+        class: 'btn btn-default' do |b|
+      %>
+        <i
+          class="fa fa-eraser"
+          data-toggle="tooltip"
+          data-placement="right"
+          title="Borrar filtros">
+        </i>
+      <% end %>
+
+      <%= f.button :button, t(:filter),
+        data: {
+          disable_with: t(:wait),
+          behavior: 'filter_statistics'
+        },
+        class: 'btn btn-primary margin-left-10' do |b| %>
+        <i class="fa fa-filter"></i>
+        Filtrar
+      <% end %>
+
+    </div>
+  </div>
+<% end %>

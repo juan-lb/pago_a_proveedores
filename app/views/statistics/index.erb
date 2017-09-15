@@ -1,0 +1,144 @@
+<% direction = params[:direction] && params[:direction] == "asc" ? "desc" : "asc" %>
+
+<section class="content">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title"><%= t(:filter) %></h3>
+          <div class="box-tools pull-right">
+            <button
+              class="btn btn-box-tool"
+              data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="box-body">
+          <div class="col-md-12">
+            <%= render partial: 'filter' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a href="#payments"
+          data-toggle="tab"
+          aria-expanded="true">
+          Pagos
+        </a>
+      </li>
+
+      <li>
+        <a href="#general_statistics"
+          data-toggle="tab"
+          aria-expanded="true">
+          Estadísticas generales
+        </a>
+      </li>
+
+      <li>
+        <a href="#operators_statistics"
+          data-toggle="tab"
+          aria-expanded="true">
+          Estadísticas por operador
+        </a>
+      </li>
+
+      <li>
+        <a href="#banks_statistics"
+          data-toggle="tab"
+          aria-expanded="true">
+          Estadísticas por banco
+        </a>
+      </li>
+
+      <li class="pull-right margin-top-5">
+        <span>
+          <%= link_to export_excel_statistics_path(
+              params: params,
+              format: :xlsx
+            ),
+            class: 'btn btn-primary' do %>
+            <i class="fa fa-file-excel-o"></i>
+            Descargar Excel
+          <% end %>
+        </span>
+
+        <div class="btn-group">
+          <span type="button" class="btn btn-success">
+            <i class="fa fa-download"></i>
+            Exportación PDF
+          </span>
+
+          <button
+            type="button"
+            class="btn btn-success dropdown-toggle"
+            data-toggle="dropdown"
+            aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <%= link_to 'Ver online',
+                export_statistics_path(
+                  filter_params: params[:statistics_filter],
+                  inline: true,
+                  format: :pdf
+                ),
+                target: 'blank'
+              %>
+            </li>
+
+            <li>
+              <%= link_to 'Descargar',
+                export_statistics_path(
+                  filter_params: params[:statistics_filter],
+                  inline: false,
+                  format: :pdf
+                )
+              %>
+            </li>
+
+            <li>
+              <%= link_to 'Enviar por mail',
+                report_form_statistics_path(
+                  filter_params: params[:statistics_filter]
+                ),
+                remote: true
+              %>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active" id="payments">
+        <%= render partial: 'payments_list' %>
+      </div>
+      <div class="tab-pane" id="general_statistics">
+        <%= render partial: 'general',
+          locals: {
+            comparison_mode: @presenter.filter.comparison_mode
+          }
+        %>
+      </div>
+      <div class="tab-pane" id="operators_statistics">
+        <%= render partial: 'operators' %>
+      </div>
+      <div class="tab-pane" id="banks_statistics">
+        <%= render partial: 'banks' %>
+      </div>
+    </div>
+  </div>
+  <br>
+</section>

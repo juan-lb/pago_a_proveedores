@@ -1,0 +1,70 @@
+<% payment_currency = currency_symbol(payment_group.currency) %>
+
+<!-- Panel de datos bancarios de operador del pago -->
+<div id="js-operator_bank_data">
+  <%= render partial: 'payment_groups/operator_bank_data',
+    locals: {
+      payment_group:    payment_group,
+      payment_currency: payment_currency
+    }
+  %>
+</div>
+
+<!-- Panel de detalles del pago -->
+<div
+  class="box box-primary"
+  id="js-panel_edit_services"
+  data-payment_currency="<%= payment_currency %>">
+  <div class="box-header with-border" style="padding-bottom: 0px">
+    <div class="row">
+      <div class="col-md-6">
+        <h3 class="box-title">
+          <%= (payment_group.is_refund?) ? t(:refund_payment_group) : t(:draft_payment_group) %>
+        </h3>
+      </div>
+
+      <div class="col-md-6">
+        <p><%= truncate(payment_group.profile.email, length: 20) %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="box-body box-body-scroll">
+    <!-- Opciones para pago con incompatibilidades -->
+    <%= render partial: 'payment_groups/draft_error_actions',
+      locals: {
+        payment_group: payment_group,
+        payment_currency: payment_currency,
+
+      }
+    %>
+
+    <!-- Tabla de edición de servicios de pago -->
+    <%= render partial: 'services/editable_services',
+      locals: {
+        payment_group: payment_group
+      } unless payment_group.services.empty?
+    %>
+  </div>
+
+  <div class="box-footer clearfix">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-8">
+          <%= render partial: 'services/totals',
+            locals: {
+              payment_group: payment_group
+            }
+          %>
+        </div>
+      </div>
+
+      <!-- Acciones del pago -->
+      <%= render partial: 'payment_groups/draft_actions',
+        locals: {
+          payment_group: payment_group
+        }
+      %>
+    </div>
+  </div>
+</div>

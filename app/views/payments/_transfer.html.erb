@@ -1,0 +1,24 @@
+<div class="col-md-6">
+  <div class="info-box">
+    <% if transfer.in_aptour %>
+      <span class="info-box-icon bg-aqua">
+        <i class="fa fa-check"></i>
+      </span>
+    <% else %>
+      <span class="info-box-icon bg-red">
+        <i class="fa fa-close"></i>
+      </span>
+    <% end %>
+
+    <div class="info-box-content">
+      <span class="info-box-text">
+        Reserva
+        <%= transfer.reserve_id %>
+      </span>
+      <span class="info-box-number">
+        <%= @payment_group.currency_symbol %>
+        <%= number_with_precision(transfer.amount, precision: 2) %>
+      </span>
+    </div>
+  </div>
+</div>

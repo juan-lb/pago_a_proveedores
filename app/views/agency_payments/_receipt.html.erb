@@ -1,0 +1,22 @@
+<tr class="js-receipt" data-currency="<%= receipt[:currency] %>">
+  <!-- nombre -->
+  <td><%= receipt[:name] %></td>
+
+  <!-- cuenta -->
+  <td><%= receipt[:account] %></td>
+
+  <!-- fecha y hora -->
+  <td><%= receipt[:time] %></td>
+
+  <!-- moneda -->
+  <td><%= receipt[:currency] %></td>
+
+  <!-- monto -->
+  <td><%= number_to_currency receipt[:amount], unit: '' %></td>
+
+  <!-- cotización -->
+  <td><%= number_to_currency receipt[:cotization], unit: '' %></td>
+
+  <!-- número de file -->
+  <td><%= receipt[:file_number] %></td>
+</tr>

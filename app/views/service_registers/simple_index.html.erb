@@ -1,0 +1,93 @@
+<%
+  registers =
+    if @presenter.filter.credits_tab.present?
+      @presenter.credits
+    else
+      @presenter.debits
+    end
+%>
+
+<h5 style="margin-top: 2px">
+  <span class="cool-primary-label margin-right-5">
+    <span class="cool-label-text">
+      Seleccionado AR$:
+      <strong id="js-selectedARS">
+        <%= number_to_currency(0, unit: '') %>
+      </strong>
+    </span>
+  </span>
+
+  <span class="cool-success-label margin-right-5">
+    <span class="cool-label-text">
+      Seleccionado U$D:
+        <strong id="js-selectedUSD">
+          <%= number_to_currency(0, unit: '') %>
+        </strong>
+    </span>
+  </span>
+</h5>
+
+<table class="table" style="margin-top: -1em;">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Reserva</th>
+      <th>A pagar</th>
+      <th>Fecha de in</th>
+      <th>Fecha de pago</th>
+      <th>Fecha de seña</th>
+      <th>Fecha de out</th>
+      <th>Detalle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if registers.count == 0 %>
+      <tr>
+        <td colspan="8" class="text-center">
+          No se econtraron servicios.
+        </td>
+      </tr>
+    <% end %>
+
+    <% registers.each do |service| %>
+      <tr id="<%= dom_id service %>" data-file-number="<%= service.id_res %>">
+        <!-- checkbox -->
+        <td>
+          <%= check_box_tag "register_ids[]", service.id, false,
+            class: 'checkbox_tag js-serviceRegister',
+            data: {
+              currency: service.currency,
+              cost:     service.amount
+            }
+          %>
+        </td>
+
+        <!-- número de file -->
+        <td>
+          <%= link_to service.id_res,
+              reserve_path(service.id_res,
+                service_register_id: service,
+                operator_aptour_id:  service.operator_aptour_id,
+                draft_payment:       false
+              ),
+              data: {disable_with: t(:wait)},
+              remote: true
+          %>
+        </td>
+
+        <!-- monto a pagar-->
+        <td><%= service.amount_with_currency %></td>
+
+        <!-- fechas -->
+        <%= render partial: 'service_registers/dates',
+          locals: {
+            service_register: service
+          }
+        %>
+
+        <!-- detalles -->
+        <td><%= details_text service %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

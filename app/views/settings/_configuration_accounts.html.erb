@@ -1,0 +1,32 @@
+<div class="box box-primary">
+  <div class="box-header with-border">
+    <h3 class="box-title">Administración de Cuentas</h3>
+  </div>
+
+  <div class="box-body">
+    <div class="row">
+      <%= form_tag(accounts_path) do |f| %>
+        <div class="col-md-3">
+          <h5>Cuentas disponibles: </h5>
+          <%= select_tag "accounts[]",
+            options_for_select(@api_accounts),
+            {multiple: true, size: 15}
+          %>
+        </div>
+
+        <div class="col-md-1">
+          <%= submit_tag "Agregar",
+            data: {
+              disable_with: 'Espere...'
+            },
+            class: 'btn btn-primary margin-top-140'
+          %>
+        </div>
+      <% end %>
+
+      <div class="col-md-8">
+        <%= render partial: 'accounts/accounts' %>
+      </div>
+    </div>
+  </div>
+</div>

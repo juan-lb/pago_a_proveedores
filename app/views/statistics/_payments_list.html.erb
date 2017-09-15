@@ -1,0 +1,59 @@
+<div class="fluid-container">
+  <div class="box">
+    <div class="box-body">
+      <h5 style="margin-top: -0.25em;">
+        <span class="cool-primary-label margin-right-5">
+          <span class="cool-label-text">
+            Seleccionado AR$:
+            <strong class="js-selected-sum js-selected-ars-sum">
+              <%= number_to_currency(0, precision: 2) %>
+            </strong>
+          </span>
+        </span>
+
+        <span class="cool-success-label margin-right-5">
+          <span class="cool-label-text">
+            Seleccionado U$D:
+            <strong class="js-selected-sum js-selected-usd-sum">
+              <%= number_to_currency(0, precision: 2) %>
+            </strong>
+          </span>
+        </span>
+
+        <span class="cool-danger-label margin-right-5">
+          <span class="cool-label-text">
+            Seleccionado EUR:
+            <strong class="js-selected-sum js-selected-eur-sum">
+              <%= number_to_currency(0, precision: 2) %>
+            </strong>
+          </span>
+        </span>
+      </h5>
+
+      <table class="table table-bordered table-responsive tablesorter js-statisticsTable" id="js-paymentsListTable">
+        <thead>
+          <tr>
+            <th class="sorter-false">
+              <input type="checkbox" id="checkbox_statistics"/>
+            </th>
+            <th>Fecha</th>
+            <th>Operador</th>
+            <th>Banco</th>
+            <th>Moneda</th>
+            <th>Monto total</th>
+          </tr>
+        </thead>
+
+        <tbody id="js-paymentsList">
+          <%= render partial: 'payment_group',
+            collection: @presenter.payment_groups
+          %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="overlay hidden js-loadingStatistics">
+      <i class="fa fa-refresh fa-spin"></i>
+    </div>
+  </div>
+</div>

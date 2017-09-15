@@ -1,0 +1,59 @@
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title"><%= t :importations %></h3>
+          <div class="box-tools pull-right">
+            <%= link_to operators_path,
+              title: 'Importa reservas y servicios de un operador',
+              class: 'btn btn-default btn-add' do %>
+              <i class="fa fa-download"></i>
+              Importar operador
+            <% end %>
+
+            <%= link_to load_all_imports_path,
+              class: 'btn btn-primary btn-add',
+              'data-turbolinks': false,
+              title: 'Importa reservas, servicios, operadores, agencias y usuarios',
+              data: {
+                disable_with: t(:wait),
+                confirm: 'Esto bloqueará el sistema por aproximadamente 10 minutos. ¿Estás seguro?'
+              } do %>
+              <i class="fa fa-database"></i>
+              Importar todo
+            <% end %>
+          </div>
+        </div>
+
+        <div class="box-body">
+          <div class="col-md-12 text-center text-danger bold">
+            <span class="fa fa-exclamation-circle"></span>
+            <span>
+              Las reservas con errores pertenecen a agencias que no existen en la Ficha de Prestadores o en Aptour. Regularizar situación para poder importarlas.
+            </span>
+          </div>
+
+          <table class="table table-bordered table-condensed background-white">
+            <thead>
+              <tr>
+                <th width="5%">Número</th>
+                <th width="20%">Fecha y hora de inicio</th>
+                <th width="20%">Fecha y hora de fin</th>
+                <th width="10%">Vía</th>
+                <th width="20%">Operador asociado</th>
+                <th width="25%">Reservas con errores</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <%= render @imports %>
+            </tbody>
+          </table>
+
+          <%= will_paginate @imports %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

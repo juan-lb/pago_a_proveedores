@@ -1,0 +1,79 @@
+<div class="box box-primary" id="coming_entries">
+
+  <div class="box-header with-border">
+    <%= simple_form_for @coming_entries_manager,
+      url:    coming_entries_service_registers_path,
+      remote: true do |f|
+    %>
+      <h3 class="box-title" style="margin-bottom: 15px;">
+        Con pasajeros ingresando en los próximos días
+      </h3>
+
+      <div class="row">
+        <div class="col-md-2">
+          <%= f.input :days,
+            class: 'form-control',
+            label: 'Días'
+          %>
+        </div>
+
+        <div class="hidden" id="js-comingEntriesAmountInputs">
+          <div class="col-md-3">
+            <%= f.input :min_ars,
+              class: 'form-control',
+              label: 'Min AR$'
+            %>
+          </div>
+
+          <div class="col-md-3">
+            <%= f.input :min_usd,
+              class: 'form-control',
+              label: 'Min U$D'
+            %>
+          </div>
+        </div>
+
+        <div class="col-md-2" style="margin-top: 20px;">
+          <%= f.input :only_without_cc,
+            as:              :boolean,
+            inline_label:    true,
+            label:           'Sin C/C',
+            checked_value:   1,
+            unchecked_value: 0,
+            class:           'form-control'
+          %>
+        </div>
+
+        <div class="pull-right" style="margin-top: 20px; padding-right: 1em;">
+          <span
+            class="btn btn-default"
+            data-behavior="showAmountFilter">
+            Filtros por monto
+          </span>
+
+          <%= button_tag(
+            type: 'submit',
+            class: 'btn btn-primary',
+            data: {
+              disable_with: t(:wait)
+            }) do %>
+            Buscar
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="box-body">
+    <div class="row">
+      <div class="col-md-12">
+        <%= render partial: 'service_registers/service_register_table',
+          locals: {
+            operators: @coming_entries_manager.operators
+          }
+        %>
+      </div>
+    </div>
+  </div>
+
+</div>

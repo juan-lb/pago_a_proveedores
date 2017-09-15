@@ -1,0 +1,45 @@
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title"><%= t(:filter) %></h3>
+          <div class="box-tools pull-right">
+            <button
+              class="btn btn-box-tool"
+              data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="box-body">
+          <div class="col-md-12">
+            <%= render partial: 'filter' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Flujo de fondos</h3>
+          <div class="pull-right" style="width: 25%;">
+            <%= render partial: 'operator_form' %>
+          </div>
+        </div>
+
+        <div class="box-body">
+          <div class="col-md-12">
+            <div id="js-charts">
+              <%= render partial: 'charts' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

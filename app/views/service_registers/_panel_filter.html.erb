@@ -1,0 +1,167 @@
+<div class="box box-primary">
+  <div class="box-header with-border">
+    <h3 class="box-title"><%= t(:filter) %></h3>
+    <div class="box-tools pull-right">
+      <%= link_to service_registers_path,
+        class: 'btn btn-default' do |b|
+      %>
+        <i
+          class="fa fa-eraser"
+          data-toggle="tooltip"
+          data-placement="right"
+          title="Borrar filtros">
+        </i>
+        Borrar filtro
+      <%end%>
+      <%= link_to by_file_number_form_service_registers_path,
+
+        class: 'btn btn-default',
+        remote: true do
+      %>
+        <i class="fa fa-search"></i>
+        Buscar por número de file
+      <% end %>
+
+      <button
+        class="btn btn-box-tool"
+        data-widget="collapse">
+        <i class="fa fa-minus"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="box-body">
+    <div class="col-md-12">
+      <%= simple_form_for @presenter.filter,
+        url: :service_registers,
+        method: :get do |f|
+      %>
+
+    <div class ="row">
+
+      <%= f.hidden_field :operator_category,
+        value: current_user.operator_category
+      %>
+
+      <div class="col-md-3">
+        <%= f.label :operator_id,
+          'Operador (*)',
+          class: 'control-label'
+        %>
+        <%= f.select :operator_id,
+          @presenter.filter.operators,
+          @presenter.filter.selected_operator,
+          class: 'operator_select2'
+        %>
+      </div>
+
+      <div class="col-md-3">
+        <%= f.input :fec_type,
+          collection: RegisterFilter::FEC_TYPES
+        %>
+      </div>
+
+      <div class="col-md-2">
+        <%= datepicker_input f,
+          :from,
+          class: 'form-control'
+        %>
+      </div>
+
+      <div class="col-md-2">
+        <%= datepicker_input f,
+          :to,
+          class: 'form-control'
+        %>
+      </div>
+
+      <div class="col-md-2">
+        <%= f.label  :status_service,
+          class: 'control-label'
+        %>
+        <%= f.select :status_service,
+          ServiceRegister::STATES,
+          {include_blank: true},
+          {class: 'form-control'}
+        %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-2">
+        <%= f.input :beeper,
+          class:       'form-control',
+          placeholder: 'Ingrese localizador'
+        %>
+      </div>
+
+      <div class="col-md-2">
+        <%= f.input :traveller,
+          class:       'form-control',
+          placeholder: 'Ingrese titular'
+        %>
+      </div>
+
+      <div class="col-md-1">
+        <%= label_tag do %>
+          Pasajero
+          <i
+            class="fa fa-question-circle text-primary"
+            title="Tildar para buscar pasajero de la reserva que pueden no ser el titular de la misma.">
+          </i>
+        <% end %>
+        <%= f.input :consider_passengers,
+          as:              :boolean,
+          inline_label:    true,
+          label:           'Considerar pasajeros',
+          checked_value:   1,
+          unchecked_value: 0,
+          class:           'form-control'
+        %>
+      </div>
+
+      <div class="col-md-2">
+        <%= f.input :reserve,
+          class:       'form-control',
+          placeholder: 'Ingrese nro de reserva'
+        %>
+      </div>
+
+      <div class="col-md-2">
+        <%= f.label  :order_by,
+          class: 'control-label'
+        %>
+        <%= f.select :order_by,
+          RegisterFilter::ORDER_BY,
+          {},
+          {class: 'form-control'}
+        %>
+      </div>
+
+      <div class="col-md-2">
+        <%= f.label  :order_by,
+          class: 'control-label'
+        %>
+        <%= f.select :order_as,
+          RegisterFilter::ORDER_AS,
+          {},
+          {class: 'form-control'}
+        %>
+      </div>
+
+      <div class="col-md-1">
+        <%= f.button :button, '',
+          data:  {disable_with: t(:wait)},
+          class: 'btn btn-primary margin-top-24 margin-left-10' do |b|
+        %>
+          <i class="fa fa-filter"></i>
+          Filtrar
+        <% end %>
+      </div>
+    </div>
+    <% end %>
+
+    </div>
+
+  </div>
+</div>

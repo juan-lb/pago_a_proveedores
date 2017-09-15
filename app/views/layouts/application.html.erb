@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head><%= render 'head' %></head>
+  <body class="sidebar-mini skin-green-light fixed <%= controller_name %> <%= action_name %> sidebar-collapse">
+
+    <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+    <%= javascript_include_tag "application", 'data-turbolinks-eval' => false %>
+    <%= javascript_include_tag "application-turbolinks" %>
+
+    <%= render 'flash' %>
+    <%= render 'development' if Rails.env == 'development' %>
+
+    <div class="wrapper" >
+      <%= render 'navbar' %>
+      <%= render 'aside' if @current_profile.has_role? %>
+
+      <div id="page-wrapper" class="content-wrapper">
+        <%= render partial: 'importation_failure' if @import_failure %>
+        <%= yield %>
+      </div>
+
+      <div id="modal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-lg-custom" >
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title"></h4>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Cerrar">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="modal-second" class="modal fade">
+        <div class="modal-dialog modal-lg" >
+          <div class="modal-content">
+            <div class="modal-header"></div>
+          <div class="modal-body"></div>
+          <div class="modal-footer"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

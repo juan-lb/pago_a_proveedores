@@ -1,0 +1,107 @@
+<dl class="dl-horizontal">
+  <!-- débito -->
+  <dt><%= t(:debt) %></dt>
+  <dd>
+    <%= @payment_group.currency_symbol %>
+    <%= number_with_precision(
+      @payment_group.payment.total_debt,
+      precision: 2
+      )
+    %>
+    <% if @payment_group.currency == 'D' && @payment_group.national? %>
+      <span class="text-muted">
+        ($ <%= number_with_precision @payment_group.payment.total_debt * @payment_group.payment.cotization %>)
+      </span>
+    <% end %>
+  </dd>
+
+  <!-- pagado -->
+  <dt>Se pagó</dt>
+  <dd>
+    <%= @payment_group.currency_symbol %>
+    <%= number_with_precision(
+      @total,
+      precision: 2
+      )
+    %>
+    <% if @payment_group.currency == 'D' && @payment_group.national? %>
+      <span class="text-muted">
+        ($ <%= number_with_precision @total * @payment_group.payment.cotization %>)
+      </span>
+    <% end %>
+  </dd>
+
+  <% if @payment_group.currency == 'D' %>
+    <!-- cotizatión -->
+    <dt>Cotización</dt>
+    <dd>
+      <%= number_with_precision @payment_group.payment.cotization %>
+    </dd>
+  <% end %>
+
+  <% if @payment_group.international? %>
+    <!-- gastos bancarios -->
+    <dt class="margin-top-5">Comisión bancaria</dt>
+    <dd class="margin-top-5">
+      <%= number_with_precision @payment_group.payment.commission %>
+    </dd>
+    <dt>IVA</dt>
+    <dd>
+      <%= number_with_precision @payment_group.payment.iva %>
+    </dd>
+    <dt>IIBB</dt>
+    <dd>
+      <%= number_with_precision @payment_group.payment.iibb_perception %>
+    </dd>
+  <% end %>
+
+  <% if @payment_group.national? && @payment_group.retention_amount > 0 %>
+    <!-- retención de Ingresos Brutos -->
+    <dt>Retención IG</dt>
+    <dd>
+      <%= @payment_group.currency_symbol %>
+      <%= number_with_precision(
+        @payment_group.payment.ig_retention,
+        precision: 2
+      ) %>
+      <%= link_to icon(:eye),
+        ig_retention_national_payment_group_path(
+          @payment_group,
+          format: :pdf
+        )
+      %>
+    </dd>
+
+    <!-- total -->
+    <dt>Total</dt>
+    <dd>
+      <strong>
+        <%= @payment_group.currency_symbol %>
+        <%= number_with_precision(
+          @payment_group.payment.ig_retention + @total,
+          precision: 2
+        ) %>
+      </strong>
+    </dd>
+  <% end %>
+
+  <hr>
+
+  <!-- reserva -->
+  <dt><%= t(:reserve) %></dt>
+  <dd>
+    <%= @payment_group.payment.principal_reserve_id %>
+  </dd>
+
+  <!-- cuenta banacaria -->
+  <dt><%= t(:payment_method) %></dt>
+  <dd>
+    <%= @account.name %> (<%= @account.currency %>)
+  </dd>
+
+  <!-- identificación del pago -->
+  <dt><%= t(:payment_method_number) %></dt>
+  <dd>
+    <%= @payment_group.payment.payment_method_number.blank? ? '-' : @payment_group.payment.payment_method_number %>
+  </dd>
+</dl>

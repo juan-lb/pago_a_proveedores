@@ -1,0 +1,73 @@
+wb = xlsx_package.workbook
+wb.styles do |s|
+  if @in_euros.present?
+    currency      = '€'
+    column_method = 'euros'
+    total         = @payment_group.total_euros.round 2
+  else
+    currency      = @payment_group.currency_symbol
+    column_method = 'amount'
+    total         = @payment_group.total_to_pay.round 2
+  end
+
+  head_row = [
+    "Titular",
+    "Localizador",
+    "Monto a pagar (#{currency})",
+    "Fecha In",
+    "Prestador"
+  ]
+
+  data = []
+
+  @payment_group.services.each do |service|
+
+    date_in = (service.date_in.nil? ? '-' : service.date_in.strftime("%d/%m/%Y"))
+
+    row = [
+      service.viajeroresponsable,
+      service.leg_ope,
+      service.send(column_method).round(2),
+      date_in,
+      (service.provider ? service.provider.name : '-'),
+    ]
+
+    data << row
+  end
+
+  data << ['EXTRA', 'EXTRA', @payment_group.difference.round(2), 'EXTRA'] if @payment_group.has_difference?
+  total_row = ['', '', total, '']
+
+  create_excel(s)
+
+  wb.add_worksheet() do |sheet|
+    # Contenido de celdas
+    excel_header(sheet, 'Reporte de pago', 5)
+    excel_table_head(sheet, ["Operador", "Fecha"])
+    excel_table_body_with_style(sheet, [[@payment_group.operator_name, Date.today.to_s]], @centered_table)
+    excel_empty_rows(sheet, 2)
+    excel_table_head(sheet, head_row)
+    excel_table_body_with_style(sheet, data, @centered_table)
+    sheet.add_row total_row
+
+    # Formato de celdas
+    service_row = 10
+    rows_length = @payment_group.services.count
+    rows_length += 1 if @payment_group.has_difference?
+    rows_length.times do
+      sheet.rows[service_row].cells[2].style = @currency_table_cell
+      service_row += 1
+    end
+    sheet.rows[service_row].cells[2].style = @currency_bold_table_cell
+
+    # Logo de Aero
+    img = File.expand_path(Rails.root+'app/assets/images/small_logo.png')
+    sheet.add_image(:image_src => img, :end_at => true) do |image|
+      image.width = 136
+      image.height = 77
+      image.start_at 0, 1
+    end
+
+  end
+
+end

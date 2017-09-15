@@ -1,0 +1,141 @@
+<div class="box-body">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+          <table class="table table-condensed table-bordered table-sm">
+            <thead>
+              <tr>
+                <th>Operador</th>
+                <th><%= Const::ARS %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if ars_operators.size.zero? %>
+                <tr class="text-center">
+                  <td colspan="2">No se encontró información.</td>
+                </tr>
+              <% else %>
+                <% ars_operators.each do |operator| %>
+                  <% repeated_reserves = operator[:repeated_reserves] &&
+                    operator[:repeated_reserves].any?
+                  %>
+                  <tr
+                    class="js-payment"
+                    data-currency="P"
+                    data-total="<%= operator[:sum_ars].round 2 %>"
+                    data-repeated_reserves="<%= operator[:repeated_reserves] %>">
+                    <td class="<%= 'background-color-light-red' if operator[:prepaid] %>">
+                      <%= content_tag(:i, nil,
+                          class: 'fa fa-exclamation-circle text-danger',
+                          title: 'Existen pagos anticipados',
+                          style: 'margin-right: 0.5em;'
+                         ) if operator[:prepaid]
+                      %>
+
+                      <%= link_to operator[:name],
+                        preselect_services_service_registers_path(
+                          operator_id:  operator[:aptour_id],
+                          register_ids: operator[:services].map(&:id)
+                        ),
+                        remote: true,
+                        class:  'btn btn-link btn-xs',
+                        target: 'blank'
+                      %>
+                    </td>
+                    <td class="<%= 'background-color-dark-yellow' if repeated_reserves %>">
+                      <%= content_tag(:i, nil,
+                          class: 'fa fa-exclamation-circle text-yellow',
+                          title: "Existen reservas en otros pagos: #{operator[:repeated_reserves].join ', '}",
+                          style: 'margin-right: 0.5em;'
+                         ) if repeated_reserves
+                      %>
+                      <%= number_to_currency(operator[:sum_ars], unit: '') %>
+                    </td>
+                  </tr>
+                <% end %>
+                <tr>
+                  <td class="text-bold text-right">
+                    Total
+                  </td>
+                  <td
+                    class="text-bold js-total-ars"
+                    data-total="<%= total_ars %>">
+                    <%= number_to_currency total_ars, unit: '' %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-md-6 col-sm-6 col-xs-6">
+          <table class="table table-condensed table-bordered table-sm">
+            <thead>
+              <tr>
+                <th>Operador</th>
+                <th><%= Const::USD %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if usd_operators.size.zero? %>
+                <tr class="text-center">
+                  <td colspan="2">No se encontró información.</td>
+                </tr>
+              <% else %>
+                <% usd_operators.each do |operator| %>
+                  <% repeated_reserves = operator[:repeated_reserves] &&
+                    operator[:repeated_reserves].any?
+                  %>
+                  <tr
+                    class="js-payment"
+                    data-currency="D"
+                    data-total="<%= operator[:sum_usd].round 2 %>"
+                    data-repeated_reserves="<%= operator[:repeated_reserves] %>">
+                    <td class="<%= 'background-color-light-red' if operator[:prepaid] %>">
+                      <%= content_tag(:i, nil,
+                          class: 'fa fa-exclamation-circle text-danger',
+                          title: 'Existen pagos anticipados',
+                          style: 'margin-right: 0.5em;'
+                         ) if operator[:prepaid]
+                      %>
+
+                      <%= link_to operator[:name],
+                        preselect_services_service_registers_path(
+                          operator_id:  operator[:aptour_id],
+                          register_ids: operator[:services].map(&:id)
+                        ),
+                        remote: true,
+                        class:  'btn btn-link btn-xs',
+                        target: 'blank'
+                      %>
+                    </td>
+                    <td class="<%= 'background-color-dark-yellow' if repeated_reserves %>">
+                      <%= content_tag(:i, nil,
+                          class: 'fa fa-exclamation-circle text-yellow',
+                          title: "Existen reservas en otros pagos: #{operator[:repeated_reserves].join ', '}",
+                          style: 'margin-right: 0.5em;'
+                         ) if repeated_reserves
+                      %>
+                      <%= number_to_currency(operator[:sum_usd], unit: '') %>
+                    </td>
+                  </tr>
+                <% end %>
+                <tr>
+                  <td class="text-bold text-right">
+                    Total
+                  </td>
+                  <td
+                    class="text-bold js-total-usd"
+                    data-total="<%= total_usd %>">
+                    <%= number_to_currency total_usd, unit: '' %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+$('#modal').find('.modal-content').html("<%= j render partial: 'bank_charges_form' %>");
+$('#modal').modal();
+
+$('#payment_commission').on('keyup', function(e){
+  commission = parseFloat($(e.target).val())
+  iva        = commission * 0.21 || 0
+
+  $('#payment_iva').val(iva.toFixed(2))
+});
+
+select = $('#payment_bank_account');
+
+$(select).change(function(e){
+  input      = $('#payment_cotization');
+  cotization = parseFloat($('#js-cotization').data('value'));
+  currency   = select.find(':selected').data('account_currency');
+
+  if (currency == 1)
+    input.val(1.00);
+  else
+    input.val(cotization);
+});
+
+App.InitializationFunctions.init_formula_inputs()

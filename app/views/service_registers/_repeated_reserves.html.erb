@@ -1,0 +1,21 @@
+<% if reserves.any? %>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="margin-top-10">
+          <span class="text-yellow bold">
+            Reservas repetidas en operadores:
+          </span>
+          <%= reserves.join ', ' %>
+          <span class="pull-right">
+            Seleccionar reserva en conflicto:
+            <%= select_tag :reserve, options_for_select(reserves),
+              include_blank: true,
+              class:         'form-control'
+            %>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

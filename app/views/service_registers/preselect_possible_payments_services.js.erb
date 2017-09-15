@@ -1,0 +1,5 @@
+var modal_tag = $('#modal-second');
+modal_tag.find('.modal-dialog').addClass('modal-md').removeClass('modal-lg');
+modal_tag.find('.modal-body').html('<%= j render partial: "service_registers/preselect_services", locals: { operator_aptour_id: @operator_aptour_id, register_ids: @register_ids } %>');
+modal_tag.modal({backdrop: 'static', keyboard: false});
+

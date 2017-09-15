@@ -1,0 +1,97 @@
+<div class="box box-primary" id="js-payable">
+  <div class="box-header with-border">
+    <%= simple_form_for @payable_manager,
+      url:    payable_service_registers_path,
+      remote: true do |f|
+    %>
+      <h3 class="box-title" style="margin-bottom: 15px;">
+        Ok para pagar
+        <span class="explanation">
+          (servicios con status <b>confirmado</b> + reservas con dinero depositado por agencias)
+        </span>
+      </h3>
+
+      <div class="row">
+        <div class="col-md-3">
+          <%= f.label  :operator_category, class: 'control-label' %>
+          <%= f.select :operator_category,
+             Profile::OPERATOR_CATEGORY,
+            {
+              selected:      @payable_manager.operator_category ||
+                             current_user.operator_category,
+              include_blank: true
+            },
+            {
+              class: 'form-control'
+            }
+          %>
+        </div>
+
+        <div class="col-md-2" style="margin-top: 20px;">
+          <%= f.input :only_without_cc,
+            as:              :boolean,
+            inline_label:    true,
+            label:           'Sin C/C',
+            checked_value:   1,
+            unchecked_value: 0,
+            class:           'form-control',
+            input_html:      {checked: false}
+          %>
+        </div>
+
+        <div class="col-md-2">
+          <%= f.input :fec_type,
+            collection: ServiceRegister::FEC_TYPES.
+              delete_if { |each| each.include? 'fec_mix'},
+            prompt:     false,
+            class:      'form-control',
+            label:      'Fecha'
+          %>
+        </div>
+
+        <div class="col-md-2">
+          <%= datepicker_input f, :from,
+            class: 'form-control'
+          %>
+        </div>
+
+        <div class="col-md-2">
+          <%= datepicker_input f, :to,
+            class: 'form-control'
+          %>
+        </div>
+
+        <div class="col-md-1">
+          <%= f.input :days, class: 'form-control' %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <p>*Dejar en blanco para filtrar por todas las categorías de operadores</p>
+          <p>**Días de margen respecto de la fecha actual para ignorar status de servicios</p>
+        </div>
+
+        <div class="col-md-1 col-md-offset-4 margin-top-10">
+          <span class="btn btn-default" data-behavior="cleanPayable">
+            <i class="fa fa-eraser"></i>
+            Borrar
+          </span>
+        </div>
+
+        <div class="col-md-1 margin-top-10">
+          <%= f.submit 'Buscar',
+            data: {
+              disable_with: t(:wait)
+            },
+            class: 'btn btn-block btn-primary'
+          %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Contenido cargado con AJAX -->
+  <div id="repeated_reserves"></div>
+  <div id="payable_list"></div>
+</div>

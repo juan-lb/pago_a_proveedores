@@ -1,0 +1,513 @@
+4.1.1 HOTFIX
+ - Arreglado background para funcionar en producción
+
+4.1
+ - Añadida integración con MO:
+   - Búsqueda de servicios por localizador
+   - Modificación de localizador de servicios al enviar pagos
+   - Modificación manual de servicios de pagos enviados/cerrados
+ - Modificada frecuencia de envío de reportes automáticos por mail
+
+4.0
+ - Implementados tests automáticos en GitLab
+
+3.9.3 HOTFIX
+ - Eliminada restricción de status de servicio en Pagos Posibles
+ - Añadido filtro por status de servicio en Pagos Posibles
+ - Corregido error en decorador de servicios cuando una reserva no tiene agencia asociada
+ - Añadida paginación a listado de importaciones
+ - Corregido impacto en Ajuste por Marketing
+ - Añadidos totales a reporte de Promedio de Transferencias
+ - Implementados tests de servicios
+ - Aplicada refactorización a importación diaria
+ - Corregido cron de reportes
+ - Omitidos operadores 'GUARDIA' de reporte de saldos a favor
+ - Añadida nueva categoría para operadores sin categoría
+
+3.9.2 HOTFIX
+ - Mejorada performance de Dinero Entrante
+ - Corregido potencial error en presenter de ServiceRegisters
+ - Añadida edición de múltiples destinatarios a reporte de dalfos a favor
+
+3.9.1 HOTFIX
+ - Corregido redondeo de decimales en el armado de pagos
+
+3.9
+ - Implementado sistema de permisos por perfil de usuario a nivel controlador
+ - Añadida información de Prestador asociada a cada servicio
+
+3.8.2 HOTFIX
+ - Corregido cálculo en promedio de transferencias: se promedia cada monto con la cantidad de pagos en vez de con la cantidad de días
+
+3.8.1 HOTFIX
+ - Corregido error por el cual se realizaban múltiples importaciones automáticas
+
+3.8
+ - Añadido funcionalidad para agregar usuarios
+ - Añadida importación de único operador
+ - Añadida exportación de saldos a favor en PDF
+ - Añadida generación y exportación en PDF de promedio de transferencias
+ - Añadida automatización de envío de PDF de saldos a favor
+ - Añadida automatización de envío de PDF de promedio de transferencias
+
+3.7.6 HOTFIX
+ - Corregido error al cargar pago de operador internacional marcado como retensor
+
+3.7.5 HOTFIX
+ - Flujo de fondos:
+   - Añadido filtro por operadores con/sin cuenta corriente
+
+3.7.4 HOTFIX
+ - Añadido impacto de carga de impuestos en APtour
+ - Corregido proveedor en la carga de gastos bancarios
+
+3.7.3 HOTFIX
+ - Modificado tipo de dato DET_PREV de ServiceRegister
+
+3.7.2 HOTFIX
+ - Modificado timeout de Unicorn
+
+3.7.1 HOTFIX
+ - Corregido saldo de reserva
+ - Corregido costo de reserva: sólo tiene en cuenta servicios, descarta tickets aéreos
+ - Añadido detalle de saldos por operador en detalle de reserva
+
+3.7
+ - Añadido margen de días para ignorar status de servicios en Pagos Posibles y OK Para Pagar
+ - Añadidos tests de servicios
+ - Añadidos tests de controladores
+ - Añadida posibilidad de pasar pago a estado Borrador
+ - Implementada funcionalidad de Ajuste por Marketing
+ - Añadida columna 'Depositado' a listado de servicios
+ - Módulo de Estadísticas:
+   - Cambios aplicados a PDF
+ - Añadida información de gastos bancarios en detalle de pago
+
+3.6.6 HOTFIX
+ - Agregado completado automático de cotización en formulario de carga de gastos bancarios
+
+3.6.5 HOTFIX
+ - Mejorada paginación en filtro de pagos
+ - Presenter de listado de pagos refactorizado
+
+3.6.4 HOTFIX
+ - Añadida paginación a filtro de pagos
+
+3.6.3 HOTFIX
+ - Corregido error en filtro de pagos
+
+3.6.2 HOTFIX
+ - Modificado 'deploy.rb'
+
+3.6.1 HOTFIX
+ - Corregido error al obtener servicios asociados por localizar en detalle de reserva
+
+3.6
+ - Módulo Devoluciones:
+   - Automatizado impacto de devoluciones y pagos ficticios
+   - Añadida cuenta MARKETING a cuentas para asiento de ingreso
+ - Ignorados operadores comenzados con 'GUARDIA' en prearmado de pagos
+ - Añadido informe de error de importación al buscar servicios por número de file
+ - Añadida agenda de si la importación es manual o automática
+ - Añadido 'vendedor' a filtro de pagos
+ - Añadida alerta de posible modificación o eliminado de servicios en Aptour
+ - Flujo de fondos:
+   - Implementación de funcionaldiad general
+ - Implementados tests de controladores
+ - Añadir saldo disponible a índice de servicios y detalle de reserva
+ - Corregido error al preseleccionar servicios de un pago eliminado
+
+3.5.2 HOTFIX
+ - Corregido error al importar registros ya incluidos en pagos no cargados
+
+3.5.1 HOTFIX
+ - Corregido error al actualizar montos de servicios en pago borrador
+
+3.5
+ - Módulo Devoluciones:
+   - Implementada funcionalidad de pagos ficticios con asiento de ingreso
+   - Implementada funcionalidad de pagos ficticios con devolución de reservas
+ - Modificado logo a nueva imagen de Aero
+ - Añadido background con motivo de Aero
+ - Módulo de Estadísticas:
+   - Cambios aplicados a PDF
+ - Añadido total pesificado a pagos nacionales en listado y detalle
+ - OK para pagar:
+   - Agregado totalizador de pagos armados
+
+3.4.4 HOTFIX
+ - Añadidos pagos con total nulo al listado de pagos
+
+3.4.3 HOTFIX
+ - Corregido error al añadir servicios a pago borrador cuando se filtra por depósito
+
+3.4.2 HOTFIX
+ - OK para pagar:
+   - Agregado filtro por operadores sin cuenta corriente
+   - Cambiado filtro por id de operador a categoría de operadores
+
+3.4.1 HOTFIX
+ - Logo en Excel de service_registers comentado porque MS Excel presenta errores
+
+3.4
+ - Mejora de performance:
+   - AddServices de service_registers
+
+3.3.3 HOTFIX
+ - Corregido bug al ordenar servicios por depósito de agencias
+
+3.3.2 HOTFIX
+ - Corregidas fechas en Excel de servicios
+
+3.3.1 HOTFIX
+ - Corregido error en filtro de pagos
+
+3.3
+ - Agregados tests de modelos
+ - Agregado autocompletado de mail de operador para envío de reporte de pago
+ - Agregada diferenciación entre pago y seña en servicios
+ - Corregido bug al eliminar pagos con señas
+ - Módulo Devoluciones:
+   - Implementada funcionalidad de devoluciones ficticias con asiento de egreso
+   - Implementada funcionalidad de devoluciones ficticias con pago de reservas
+ - Modificada cuenta de Mandrill de Snappler por la de Aero
+ - Añadida calculadora en carga de gastos bancarios en diferido
+ - Módulo de Estadísticas:
+   - Añadida exportación en formato Excel
+ - Añadida exportación de selección de servicios en formato Excel
+ - Implementado OK para pagar
+ - Mejora de performance:
+   - Index de service_registers
+   - Index de payment_groups
+ - Refactorizada funcionalidad ComingEntries
+ - Añadidos euros a Excel de reporte de pago
+ - Agregada búsqueda por pasajeros de servicios
+ - Agregada información de pasajeros en detalle de reserva
+
+3.2.6 HOTFIX
+ - Módulo de Estadísticas:
+   - Corregido bug en parámetros de filtrado al enviar reporte por mail
+
+3.2.5
+ - Corregida información de detalle de reservas
+ - Mejorada vista de detalle de reserva
+ - Corregido error al editar servicios marcados como créditos
+
+3.2.4
+ - Agregada información de pagos realizados a operadores en detalle de reserva
+ - Tests arreglados y actualizados
+
+3.2.3 HOTFIX
+- Módulo de Estadísticas:
+  - Pagos en estado ENVIADO agregados
+
+3.2.1, 3.2.2 HOTFIX
+- Corregido bug en modelo Payment
+
+3.2
+- Refactorización:
+  - Vistas
+  - Clases Ruby
+  - Estadísticas
+  - CoffeeScript
+- Agregadas nuevas funcionalidades al mailing de reporte de pagos:
+  - Envío con copia CC
+  - Registro de fecha de último envío
+  - Agregado de reply_to
+- Agregado enlace a créditos en vista de saldos a favor
+- Reducidos montos límite para importación de créditos
+- Agregada posibilidad de modificar montos límites para importación de créditos por parte de los usuarios
+- Corregida fecha de in de servicios
+- Agregado filtro y ordenado por número de file en armado de pago borrador
+- Módulo Devoluciones:
+  - Implementada funcionalidad de devoluciones reales
+- Módulo Dinero Entrante:
+  - Añadido filtro de recibos por número de reserva (informe de destino pagado por agencias)
+- Agregada generación de facturas para gastos bancarios con moneda nominada en dólares
+- Agregada funcionalidad de aplicación de gastos bancarios en diferido con moneda independiente
+- Agregado listado de pagos sin carga de gastos bancarios
+
+3.1.1 HOTFIX
+- Corregido error al consultar por registros prepagos
+
+3.1
+- Agregado autocompletado de email para envío de reporte de pago
+- Refactorización:
+  - Rutas
+  - Controladores
+- Corregidos signos de montos en detalle de reservas
+- Añadida fecha de envío para los pagos
+- Módulo de Estadísticas:
+  - Modificada fecha utilizada por fecha de envío
+- Implementado reporte de saldos a favor
+- Módulo Dinero Entrante:
+  - Agrupadas cuentas por categorías
+- Añadidad funcionalidad para transferencias internas con saldo negativo (saldos a favor)
+- Añadida información de cuentas bancarias para operadores nacionales
+
+3.0.4 HOTFIX
+- Modificada fecha de salida a tener en cuenta para la importación de registros
+
+3.0.3 HOTFIX
+- Módulo Estadísticas:
+  - Añadido U$D pesificado en tabla de estadísticas generales
+
+3.0.2 HOTFIX
+- Módulo Dinero Entrante:
+  - Correcciones:
+    - Corregido bug en monto mostrado en tabla de cuentas
+
+3.0.1 HOTFIX
+- Módulo Dinero Entrante:
+  - Correcciones:
+    - Corregido bug de boxes de AdminLTE que no colapsaban
+    - Añadida funcionalidad de filtrado JS en tabla de cuentas
+    - Agrupadas cuentas que corresponden a transferencias
+
+3.0
+- Modificada funcionalidad 'dinero que entró el día anterior' por 'dinero entrante':
+  - Añadido filtro por fecha y moneda
+  - Añadida tabla agrupando recibos por cuenta
+- Módulo de Estadísticas:
+  - Ocultada columna EUR para filtro por categoría nacional
+  - Corregida ubicación de totales en estadísticas por operador
+  - Añadido total pesificado en estadísticas por operador
+
+2.9.1 HOTFIX
+- Corregido formato de SWIFT en envío de mail de reporte de pago
+
+2.9
+- Implementada función de dinero entrante el día anterior
+- Agregado soporte para múltiples destinatarios en reporte de pago
+- Agregado campo SWIFT a reporte de pago
+
+2.8 y HOTFIXES (2.8.1, 2.8.2, 2.8.3, 2.8.4, 2.8.5)
+- HOTFIX: Movido botón de envío de mail de reporte de pago a vista 'generate_report'
+- HOTFIX: Corregido error al filtrar por fecha en Estadísticas (ordenamiento SQL)
+- Módulo de Estadísticas:
+  - Implementada generación de PDF
+  - Añadido envío de reportes en PDF por mail
+  - Correciones:
+    - Estadísticas por operador: agregado de total
+    - Estadísticas por banco: replicada lógica de monedas que utiliza 'estadísticas por operador'
+    - Modo de comparación de meses: ocultados todos los inputs excepto los de selección de períodos
+    - Modificada fecha a utilizar: fecha de creación de pagos
+- Añadido envío de reporte de pago por mail
+- Añadida razón social a operadores y modificado certificado de retención: nombre por razón social
+
+2.7
+- Módulo de Estadísticas:
+  - Mejoras de performance
+  - Correcciones:
+    - Eliminada columna AR$ de tabla de estadísticas por operador para categoría internacional.
+    - Separadas monedas en gráficos comparativos
+    - Añadidas estadísticas a nivel 'banco'
+    - Añadido modo de comparación de meses
+
+2.6
+- Módulo de Estadísticas:
+  - Especificación de pagos realizados y mostrados en U$D, pero que deben tratarse como EUR.
+  - Correcciones:
+    - Verificado caso de Iberostar Cuba
+    - Ignoradas filas con monto nulo
+    - Añadido redondeo de decimales
+    - Editadas monedas de pagos internacionales
+- Filtro 'ingresan en los próximos días':
+  - Añadido filtro de tipo de operador según usuario logueado
+  - Añadido filtro de montos mínimos en AR$ y en U$D
+- Editada calculado de carga de gastos bancarios
+- Añadida búsqueda de registros por número de file
+- Añadido nuevo filtro en pagos: 'fecha de seña + previsión'
+- Destacados servicios que presentan indicios de pagos anticipados.
+- Añadido saldo a pagar por agenciia en detalle de reserva
+
+2.5.3 HOTFIX
+- Flag 'in_euros' de los pagos actualizado cuando el pago pasa a estado 'CERRADO'
+
+2.5.2 HOTFIX
+- Módulo de Estadísticas:
+  - Añadidos filtros avanzados de fecha
+  - Añadidas métricas estadísticas
+- Agregado remarcado de servicios con indicios de pagos anticipados
+- Añadido depósito por parte de agencia en detalle de reserva
+- Formateo de Excel de pagos
+- Corregido bug al importar existiendo pagos en estado 'Enviado'
+- Corregida carga de gastos bancarios
+- Visualización de datos bancarios para pagos en estado 'Borrador'
+
+2.5.1 HOTFIX
+- Módulo de Estadísticas:
+  - Añadida sumarización de resultados
+  - Añadido filtrado por fecha con datepicker
+  - Añadida estructura para paginado por JS
+
+2.5
+- Información de reserva: mostrar datos de vendedor y operativo. Requiere persistir datos de usuarios en cada importación
+- Módulo de Estadísticas: funcionalidad básica implementada
+
+2.4.1 HOTFIX
+- Corregido bug de carga duplicada de gastos bancarios
+
+2.4
+- Agregada funcionalidad de gastos en transferencias internacionales
+- Agregado ingreso de fórmulas al estilo Excel para inputs
+- Fórmula agregada a cálculo de comisión bancaria en pagos internacionales
+
+2.3.10, 2.3.11 HOTFIX
+
+- Add NewRelic
+
+2.3.9 HOTFIX
+- Se cambio el cron para las 7AM
+
+2.3.8 HOTFIX
+- Bug solucionado en Excel de pagos
+
+2.3.7 HOTFIX
+- Bug solucionado en sumarización de pagos (DEFINITIVO)
+
+2.3.6 HOTFIX
+- Bug solucionado en sumarización de pagos (definitivo)
+
+2.3.5 HOTFIX
+- Bug solucionado en sumarización de pagos
+
+2.3.4 HOTFIX
+- Deploy staging
+
+2.3.3 HOTFIX
+- Cambio de horario del cron
+
+2.3.2 HOTFIX
+- Cambio en monedas en PDF de retenciones
+
+2.3.1 HOTFIX
+- Acumulados de retentiones ahora se actualizan para pagos en USD
+
+2.3
+- Corrección de impacto en Aptour para retenciones de pagos en USD
+- Popup editado en listado de servicios
+
+2.2.1 HOTFIX
+- Bug corregido en coffeescript de listado de pagos
+
+2.2
+- Bloquear el sistema cuando se realiza la importación
+- Agregar fecha de in al servicio (para reporte en PDF)
+- Poner totales en el index de payment_groups
+- Indicar cantidad de pagos según cada estado
+- Retenciones pagos en USD
+- Corrección de Bug con Base Imponible
+- Nuevo orden para ServiceRegisterFilter (ordena por depositado)
+- Logger a Log_Importation_Environment
+- Poder cambiar el perfil del usuario desde el navbar
+
+2.1
+- Sesion almacenada en DB
+
+2.0
+- Importación nueva
+- Muchos cambios
+
+1.8.6, 1.8.7, 1.8.8
+- Mina deploy
+
+1.8.5 HOTFIX
+- Calculo de retenciones
+- Task para acomodar acumulados
+- Cambio la cuenta donde se asientan las retenciones
+
+1.8.4 HOTFIX
+- Se agrega el excedente a los pagos realizados (no mostraba la diferencia)
+- Se desglosa info en el listado pagos (deuda, crédito, retención, total)
+- Se agrega EXTRA al excel, siempre que el pago tenga dinero extra
+- Se agrega el EXTRA al total de cada pago. Antes quedaba un total sin el extra
+- Se corrige bug que mostraba retención cuando era cero
+- Se agregan datos bancarios del operador en la pantalla de pago
+- Se agrega mensaje de alerta para redonde en pantalla de pago en proceso
+
+1.8.3 HOTFIX
+- Se abren los pagos en nueva pestaña
+- Se muestran transferencias internas en listado de pagos (antes quitaba los que eran cero)
+
+1.8.2 HOTFIX
+- http://redmine.snappler.com/issues/2805#change-7020
+- http://redmine.snappler.com/issues/2803#change-7021
+
+1.8.1 HOTFIX
+- Hotfix en filtro de pagos: fecha desde y hasta mismo dia
+
+1.8
+- Unificación de previsión de pago y pagos posibles
+- http://redmine.snappler.com/issues/2804
+- http://redmine.snappler.com/issues/2854
+- http://redmine.snappler.com/issues/2855
+- http://redmine.snappler.com/issues/2856
+
+1.7.5
+Changelog de la version 1.7.4
+
+1.7.4
+- http://redmine.snappler.com/issues/2791
+- http://redmine.snappler.com/issues/2684
+- http://redmine.snappler.com/issues/2801
+
+1.7.3
+- http://redmine.snappler.com/issues/2692
+- http://redmine.snappler.com/issues/2665
+- http://redmine.snappler.com/issues/2689
+- http://redmine.snappler.com/issues/2685
+- http://redmine.snappler.com/issues/2695
+- http://redmine.snappler.com/issues/2664
+- http://redmine.snappler.com/issues/2662
+- http://redmine.snappler.com/issues/2663
+- http://redmine.snappler.com/issues/2686
+- http://redmine.snappler.com/issues/2693
+- http://redmine.snappler.com/issues/2687
+
+1.7.2
+- Metiéndole onda
+
+1.7.1
+- Reintento cuando falla la importación
+
+1.7.0
+- Nuevos filtros, y diferencias en el filtro
+
+1.6.6
+- quitando filtro incorrecto para importar
+
+1.6.5
+- sacando null en false para fec_ape
+
+1.6.4
+- iva pago en dolares
+- base configurable para retensiones
+- filtro de prevision depagos
+- detalle de euros
+
+1.6.3
+- Fitro por fecha en urgentes: IN y Pago
+
+1.6.2
+- Descripcion de Ok para pagar
+
+1.6.1
+- Correccion del Ok para pagar con filtro de fecha
+
+1.6.0
+- Reparacion de filtros iniciales
+- Ahora baja el PDF
+
+######################## Corrección de versiones para matchear con REDMINE
+2.1.2
+- Fix de schedule.rb
+
+2.1.1
+- Cache para agencias en importacion
+
+2.1.0
+- Correcciones para produccion
+
+2.0.0
+- Primera release con git flow

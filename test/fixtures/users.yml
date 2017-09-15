@@ -1,0 +1,22 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id         :integer          not null, primary key
+#  aptour_id  :string(255)
+#  name       :string(255)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+user_one:
+  aptour_id: 7
+  name: Luke Skywalker
+
+user_two:
+  aptour_id: 10
+  name: Bruce Wayne
+
+user_three:
+  aptour_id: 100
+  name: Rick Grames

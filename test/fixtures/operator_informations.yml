@@ -1,0 +1,20 @@
+# == Schema Information
+#
+# Table name: operator_informations
+#
+#  id                 :integer          not null, primary key
+#  operator_aptour_id :integer
+#  email              :string(255)
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  operator_aptour_id: 1
+  email: luke.skywalker@snappler.com
+
+two:
+  operator_aptour_id: 2
+  email: bruce.wayne@snappler.com

@@ -1,0 +1,109 @@
+# == Schema Information
+#
+# Table name: payment_groups
+#
+#  id                 :integer          not null, primary key
+#  status             :string(255)
+#  profile_id         :integer
+#  operator_id        :integer
+#  total_in_cents     :integer          default(0)
+#  currency           :string(255)
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  category           :integer
+#  operator_name      :string(255)
+#  is_credit          :boolean          default(FALSE)
+#  type               :string(255)      not null
+#  operator_aptour_id :integer
+#  in_euros           :boolean          default(FALSE)
+#  sent_date          :datetime
+#  payment_group_id   :integer
+#  adjustment         :boolean          default(FALSE)
+#
+
+payment_group_one:
+  status: 'Borrador'
+  profile_id: 1
+  operator_aptour_id: 1 # National Operator
+  total_in_cents: 20000000
+  currency: 'D'
+  category: 1
+  operator_name: 'operator_name'
+  is_credit: false
+  type: 'NationalPaymentGroup'
+  updated_at: '2017-05-04'
+
+payment_group_two:
+  status: 'Cargado'
+  profile_id: 1
+  operator_aptour_id: 1 # National Operator
+  total_in_cents: 20000000
+  currency: 'P'
+  category: 1
+  operator_name: 'operator_name'
+  is_credit: false
+  type: 'NationalPaymentGroup'
+  updated_at: '2017-05-05'
+  sent_date: '2017-05-05'
+
+payment_group_three:
+  status: 'En proceso'
+  profile_id: 1
+  operator_aptour_id: 2 # International Operator
+  total_in_cents: 20000000
+  currency: 'D'
+  category: 2
+  operator_name: 'operator_name'
+  is_credit: false
+  type: 'InternationalPaymentGroup'
+  updated_at: '2017-05-06'
+  sent_date: '2017-05-06'
+
+payment_group_four:
+  status: 'Borrador'
+  profile_id: 1
+  operator_aptour_id: 2 # International Operator
+  total_in_cents: 20000000
+  currency: 'D'
+  category: 2
+  operator_name: 'operator_name'
+  is_credit: false
+  type: 'InternationalPaymentGroup'
+  updated_at: '2017-05-07'
+
+payment_group_five:
+  status: 'Cargado'
+  profile_id: 1
+  operator_aptour_id: 2 # International Operator
+  total_in_cents: 20000000
+  currency: 'D'
+  category: 2
+  operator_name: 'operator_name'
+  is_credit: false
+  type: 'NationalPaymentGroup'
+  updated_at: '2017-05-08'
+  sent_date: '2017-05-08'
+
+payment_group_six:
+  status: 'Borrador'
+  profile_id: 1
+  operator_aptour_id: 2 # National Operator
+  total_in_cents: -20000000
+  currency: 'D'
+  category: 2
+  operator_name: 'operator_name'
+  is_credit: true
+  type: 'RefundPaymentGroup'
+  updated_at: '2017-05-04'
+
+payment_group_seven:
+  status: 'En proceso'
+  profile_id: 1
+  operator_aptour_id: 2 # National Operator
+  total_in_cents: -30000000
+  currency: 'D'
+  category: 2
+  operator_name: 'operator_name'
+  is_credit: true
+  type: 'RefundPaymentGroup'
+  updated_at: '2017-05-05'

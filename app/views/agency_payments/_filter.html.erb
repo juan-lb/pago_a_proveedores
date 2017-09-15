@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="box box-primary">
+      <div class="box-header">
+        <div class="box-title bold">
+          Filtrar
+        </div>
+
+        <div class="box-tools pull-right">
+          <button
+            class="btn btn-box-tool"
+            data-widget="collapse">
+            <i class="fa fa-minus"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="box-body">
+        <%= simple_form_for :agency_payment,
+              url:    agency_payments_path,
+              method: :get do |f| %>
+          <div class="col-md-2">
+            <span class="input-group date">
+              <%= f.label :from, 'Desde' %>
+              <%= f.text_field :from,
+                class: 'form-control',
+                value: @manager.from
+              %>
+            </span>
+          </div>
+
+          <div class="col-md-2">
+            <span class="input-group date">
+              <%= f.label :to, 'Hasta' %>
+              <%= f.text_field :to,
+                class: 'form-control',
+                value: @manager.to
+              %>
+            </span>
+          </div>
+
+          <div class="col-md-2 col-md-offset-6 margin-top-25">
+            <%= f.button :button, '',
+              class: 'btn btn-primary',
+              data:  {
+                disable_with: t(:wait),
+                behavior:     'filterData'
+              } do |b| %>
+              <i class="fa fa-filter"></i>
+              Filtrar
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<div class="box box-primary">
+
+  <div class="box-header with-border">
+    <div class="row">
+      <div class="col-md-4">
+        <h3 class="box-title"><%= t(:about_payment) %></h3>
+      </div>
+    </div>
+
+    <%= render partial: 'payment_groups/associated_payment_group' %>
+
+    <div class="box-tools pull-right">
+      <button
+        class="btn btn-box-tool"
+        data-widget="collapse">
+        <i class="fa fa-minus"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="box-body">
+    <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <% if @payment_group.is_credit? %>
+          <%= render partial: 'payment_groups/credit_information' %>
+        <% else %>
+          <%= render partial: 'payment_groups/debit_information' %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3">
+        <%= link_to export_to_excel_payment_group_path(
+            @payment_group,
+            format: :xlsx
+          ),
+          class:  'btn btn-default',
+          target: 'blank' do %>
+            <i class="fa fa-file-excel-o"></i>
+            Exportar a Excel
+        <% end unless @payment_group.is_refund? %>
+      </div>
+
+      <div class="col-md-3 col-md-offset-5" id="js-bankCharges">
+        <%= link_to bank_charges_form_international_payment_group_path(@payment_group),
+          class:  'btn btn-primary',
+          remote: true do %>
+          <i class="fa fa-bank"></i>
+          Cargar gastos bancarios
+        <% end unless @payment_group.is_credit? ||
+          @payment_group.payment.commission > 0 ||
+          @payment_group.category == 1
+        %>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>

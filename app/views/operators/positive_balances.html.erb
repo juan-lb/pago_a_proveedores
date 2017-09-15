@@ -1,0 +1,54 @@
+<section class="content">
+  <div class="row">
+    <%= render partial: 'positive_balances_filter' %>
+    <%= render partial: 'positive_balances_totals' %>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-primary">
+        <div class="box-header">
+          <h3 class="box-title">Saldos a favor por operador</h3>
+          <div class="box-tools pull-right">
+            <span
+               class="btn btn-sm btn-primary"
+               data-behavior="hideOperators">
+              <i class="fa fa-eye"></i>
+              Ocultar operadores sin créditos
+            </span>
+
+            <%= link_to export_positive_balances_operators_path(
+                filter_params: params[:operators_positive_balances_filter],
+                format: :pdf
+              ),
+              class: 'btn btn-sm btn-success' do %>
+              <i class="fa fa-download"></i>
+              Exportar PDF
+            <% end %>
+          </div>
+        </div>
+
+        <div class="box-body">
+          <table class="table table-reponsive">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th class="filter-false">Créditos U$D</th>
+                <th class="filter-false">Créditos AR$</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <%= render partial: 'operator_positive_balance',
+                collection: @presenter.operators_with_balances
+              %>
+            </tbody>
+          </table>
+        </div>
+
+        <%= will_paginate @presenter.operators_with_balances %>
+
+      </div>
+    </div>
+  </div>
+</section>

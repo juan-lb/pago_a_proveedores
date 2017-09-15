@@ -1,0 +1,144 @@
+<% preselected = preselected.include? service_register.id %>
+<% klass = service_register.has_detail? ? '' : 'background-color-light-yellow' %>
+
+<tr
+  id="service-register-<%= service_register.id %>"
+  data-reserve="<%= service_register.id_res %>"
+  class="<%= klass %> js-serviceRegister js-row">
+
+  <!-- checkbox -->
+  <td class="shrink">
+    <%= check_box_tag "register_filter[register_ids][]",
+      service_register.id, preselected,
+      class: "checkbox_tag js-serviceRegister js-#{type}",
+      data: {
+        cost: service_register.amount,
+        currency: service_register.currency,
+        behavior: "select_service"
+      }
+    %>
+  </td>
+
+  <!-- número de file -->
+  <td class="shrink">
+    <%= link_to service_register.id_res,
+        reserve_path(service_register.id_res,
+          service_register_id: service_register,
+          operator_aptour_id: service_register.operator_aptour_id),
+        data: { disable_with: t(:wait) },
+        remote: true
+    %>
+    (<%= @presenter.reserves[service_register.id_res] %>)
+  </td>
+
+  <!-- estado -->
+  <td class="shrink"
+      data-toggle="tooltip"
+      data-placement="right"
+      data-container="body"
+      title="<%= service_register.status %>">
+    <%= service_register.short_status %>
+  </td>
+
+  <!-- monto depositado por agencia en AR$ -->
+  <td class="shrink">
+    <%= number_with_precision service_register.agency_payment_ars %>
+  </td>
+
+  <!-- monto depositado por agencia en U$D -->
+  <td class="shrink">
+    <%= number_with_precision service_register.agency_payment_usd %>
+  </td>
+
+  <!-- saldo en AR$ -->
+  <td class="shrink">
+    <%= number_with_precision service_register.reserve.debt.abs - @presenter.reserves_paid[service_register.id_res]['ars'] %>
+  </td>
+
+  <!-- saldo en U$D -->
+  <td class="shrink">
+    <%= number_with_precision service_register.reserve.debt_usd.abs - @presenter.reserves_paid[service_register.id_res]['usd'] %>
+  </td>
+
+  <!-- monto a pagar -->
+  <td class="shrink">
+    <%= service_register.amount_with_currency %>
+  </td>
+
+  <!-- titular -->
+  <td class="shrink"
+      data-toggle="tooltip"
+      data-placement="right"
+      data-container="body"
+      title="<%= service_register.viajeroresponsable %>">
+    <%= service_register.passenger %>
+  </td>
+
+  <!-- fechas -->
+  <% klass1 = '' %>
+  <% klass2 = '' %>
+  <% klass3 = '' %>
+  <% klass4 = '' %>
+
+  <% type = @presenter.filter.fec_type %>
+  <% if type == 'near_expiring_date' || type == '' %>
+    <% type = service_register.near_expiring_date_type %>
+  <% else %>
+    <% type = @presenter.filter.fec_type %>
+  <% end %>
+
+  <% case type
+  when 'fec_sal'
+    klass1 = 'bold'
+  when 'fec_pag'
+    klass2 = 'bold'
+  when 'fec_sen'
+    klass3 = 'bold'
+  when 'fec_out'
+    klass4 = 'bold'
+  end %>
+
+  <!-- fecha de in -->
+  <td class="<%= klass1 %>">
+    <%= service_register.fec_sal %>
+  </td>
+
+  <!-- fecha de pago -->
+  <td class="<%= klass2 %>">
+    <%= service_register.ps == 'S' ? '-' : service_register.fec_pag %>
+  </td>
+
+  <!-- fecha de seña -->
+  <td class="<%= klass3 %>">
+    <% if service_register.ps == 'S' %>
+      <span
+        class="text-yellow"
+        title="Seña de pago">
+        <%= service_register.fec_sen %>
+      </span>
+    <% else %>
+      -
+    <% end %>
+  </td>
+
+  <!-- fecha de out -->
+  <td class="<%= klass4 %>">
+    <%= service_register.fec_out %>
+  </td>
+
+  <!-- localizador -->
+  <td class="shrink">
+    <%= service_register.leg_ope %>
+  </td>
+
+  <!-- nombre agencia -->
+  <td class="shrink"><span class="label label-<%= service_register.agency_color %>">
+      <%= service_register.agency_name %>
+  </td>
+
+  <!-- detalle -->
+  <td class="shrink <% if service_register.prepaid? %>background-color-light-red<% end %>">
+    <%= details_text(service_register) %>
+  </td>
+
+</tr>

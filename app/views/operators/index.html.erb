@@ -1,0 +1,69 @@
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title"><%= t(:filter) %></h3>
+
+          <div class="box-tools pull-right">
+            <button
+              class="btn btn-box-tool"
+              data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="box-body">
+          <div class="col-md-12">
+            <%= render partial: 'filter' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-primary">
+        <div class="box-header">
+          <h3 class="box-title"><%= t(:operators) %></h3>
+          <div class="box-tools pull-right">
+            <%= link_to export_transfers_average_operators_path(
+                format: :pdf
+              ),
+              class: 'btn btn-sm btn-success' do %>
+              <i class="fa fa-download"></i>
+              Promedio de transferencias
+            <% end %>
+          </div>
+        </div>
+
+        <div class="box-body table-responsive table-hover" id="js-operators">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th class="filter-false">Categoría</th>
+                <th class="filter-false">Cuenta corriente</th>
+                <th class="filter-false">Ret. Ganan</th>
+                <th class="filter-false">Email</th>
+                <th class="filter-false">Importar</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <%= render @presenter.operators %>
+            </tbody>
+          </table>
+        </div>
+
+        <%= will_paginate @presenter.operators %>
+
+        <div class="overlay hidden js-loadingStatistics">
+          <i class="fa fa-refresh fa-spin"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

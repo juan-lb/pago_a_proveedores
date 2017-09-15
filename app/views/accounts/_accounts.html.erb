@@ -1,0 +1,21 @@
+<h5>Cuentas habilitadas: </h5>
+<div id="table-scroll">
+
+  <table id="table-accounts" class="table table-condensed table-bordered">
+    <thead>
+      <tr>
+        <th>Identificador</th>
+        <th>Moneda</th>
+        <th>Categoría</th>
+        <th>Tipo</th>
+        <th>Nombre para mostrar</th>
+        <th>Proveedor</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody id="accounts">
+      <%= render partial: '/accounts/account', collection: @accounts %>
+    </tbody>
+  </table>
+</div>

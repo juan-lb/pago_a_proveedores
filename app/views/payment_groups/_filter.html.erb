@@ -1,0 +1,130 @@
+<% operator_name = @presenter.filter.operator_id.nil? ? {} : [[Operator.find_by(aptour_id: @presenter.filter.operator_id).name, @presenter.filter.operator_id]] %>
+<% selected_operator = @presenter.filter.operator_id.nil? ? {} : { selected: @presenter.filter.operator_id } %>
+
+<%= simple_form_for @presenter.filter,
+  url:    :payment_groups,
+  method: :get do |f|
+%>
+  <div class="row">
+    <div class="col-md-2">
+      <%= f.label  :operator_category, class: 'control-label' %>
+      <%= f.select :operator_category,
+        Profile::OPERATOR_CATEGORY,
+        {
+          selected:      @presenter.filter.operator_category,
+          include_blank: true
+        },
+        {
+          class: 'form-control'
+        }
+      %>
+    </div>
+
+    <div class="col-md-3">
+      <%= f.label  :operator_id, t(:operator), class: 'control-label' %>
+      <%= f.select :operator_id,
+        operator_name,
+        selected_operator,
+        class: 'operator_select2'
+      %>
+    </div>
+
+    <div class="col-md-2">
+      <%= datepicker_input f, :from, class: 'form-control' %>
+    </div>
+
+    <div class="col-md-2">
+      <%= datepicker_input f, :to, class: 'form-control' %>
+    </div>
+
+    <div class="col-md-2">
+      <%= f.label  :status, t(:status), class: 'control-label' %>
+      <%= f.select :status,
+        [
+          Const::PAYMENT_STATUS_DRAFT,
+          Const::PAYMENT_STATUS_IN_PROCESS,
+          Const::PAYMENT_STATUS_SENT,
+          Const::PAYMENT_STATUS_CLOSED
+        ],
+        {selected: Const::PAYMENT_STATUS_CLOSED},
+        class: 'form-control'
+      %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <%= f.input :reserve,
+        class:       'form-control',
+        placeholder: 'Ingrese un número de reserva'
+      %>
+    </div>
+
+    <div class="col-md-3">
+      <%= f.input :leg_ope,
+        class:       'form-control',
+        placeholder: 'Ingrese un localizador'
+      %>
+    </div>
+
+    <div class="col-md-3">
+      <%= f.input :passenger,
+        class:       'form-control',
+        placeholder: 'Datos del pasajero'
+      %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-9">
+      <%= label_tag :sellers, 'Vendedor/es' %>
+      <%= select_tag 'payment_group_filter[sellers]',
+        options_from_collection_for_select(
+          User.all, 'aptour_id', 'name',
+          @presenter.filter.sellers
+        ),
+        multiple: true,
+        data: {
+          behavior: 'selectSellers'
+        }
+      %>
+    </div>
+
+    <div class="col-md-1 margin-top-25">
+      <span style="position: abolute;">
+        <%= check_box_tag 'payment_group_filter[refund]', 'refund', false,
+          class:   'tgl tgl-flip',
+          id:      'refund',
+          checked: @presenter.filter.refund
+        %>
+        <label
+          class="tgl-btn"
+          data-tg-off="Pago"
+          data-tg-on="Devolución"
+          for="refund">
+        </label>
+      </span>
+    </div>
+
+    <div class="col-md-2 margin-top-25">
+      <%= link_to payment_groups_path,
+        class: 'btn btn-default' do |b| %>
+        <i
+          class="fa fa-eraser"
+          data-toggle="tooltip"
+          data-placement="right"
+          title="Borrar filtros">
+        </i>
+      <% end %>
+
+      <%= f.button :button, t(:filter),
+        data: {
+          disable_with: t(:wait)
+        },
+        class: 'btn btn-primary margin-left-10' do |b| %>
+        <i class="fa fa-filter"></i>
+        Filtrar
+      <% end %>
+    </div>
+  </div>
+<% end %>

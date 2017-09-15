@@ -1,0 +1,60 @@
+<div class="modal-header" id="js-balanceDetail">
+  <button
+    type="button"
+    class="close"
+    data-dismiss="modal">
+    &times;
+  </button>
+
+  <h4 class="modal-title">
+    Envío de reporte de estadísticas de pagos
+  </h4>
+</div>
+
+<div class="modal-body">
+
+  <%= form_for StatisticsReport.new,
+    url: send_report_statistics_path,
+    method: :post,
+    remote: true do |f| %>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <%= f.label 'Notas' %>
+          <%= f.text_area :message,
+            class:       'form-control',
+            placeholder: 'Ingrese nota u observación de interés'
+          %>
+        </div>
+
+        <% params[:filter_params].each do |key,value| %>
+          <%= hidden_field_tag "filter_params[#{key}]", value %>
+        <% end if params[:filter_params] %>
+      </div>
+
+      <br/>
+
+      <div class="row">
+        <div class="col-md-4">
+          <%= f.label 'Destinatario' %>
+          <%= f.email_field :to,
+            class:       'form-control',
+            value:       current_user.email,
+            placeholder: 'Ingrese correo del destinatario',
+            required:    true
+          %>
+        </div>
+
+        <div class="col-md-2 col-md-offset-6">
+          <%= f.submit "Enviar reporte",
+            data: {
+              disable_with: 'Enviando...'
+            },
+            class: 'btn btn-success margin-top-25'
+          %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

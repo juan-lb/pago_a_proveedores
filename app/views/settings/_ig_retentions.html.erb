@@ -1,0 +1,39 @@
+<div class="box box-primary">
+  <div class="box-header with-border">
+    <h3 class="box-title">Retención de ganancias</h3>
+  </div>
+
+  <div class="box-body">
+    <div class="row">
+      <div class="col-md-4">
+        <%= label @setting, 'Límite' %>
+        <br/>
+        <%= best_in_place @setting, :ig_limit,
+          as:          :input,
+          class:       'bold',
+          inner_class: 'bip-input'
+        %>
+      </div>
+
+      <div class="col-md-4">
+        <%= label @setting, 'Base' %>
+        <br/>
+        <%= best_in_place @setting, :ig_base,
+          as:          :input,
+          class:       'bold',
+          inner_class: 'bip-input'
+        %>
+      </div>
+
+      <div class="col-md-4">
+        <%= label @setting, 'Alícuota' %>
+        <br/>
+        <%= best_in_place @setting, :ig_aliquot,
+          as:          :input,
+          class:       'bold',
+          inner_class: 'bip-input'
+        %>
+      </div>
+    </div>
+  </div>
+</div>

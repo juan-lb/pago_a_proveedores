@@ -1,0 +1,24 @@
+<% total = payment_group.total + payment_group.difference %>
+
+<tr id="<%= dom_id payment_group %>">
+  <!-- fecha -->
+  <td><%= payment_group.sent_date %></td>
+
+  <!-- operador -->
+  <td><%= payment_group.operator_name %></td>
+
+  <!-- moneda -->
+  <td><%= payment_group.currency_symbol %></td>
+
+  <!-- total -->
+  <td><%= number_with_precision total, precision: 2 %></td>
+
+  <!-- cargar gastos bancarios -->
+  <td class="text-center">
+    <%= link_to bank_charges_form_international_payment_group_path(payment_group),
+      class:  'btn btn-primary btn-xs',
+      remote: true do %>
+      <i class="fa fa-bank" title="Cargar gastos bancarios"></i>
+    <% end %>
+  </td>
+</tr>

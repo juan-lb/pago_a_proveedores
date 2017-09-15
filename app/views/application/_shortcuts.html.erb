@@ -1,0 +1,152 @@
+<div class="box box-primary">
+  <div class="box-header">
+    <h3 class="box-title">Accesos directos</h3>
+  </div>
+
+  <div class="box-body">
+    <div class="row">
+      <div class="col-md-12">
+        <h4 class="bold">General</h4>
+      </div>
+    </div>
+
+    <div class="row margin-top-10">
+      <% permitted = current_user.has_permissions? :statistics %>
+      <%= link_to :statistics, class: "#{permitted ? '' : 'disabled'}" do %>
+        <div class="col-md-6">
+          <div class="info-box">
+            <span class="info-box-icon bg-yellow">
+              <i class="fa fa-bar-chart"></i>
+            </span>
+
+            <div class="info-box-content">
+              <span class="info-box-text bold">Estadísticas</span>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <% permitted = current_user.has_permissions? :fund_flow %>
+      <%= link_to :fund_flow_index, class: "#{permitted ? '' : 'disabled'}" do %>
+        <div class="col-md-6">
+          <div class="info-box">
+            <span class="info-box-icon bg-orange">
+              <i class="fa fa-area-chart"></i>
+            </span>
+
+            <div class="info-box-content">
+              <span class="info-box-text bold">Flujo de fondos</span>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <% permitted = current_user.has_permissions? :agency_payments %>
+      <%= link_to :agency_payments, class: "#{permitted ? '' : 'disabled'}" do %>
+        <div class="col-md-6">
+          <div class="info-box">
+            <span class="info-box-icon bg-green">
+              <i class="fa fa-dollar"></i>
+            </span>
+
+            <div class="info-box-content">
+              <span class="info-box-text bold">Dinero entrante</span>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <% permitted = current_user.has_permissions? :operators %>
+      <%= link_to :positive_balances_operators, class: "#{permitted ? '' : 'disabled'}" do %>
+        <div class="col-md-6">
+          <div class="info-box">
+            <span class="info-box-icon bg-red">
+              <i class="fa fa-navicon"></i>
+            </span>
+
+            <div class="info-box-content">
+              <span class="info-box-text bold">Saldos a favor</span>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <% permitted = current_user.has_permissions? :settings %>
+      <%= link_to :settings, class: "#{permitted ? '' : 'disabled'}" do %>
+        <div class="col-md-6">
+          <div class="info-box">
+            <span class="info-box-icon bg-blue">
+              <i class="fa fa-cog"></i>
+            </span>
+
+            <div class="info-box-content">
+              <span class="info-box-text bold">Opciones</span>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <% permitted = current_user.has_permissions? :payment_groups %>
+    <% if permitted %>
+      <div class="row">
+        <div class="col-md-12">
+          <h4 class="bold">Pagos</h4>
+        </div>
+      </div>
+
+      <div class="row margin-top-10">
+        <%= link_to [:payment_groups,
+          payment_group_filter: {
+            status: 'Cargado'
+          }
+        ] do %>
+          <div class="col-md-6">
+            <div class="info-box">
+              <span class="info-box-icon bg-navy">
+                <i class="fa fa-book"></i>
+              </span>
+
+              <div class="info-box-content">
+                <span class="info-box-text bold">Realizados</span>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <%= link_to [:payment_groups,
+          payment_group_filter: {
+            refund: 'refund',
+            status: 'Cargado'
+          }
+        ] do %>
+          <div class="col-md-6">
+            <div class="info-box">
+              <span class="info-box-icon bg-navy">
+                <i class="fa fa-reply"></i>
+              </span>
+
+              <div class="info-box-content">
+                <span class="info-box-text bold">Devoluciones</span>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <%= link_to [:closed_without_bank_charges, :international_payment_groups] do %>
+          <div class="col-md-6">
+            <div class="info-box">
+              <span class="info-box-icon bg-navy">
+                <i class="fa fa-bank"></i>
+              </span>
+
+              <div class="info-box-content">
+                <span class="info-box-text bold">Sin gastos bancarios</span>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

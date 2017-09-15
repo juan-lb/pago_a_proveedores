@@ -1,0 +1,69 @@
+# == Schema Information
+#
+# Table name: reserves
+#
+#  id                 :integer          not null, primary key
+#  reserve_id         :integer
+#  total_in_cents     :integer
+#  paid_in_cents      :integer
+#  used_in_cents      :integer          default(0)
+#  total_usd_in_cents :integer
+#  paid_usd_in_cents  :integer
+#  used_usd_in_cents  :integer          default(0)
+#  agency_aptour_id   :integer
+#  id_usu             :string(255)
+#  observations       :text(65535)
+#  client_details     :text(65535)
+#  fec_ape            :date
+#  id_operes          :string(255)
+#  debt_in_cents      :integer          default(0)
+#  debt_usd_in_cents  :integer          default(0)
+#
+
+reserve_one:
+  id: 1
+  reserve_id: 1
+  total_in_cents: 0
+  paid_in_cents: 0
+  used_in_cents: 0
+  total_usd_in_cents: 200
+  paid_usd_in_cents: 0
+  used_usd_in_cents: 0
+  agency_aptour_id: 1
+  id_usu: 7
+  observations: ''
+  client_details: ''
+  fec_ape: "2016-09-20"
+  id_operes: 7
+
+reserve_two:
+  id: 2
+  reserve_id: 2
+  total_in_cents: 0
+  paid_in_cents: 0
+  used_in_cents: 0
+  total_usd_in_cents: 100
+  paid_usd_in_cents: 0
+  used_usd_in_cents: 0
+  agency_aptour_id: 1
+  id_usu: 7
+  observations: ''
+  client_details: ''
+  fec_ape: "2016-09-22"
+  id_operes: 7
+
+reserve_three:
+  id: 3
+  reserve_id: 3
+  total_in_cents: 0
+  paid_in_cents: 0
+  used_in_cents: 0
+  total_usd_in_cents: 100
+  paid_usd_in_cents: 0
+  used_usd_in_cents: 0
+  agency_aptour_id: 1
+  id_usu: 7
+  observations: ''
+  client_details: ''
+  fec_ape: "2016-09-22"
+  id_operes: 7

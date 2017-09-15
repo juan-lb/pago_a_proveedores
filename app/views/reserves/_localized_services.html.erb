@@ -1,0 +1,30 @@
+<h5>Servicios asociados por localizador (<strong><%= @presenter.current_service.leg_ope %></strong>): </h5>
+
+<table class="table table-bordered table-responsive table-condensed">
+  <thead>
+    <tr>
+      <th width="40%">Servicio</th>
+      <th width="60%">Observaciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @presenter.localized_services.each do |service| %>
+      <% next if service == @presenter.current_service %>
+      <tr>
+        <td>
+          <strong>#<%= service.numero %> </strong>
+          <%= service.NOMBRE.strip %>
+        </td>
+        <td>
+          <% service.obse_serv.present? ? service.obse_serv : '-' %>
+        </td>
+      </tr>
+    <% end %>
+
+    <% if @presenter.localized_services.empty? %>
+      <tr>
+        <td colspan="2">No existen servicios asociados.</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

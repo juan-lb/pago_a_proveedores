@@ -1,0 +1,122 @@
+<%
+  total        = payment_group.total
+  not_finished = payment_group.international? &&
+    payment_group.closed? &&
+    !payment_group.is_credit? &&
+    payment_group.payment.commission == 0
+
+  debt   = payment_group.debts_amount
+  credit = payment_group.credits_amount
+%>
+
+<tr
+  <% if payment_group.adjustment %>
+    class="js-payment-group success"
+  <% else %>
+    class="js-payment-group <%= 'danger' if not_finished %>"
+  <% end %>
+  data-total="<%= payment_group.total %>">
+
+  <!-- checkbox -->
+  <td>
+    <input type="checkbox">
+  </td>
+
+  <!-- fecha de actualización -->
+  <td width="30%">
+    <%= l payment_group.updated_at %>
+  </td>
+
+  <!-- nombre de operador -->
+  <td>
+    <%= payment_group.operator_name %>
+  </td>
+
+  <!-- moneda -->
+  <td>
+    <%= payment_group.currency_symbol %>
+  </td>
+
+  <!-- débito -->
+  <td class="align-right">
+    <%= number_to_currency(debt, precision: 2, unit: '') %>
+  </td>
+
+  <!-- crédito -->
+  <td class="align-right">
+    <%= number_to_currency(credit, precision: 2, unit: '') %>
+  </td>
+
+  <!-- calculado -->
+  <td class="align-right">
+    <%= number_to_currency(debt + credit, precision: 2, unit: '') %>
+  </td>
+
+  <!-- retención -->
+  <td class="align-right">
+    <%= number_to_currency(payment_group.retention_amount, precision: 2, unit: '') %>
+  </td>
+
+  <!-- total -->
+  <td class="align-right <%= "js-credit" if payment_group.is_credit %>">
+    <% if payment_group.is_credit? && !payment_group.is_refund? %>
+      <%= link_to number_with_precision(total, precision: 2),
+        [:show_credit, payment_group],
+        class:  'js-total',
+        data: {
+          behavior: "view_payment",
+        },
+        target: '_blank'
+      %>
+    <% else %>
+      <% if payment_group.status == Const::PAYMENT_STATUS_DRAFT %>
+        <%= link_to number_with_precision(total, precision: 2),
+          service_registers_path(
+            register_filter: {
+              operator_id: payment_group.operator_aptour_id
+            }
+          ),
+          class: 'js-total',
+          target: '_blank',
+          data: {
+            behavior: "view_payment",
+            currency: payment_group.currency
+          }
+        %>
+      <% else %>
+        <% total_payed = total + payment_group.difference - payment_group.retention_amount %>
+        <%= link_to number_with_precision(total_payed, precision: 2),
+          [payment_group],
+          target: '_blank',
+          class: 'js-total',
+          data: {
+            no_turbolink: true,
+            behavior:     "view_payment",
+            currency:     payment_group.currency
+          }
+        %>
+
+        <% if not_finished %>
+          <i
+            class="fa fa-exclamation-circle text-danger"
+            title="Gastos bancarios no cargados. Entrar al detalle para agregarlos.">
+          </i>
+        <% end %>
+
+        <% if payment_group.adjustment %>
+          <i
+            class="fa fa-tag text-success"
+            title="Pago de ajuste. En el detalle del pago se encuentra información al respecto.">
+          </i>
+        <% end %>
+
+        <% if payment_group.currency == 'D' && payment_group.national? %>
+          <i
+            class="fa fa-exchange text-primary"
+            title="Monto pesificado: <%= number_to_currency total_payed * payment_group.payment.cotization %>">
+          </i>
+        <% end %>
+      <% end %>
+    <% end %>
+  </td>
+</tr>

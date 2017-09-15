@@ -1,0 +1,75 @@
+<% currency_symbol = @payment_group.currency_symbol %>
+
+<table class="table table-hover table-bordered">
+  <thead>
+    <tr>
+      <th>Reserva</th>
+      <th>Localizador</th>
+      <th>Titular</th>
+      <th>Fecha in</th>
+      <th>Prestador</th>
+      <th>Detalle</th>
+      <th>Importe</th>
+      <th>Euros</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @payment_group.services.each do |service| %>
+      <tr>
+        <!-- Número de reserva -->
+        <td class="shrink">
+          <%= service.reserve_id %>
+        </td>
+
+        <!-- Localizador -->
+        <td class="shrink">
+          <%= service.leg_ope %>
+        </td>
+
+        <!-- Titular -->
+        <td class="shrink">
+          <%= service.viajeroresponsable ? service.viajeroresponsable.upcase : '-' %>
+        </td>
+
+        <!-- Fecha de IN -->
+        <td class="shrink">
+          <%= service.date_in %>
+        </td>
+
+        <!-- Prestador -->
+        <td class="shrink">
+          <%= service.provider ? service.provider.name : '-' %>
+        </td>
+
+        <!-- Detalles -->
+        <td
+          class="shrink"
+          data-toggle="tooltip"
+          data-placement="right"
+          data-container="body"
+          title="<%= service.details %>">
+          <%= truncate(service.details, length: 25) %>
+        </td>
+
+        <!-- Importe -->
+        <td class="shrink align-right">
+          <%= number_to_currency(service.amount, unit: currency_symbol) %>
+        </td>
+
+        <!-- Euros -->
+        <td class="shrink align-right">
+          € <%= best_in_place service, :euros, as: :input %>
+        </td>
+      </tr>
+    <% end %>
+
+    <tr class="text-bold">
+      <td colspan="6">Total</td>
+      <td class="align-right">
+        <%= number_to_currency(@payment_group.payment.total_debt, unit: currency_symbol) %>
+      </td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>

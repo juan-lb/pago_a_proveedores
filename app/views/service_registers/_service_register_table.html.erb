@@ -1,0 +1,66 @@
+<div id="table-scroll">
+  <table class="table table-bordered table-condensed background-white">
+    <thead>
+      <tr>
+        <th>Operador</th>
+        <th>Moneda</th>
+        <th>Deuda</th>
+      </tr>
+    </thead>
+
+    <tfoot>
+      <tr>
+        <td colspan='2'><strong>TOTAL</strong></td>
+        <td class="align-right">
+          <strong>
+            <%= number_with_precision(
+              operators.map { |op| op[:total] }.sum,
+              precision: 2
+            ) %>
+          </strong>
+        </td>
+      </tr>
+    </tfoot>
+
+    <tbody>
+      <% for operator in operators %>
+        <tr>
+          <!-- nombre -->
+          <td>
+            <%= form_tag [:service_registers],
+              target: '_blank',
+              method: :post do
+            %>
+              <%= hidden_field_tag 'register_filter[operator_id]',
+                operator[:id]
+              %>
+              <% operator[:registers_ids].each do |reg_id| %>
+                <%= hidden_field_tag 'register_filter[register_ids][]', reg_id %>
+              <% end %>
+              <%= button_tag operator[:nom_ope], class: 'btn btn-link btn-xs' %>
+            <% end %>
+          </td>
+
+          <!-- moneda -->
+          <td>
+            <%= operator[:moneda] %>
+          </td>
+
+          <!-- total -->
+          <td class="align-right">
+            <%= number_with_precision(
+              operator[:total],
+              precision: 2
+            ) %>
+          </td>
+        </tr>
+      <% end %>
+
+      <% if operators.empty? %>
+        <tr>
+          <td colspan="3">No se encontró información</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

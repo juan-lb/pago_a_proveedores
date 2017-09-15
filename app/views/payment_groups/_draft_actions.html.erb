@@ -1,0 +1,110 @@
+<%
+  margin = (payment_group.has_euros? ? '45' : '10')
+
+  payment =
+    # Devolución
+    if payment_group.is_refund?
+      :refund
+    # Crédito
+    elsif payment_group.total.round(2) <= 0 && payment_group.services.size > 0
+      :credit
+    # Débito nacional en pesos
+    elsif payment_group.national? && payment_group.currency == 'P'
+      :ars_national_debit
+    # Débito nacional en dólares
+    elsif payment_group.national? && payment_group.currency == 'D'
+      :usd_national_debit
+    # Débito internacional
+    elsif payment_group.international?
+      :international_debit
+    end
+%>
+
+<div class="row">
+  <% case payment %>
+  <% when :refund %>
+    <div class="col-md-3 col-md-offset-8 margin-top-<%= margin %>">
+      <%= link_to 'Cargar',
+        [:processed, payment_group],
+        data: {
+          disable_with: t(:wait)
+        },
+        method: :put,
+        class:  'btn btn-primary',
+        id:     'js-submitPayment'
+      %>
+    </div>
+  <% when :credit %>
+    <div class="col-md-3 col-md-offset-8 margin-top-<%= margin %>">
+      <%= link_to 'Transferir',
+        [:process_credit, payment_group],
+        data: {
+          disable_with: t(:wait)
+        },
+        method: :put,
+        class:  'btn btn-primary',
+        id:     'js-submitPayment'
+      %>
+    </div>
+  <% when :ars_national_debit %>
+    <div class="col-md-3 col-md-offset-8 margin-top-<%= margin %>">
+      <%= link_to 'Pagar',
+        [:sent, payment_group],
+        data: {
+          disable_with: t(:wait)
+        },
+        class:  'btn btn-primary',
+        id:     'js-submitPayment',
+        method: :put if payment_group.currency == 'P'
+      %>
+    </div>
+  <% when :usd_national_debit %>
+    <%= form_for [:sent, payment_group], method: :put do |f| %>
+      <div class="col-md-8">
+        <%= f.label "Cotización del dólar:" %>
+      </div>
+      <div class="col-md-6">
+        <%= f.text_field :cotization,
+          class: "form-control",
+          required: true,
+          value: Cotizator.new.usd_cotization
+        %>
+      </div>
+      <div class="col-md-6">
+        <%= f.submit "Pagar",
+          class: 'btn btn-primary',
+          id:    'js-submitPayment'
+        %>
+      </div>
+    <% end %>
+  <% when :international_debit %>
+    <div class="col-md-3 col-md-offset-8 margin-top-<%= margin %>">
+      <%= link_to 'Pagar',
+        [:processed, payment_group],
+        data: {
+          disable_with: t(:wait)
+        },
+        method: :put,
+        class:  'btn btn-primary',
+        id:     'js-submitPayment'
+      %>
+    </div>
+  <% end %>
+</div>
+
+<!-- Eliminar pago -->
+<div class="row margin-top-5">
+  <div class="col-md-8">
+    <%= link_to payment_group_path(payment_group),
+      method: :delete,
+      class: 'btn btn-danger',
+      remote: true,
+      data: {
+        disable_with: t(:wait),
+        confirm: 'Se eliminará el pago. ¿Desea continuar?'
+      } do %>
+      <i class="fa fa-trash"></i>
+      Eliminar pago
+    <% end %>
+  </div>
+</div>

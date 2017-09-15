@@ -1,0 +1,120 @@
+<% if @payment_group.payment.present? %>
+  <% total = @payment_group.payment.total_debt %>
+<% else %>
+  <% total = @payment_group.total %>
+<% end %>
+
+<%= render partial: 'operator_bank_data' %>
+
+<div class="box box-primary">
+  <div class="box-header with-border">
+    <div class="row">
+      <div class="col-md-4">
+        <h3 class="box-title"><%= t(:information) %></h3>
+      </div>
+    </div>
+
+    <div class="box-tools pull-right">
+      <button
+        class="btn btn-box-tool"
+        data-widget="collapse">
+        <i class="fa fa-minus"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="box-body">
+    <div class="row">
+      <div class="col-md-12">
+        <dl class="dl">
+          <dt>
+            <%= t(:status) %>:
+            <span class="label label-default">
+              <%= @payment_group.status %>
+            </span>
+          </dt>
+          <dt>
+            <%= t(:created_by) %>:
+            <span class="text-muted">
+              <%= @payment_group.profile.email %>
+            </span>
+          </dt>
+          <dt>
+            <%= t(:operator) %>:
+            <span class="text-muted">
+              <%= @payment_group.operator_name %>
+            </span>
+          </dt>
+        </dl>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <h4>Servicios asociados</h4>
+      </div>
+    </div>
+
+    <%= render partial: 'services/services' %>
+  </div>
+
+  <div class="box-footer clearfix">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="info-box">
+          <span class="info-box-icon bg-aqua">
+            <i><%= @payment_group.currency_symbol %></i>
+          </span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Total </span>
+            <span class="info-box-number">
+              <%= number_with_precision(total, precision: 2) %>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <% if @payment_group.has_euros? %>
+        <div class="col-md-6">
+          <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i>€</i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">Total euros</span>
+              <span class="info-box-number">
+                <%= number_with_precision(
+                  @payment_group.total_euros,
+                  precision: 2
+                ) %>
+              </span>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="row">
+      <% if @payment_group.payment.present? %>
+        <% if @payment_group.draft? %>
+          <div class="col-md-4 ">
+            <%= link_to [:process, @payment_group],
+              method: :put,
+              class: '' do
+            %>
+              <i class="fa fa-check-square fa-3 "></i>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="col-md-4">
+            <%= link_to report_payment_group_path(@payment_group),
+              class: 'btn btn-default margin-top-10' do
+            %>
+              <i class="fa fa-download"></i>
+              <span>Reporte</span>
+            <% end unless @payment_group.is_credit %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

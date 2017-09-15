@@ -1,0 +1,87 @@
+<div class="box box-primary">
+  <div class="box-header with-border">
+    <h3 class="box-title">Reportes</h3>
+  </div>
+
+  <div class="box-body">
+    <div class="row">
+      <div class="col-md-12">
+        <p class="bold">Promedio de transferencias</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <%= label @setting, 'Días a promediar' %>
+        <br/>
+        <%= best_in_place @setting, :operators_average_days,
+          as:          :input,
+          class:       'bold',
+          inner_class: 'bip-input'
+        %>
+      </div>
+
+      <div class="col-md-6">
+        <%= label @setting, 'Límite inferior dólares' %>
+        <br/>
+        <%= best_in_place @setting, :transfer_average_usd_limit,
+          as:          :input,
+          class:       'bold',
+          inner_class: 'bip-input'
+        %>
+      </div>
+
+      <div class="col-md-6">
+        <%= label @setting, 'Emails' %>
+        <br/>
+        <%= link_to 'Editar', edit_emails_settings_path(
+            target: :operators_average
+          ),
+          remote: true,
+          class:  'btn btn-xs btn-primary'
+        %>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="row">
+      <div class="col-md-12">
+        <p class="bold">Saldos a favor</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <%= label @setting, 'Emails' %>
+        <br/>
+        <%= link_to 'Editar', edit_emails_settings_path(
+            target: :positive_balances
+          ),
+          remote: true,
+          class:  'btn btn-xs btn-primary'
+        %>
+      </div>
+
+      <div class="col-md-4">
+        <%= label @setting, 'Límite pesos' %>
+        <br/>
+        <%= best_in_place @setting, :min_ars_credit_report,
+          as:          :input,
+          class:       'bold',
+          inner_class: 'bip-input'
+        %>
+      </div>
+
+      <div class="col-md-4">
+        <%= label @setting, 'Límite dólares' %>
+        <br/>
+        <%= best_in_place @setting, :min_usd_credit_report,
+          as:          :input,
+          class:       'bold',
+          inner_class: 'bip-input'
+        %>
+      </div>
+    </div>
+  </div>
+</div>

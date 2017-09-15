@@ -1,0 +1,70 @@
+<%
+  comparison_mode = @presenter.filter.operator_aptour_id.present?
+  ars_color       = ['#2196F3', '#F44336']
+  usd_color       = ['#FFC107', '#4CAF50', '#2196F3', '#F44336']
+
+  if comparison_mode
+    name = @presenter.operator.name
+
+    ars = build_chart_data(name, @presenter.by_day.values, :sum_ars)
+    usd = build_chart_data(name, @presenter.by_day.values, :sum_usd)
+
+    all_ars = build_chart_data(
+      'Todos los operadores',
+      @presenter.all_by_day.values,
+      :sum_ars
+    )
+    all_usd = build_chart_data(
+      'Todos los operadores',
+      @presenter.all_by_day.values,
+      :sum_usd
+    )
+    all_usd_nat = build_chart_data(
+      'Operadores nacionales',
+      @presenter.all_by_day.values,
+      :sum_usd_nat
+    )
+    all_usd_int = build_chart_data(
+      'Operadores internacionales',
+      @presenter.all_by_day.values,
+      :sum_usd_int
+    )
+  else
+    all_ars = build_chart_data(
+      'Todos los operadores',
+      @presenter.by_day.values,
+      :sum_ars
+    )
+    all_usd = build_chart_data(
+      'Todos los operadores',
+      @presenter.by_day.values,
+      :sum_usd
+    )
+    all_usd_nat = build_chart_data(
+      'Operadores nacionales',
+      @presenter.by_day.values,
+      :sum_usd_nat
+    )
+    all_usd_int = build_chart_data(
+      'Operadores internacionales',
+      @presenter.by_day.values,
+      :sum_usd_int
+    )
+  end
+%>
+
+<%= line_chart (comparison_mode ? all_ars + ars : all_ars),
+  library: {
+    colors: ars_color,
+    width:  '1100',
+    title:  'A pagar en AR$'
+  }
+%>
+
+<%= line_chart (comparison_mode ? all_usd_nat + all_usd_int + all_usd + usd : all_usd_nat + all_usd_int + all_usd),
+  library: {
+    colors: usd_color,
+    width:  '1100',
+    title:  'A pagar en U$D'
+  }
+%>

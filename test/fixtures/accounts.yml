@@ -1,0 +1,21 @@
+# == Schema Information
+#
+# Table name: accounts
+#
+#  id                 :integer          not null, primary key
+#  name               :text(65535)      not null
+#  account_api_id     :integer          not null
+#  currency_id        :integer
+#  category           :integer
+#  name_to_show       :string(255)
+#  account_type       :string(255)
+#  provider_aptour_id :integer
+#
+
+account_one:
+  name: BCO RIO AERO SRL PESOS
+  account_api_id: 98
+  currency_id: 1
+  category: 3
+  name_to_show: Banco Santander
+  account_type: B

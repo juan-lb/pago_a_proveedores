@@ -1,0 +1,19 @@
+<% if @payment_group.has_difference? %>
+  <% principal_reserve_id = @payment_group.payment.principal_reserve_id %>
+  <tr>
+
+    <% if principal_reserve_id.nil? %>
+      <td>Excedente (sin reserva asignada)</td>
+    <% else %>
+      <td>Excedente en reserva <%= principal_reserve_id %></td>
+    <% end %>
+
+    <td class="align-right">
+      <%= @payment_group.currency_symbol %>
+      <%= number_with_precision(
+        @payment_group.difference, precision: 2
+      ) %>
+    </td>
+
+  </tr>
+<% end %>

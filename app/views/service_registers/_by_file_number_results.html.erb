@@ -1,0 +1,36 @@
+<div class="fluid-container" style="margin-top: 1em;">
+  <div class="row">
+    <h4 class="text-center bold">
+      Resultados
+    </h4>
+
+    <div class="text-center">
+      <% if @error  %>
+        <span class="fa fa-exclamation-circle text-danger"></span>
+        <span class="text-danger bold">
+          La reserva <%= params[:file_number] %> se ecuentra marcada con error de importación.
+        </span>
+      <% end %>
+
+      <% if !@error && @operators.empty? %>
+        <span class="fa fa-exclamation-circle text-danger"></span>
+        <span class="text-danger bold">
+          No se encontraron resultados
+        </span>
+      <% end %>
+
+      <% @operators.each do |operator| %>
+        <%= link_to operator[:name],
+          service_registers_path(
+            register_filter: {
+              operator_id: operator[:id],
+              reserve: params[:file_number] }
+          ),
+          data: {
+            behavior: 'hideModal'
+          }
+        %>
+      <% end %>
+    </div>
+  </div>
+</div>

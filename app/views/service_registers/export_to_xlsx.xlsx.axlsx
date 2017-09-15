@@ -1,0 +1,55 @@
+wb = xlsx_package.workbook
+wb.styles do |s|
+  header = [
+    'Reserva',
+    'Estado',
+    'Depositado AR$',
+    'Depositado U$D',
+    'A pagar',
+    'Titular',
+    'Fecha In',
+    'Fecha Pago',
+    'Fecha Seña',
+    'Fecha Out',
+    'Agencia',
+    'Localizador'
+  ]
+
+  data = @service_registers.map do |each|
+    [
+      each.id_res,
+      ServiceRegister::STATES.detect { |state| state.include? each.status_service }.try(:first),
+      each.reserve.paid.abs,
+      each.reserve.paid_usd.abs,
+      "#{each.currency == 'P' ? 'AR$' : 'U$D'} #{each.service_dif}",
+      each.viajeroresponsable ? each.viajeroresponsable.upcase.strip : '-',
+      each.fec_sal ? each.fec_sal.to_date.to_s : '-',
+      each.ps == 'S' || each.fec_pag.nil? ? '-' : each.fec_pag.to_date.to_s,
+      each.ps == 'S' && each.fec_pag ? each.fec_sen.to_date.to_s : '-',
+      each.fec_out ? each.fec_out.to_date.to_s : '-',
+      each.reserve.agency.name.strip,
+      each.leg_ope
+    ]
+  end
+
+  create_excel s
+
+  wb.add_worksheet do |sheet|
+    excel_header sheet, 'Servicios'
+    excel_empty_rows sheet, 1
+    sheet.add_row ['Operador:', @service_registers.first.operator.name], style: @bold
+    excel_empty_rows sheet, 1
+
+    excel_table_head sheet, header
+    excel_table_body_with_style sheet, data, @centered_table
+
+    # Logo de Aero
+    #img = File.expand_path(Rails.root+'app/assets/images/small_logo.png')
+    #sheet.add_image(:image_src => img, :end_at => true) do |image|
+      #image.width = 136
+      #image.height = 77
+      #image.start_at 0, 1
+    #end
+  end
+
+end

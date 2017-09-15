@@ -1,0 +1,78 @@
+<header class="main-header">
+  <%= link_to root_path, class: 'logo navbar-brand' do %>
+      <span class="logo-mini"><b>PP</b></span>
+      <span class="logo-lg"><b>Pago a Proveedores</b></span>
+  <% end %>
+
+  <nav class="navbar navbar-static-top" role="navigation">
+    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+      <span class="sr-only">Esconder/Mostrar menú</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </a>
+
+    <div class="navbar-custom-menu" >
+      <ul class="nav navbar-nav">
+        <li class="dropdown user-menu">
+          <a href="#"
+            class="dropdown-toggle"
+            data-toggle="dropdown"
+            aria-expanded="false">
+            <%= @current_profile.email %>
+            <span class="caret"></span>
+          </a>
+
+          <ul class="dropdown-menu">
+            <li class="user-header">
+              <p>
+                <div class="box-round box-small">
+                  <div class="box-dummy"> </div>
+                  <span class="box-inner">
+                    <i class="fa fa-user animated" data-animation=""></i>
+                  </span>
+                </div>
+                <span class="text-white">
+                  Categoría: <%= t "operator_category.#{@current_profile.operator_category}" %>
+                </span>
+
+                <br><br>
+
+                <small>
+                  <% if @current_profile.national? %>
+                    <%= link_to change_profile_operator_category_path, class: 'btn btn-xs btn-default' do %>
+                      Cambiar a Internacional
+                    <% end %>
+                  <% else %>
+                    <%= link_to change_profile_operator_category_path, class: 'btn btn-xs btn-default' do %>
+                      Cambiar a Nacional
+                    <% end %>
+                  <% end %>
+                </small>
+              </p>
+            </li>
+
+            <li class="user-footer">
+              <% if @current_profile.is?('admin') %>
+                <div class="pull-left">
+                  <%= link_to admin_index_path,
+                    class: 'btn btn-default btn-flat' do
+                  %>
+                    <%= icon :lock %>
+                    <%= t(:administration) %>
+                  <% end %>
+                </div>
+              <% end %>
+
+              <div class="pull-right">
+                <%= link_to t(:logout), logout_path,
+                  class: 'btn btn-danger btn-flat'
+                %>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

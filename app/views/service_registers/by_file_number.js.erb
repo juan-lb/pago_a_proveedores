@@ -1,0 +1,12 @@
+modal = $('#modal');
+modal.modal('show');
+
+modal.find('#js-byFileNumberResults').html("<%= j render partial: 'by_file_number_results' %>");
+$('[data-behavior~=hideModal]').on('click', function(e){
+  modal.modal('hide');
+});
+
+<% if @error %>
+  alert = new App.Alert();
+  alert.alert('Existen errores de importación con la reserva indicada.', 'alert-danger');
+<% end %>

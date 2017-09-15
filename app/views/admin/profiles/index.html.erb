@@ -1,0 +1,22 @@
+<section class="container-fluid margin-top-5">
+  <div class="box box-solid">
+    <div class="box-header">
+      <h3 class="box-title text-bold"><%= t :profiles %></h3>
+      <div class="box-tools pull-right">
+        <span class="pull-right">
+          <%= link_to [:new, :admin, :profile],
+            class: 'btn btn-primary' do %>
+            <i class="fa fa-plus-circle"></i>
+            Añadir usuario
+          <% end %>
+        </span>
+      </div>
+    </div>
+
+    <div class="box-body">
+      <section class="content">
+        <%= render @profiles %>
+      </section>
+    </div>
+  </div>
+</section>

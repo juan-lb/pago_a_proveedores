@@ -1,0 +1,53 @@
+<% total   = payment_group.total_for_statistics.round %>
+<% account = payment_group.payment.account %>
+
+<tr id="<%= dom_id payment_group %>"
+    class="js-statisticsPaymentGroup <%= 'success' if payment_group.sent? %>"
+    data-total="<%= total %>"
+    data-currency="<%= payment_group.currency_for_statistics %>">
+
+  <!-- checkbox -->
+  <td>
+    <input type="checkbox">
+  </td>
+
+  <!-- fecha de envío-->
+  <td>
+    <%= payment_group.sent_date %>
+  </td>
+
+  <!-- nombre de operador -->
+  <td>
+    <%= payment_group.operator_name %>
+  </td>
+
+  <!-- nombre de cuenta -->
+  <td>
+    <% if account.nil? %>
+      <span title="No registra cuenta bancaria asociada">
+        <i>sin información</i>
+      </span>
+    <% else %>
+      <span title="<%= account.name %>">
+        <%= account.public_name %>
+      </span>
+    <% end %>
+  </td>
+
+  <!-- moneda -->
+  <td>
+    <%= payment_group.currency_symbol_for_statistics %>
+  </td>
+
+  <!-- total -->
+  <td>
+    <%= number_to_currency total, unit: '' %>
+    <% if payment_group.sent? %>
+      <i
+        class="fa fa-exclamation-circle text-success pull-right"
+        title="Pago en estado ENVIADO">
+      </i>
+    <% end %>
+  </td>
+
+</tr>

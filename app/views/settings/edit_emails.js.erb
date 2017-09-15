@@ -1,0 +1,19 @@
+$('#modal').find('.modal-content').html("<%= j render partial: 'edit_emails_form' %>");
+$('#modal').modal();
+
+<% emails = @setting.send("#{params[:target]}_emails") %>
+
+input  = $('#js-toInput');
+emails = '[';
+
+<% emails.each do |email| %>
+  emails += '"<%= email %>",'
+<% end %>
+
+emails = emails.slice(0, -1) + ']';
+input.val(emails)
+
+// Inicialización de MultipleEmails input
+$('#js-toInput').multiple_emails();
+
+$('.multiple_emails-input').focus()

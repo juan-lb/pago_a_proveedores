@@ -1,0 +1,32 @@
+<% payment_opposite_currency = opposite_currency_symbol(payment_group.currency) %>
+
+<div class="hidden well" id="js-paymentCurrencyActions">
+  <div class="row text-danger">
+    <div
+      class="col-md-12 bold"
+      id="js-paymentCurrencyErrors">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <%= link_to "Cambiar moneda a #{payment_opposite_currency} y eliminar servicios en #{payment_currency}",
+        change_currency_payment_group_path(
+          payment_group,
+          old_params: params
+        ),
+        method: :put,
+        remote: true
+      %>
+      <br>
+      <%= link_to "Eliminar servicios en #{payment_opposite_currency}",
+        remove_incompatible_services_payment_group_path(
+          payment_group,
+          old_params: params
+        ),
+        method: :put,
+        remote: true
+      %>
+    </div>
+  </div>
+</div>

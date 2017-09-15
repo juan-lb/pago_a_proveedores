@@ -1,0 +1,101 @@
+<% international_category = @presenter.filter.operator_category == 'international' %>
+
+<div class="fluid-container">
+  <div class="row">
+    <div class="col-md-12">
+      <div
+        class="alert alert-warning text-center"
+        style="padding: 3px!important; width: 50%; margin-left: 25%;">
+        Los pagos en estado <strong>ENVIADO</strong> no son considerados por no tener cuenta bancaria asociada.
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="box box-warning">
+        <div class="box-header with-border">
+          <h3 class="box-title">Monto</h3>
+          <div class="box-tools pull-right">
+            <button
+              class="btn btn-box-tool"
+              data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="box-body">
+          <table class="table table-bordered table-responsive tablesorter js-statisticsTable">
+            <thead>
+              <tr>
+                <th>Banco</th>
+                <% unless international_category %>
+                  <th>AR$</th>
+                <% end %>
+                <th>U$D</th>
+                <th>EUR</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% @presenter.amount_by_bank.values.each do |b| %>
+                <tr>
+                  <td><%= b[:name] %></td>
+                  <% unless international_category %>
+                    <td><%= number_to_currency b[:ars].round, unit: '' %></td>
+                <% end %>
+                  <td><%= number_to_currency b[:usd].round, unit: '' %></td>
+                  <td><%= number_to_currency b[:eur].round, unit: '' %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="overlay hidden js-loadingStatistics">
+          <i class="fa fa-refresh fa-spin"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="box box-warning">
+        <div class="box-header with-border">
+          <h3 class="box-title">Cantidad</h3>
+          <div class="box-tools pull-right">
+            <button
+              class="btn btn-box-tool"
+              data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="box-body">
+          <table class="table table-bordered table-responsive tablesorter js-statisticsTable">
+            <thead>
+              <tr>
+                <th>Banco</th>
+                <th>Cantidad</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% @presenter.quantity_by_bank.values.each do |b| %>
+                <tr>
+                  <td><%= b[:name] %></td>
+                  <td><%= b[:quantity] %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="overlay hidden js-loadingStatistics">
+          <i class="fa fa-refresh fa-spin"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

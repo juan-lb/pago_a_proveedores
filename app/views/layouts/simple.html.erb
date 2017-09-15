@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head><%= render 'head' %></head>
+  <body class="skin-green-light sidebar-collapse">
+    <%= render 'flash' %>
+    <div class="wrapper" >
+
+      <%= render 'navbar' %>
+
+      <div id="page-wrapper" class="content-wrapper">
+        <div class="container">
+          <%= yield %>
+        </div>
+      </div>
+
+      <%= javascript_include_tag "application", 'data-turbolinks-eval' => false %>
+      <%= javascript_include_tag "application-turbolinks" %>
+  </body>
+</html>

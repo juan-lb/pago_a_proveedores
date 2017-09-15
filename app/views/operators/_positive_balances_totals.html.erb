@@ -1,0 +1,39 @@
+<div class="col-md-6">
+  <div class="box box-primary">
+    <div class="box-header">
+      <div class="box-title">
+        Resumen
+      </div>
+    </div>
+
+    <div class="box-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="info-box">
+            <span class="info-box-icon label-primary text-bold">AR$</span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Pesos</span>
+              <span class="info-box-number">
+                <%= number_to_currency @presenter.ars_total, unit: '' %>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="info-box">
+            <span class="info-box-icon bg-green text-bold">U$D</span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Dólares</span>
+              <span class="info-box-number">
+                <%= number_to_currency @presenter.usd_total, unit: '' %>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

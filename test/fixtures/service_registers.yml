@@ -1,0 +1,321 @@
+# == Schema Information
+#
+# Table name: service_registers
+#
+#  id                      :integer          not null, primary key
+#  id_usu                  :string(255)
+#  id_ope                  :integer
+#  id_res                  :integer
+#  ps                      :string(255)
+#  numero                  :integer
+#  fecha                   :datetime
+#  leg_ope                 :string(255)
+#  apagar_in_cents         :integer
+#  saldo_in_cents          :integer
+#  dif_in_cents            :integer
+#  apagarus_in_cents       :integer
+#  saldous_in_cents        :integer
+#  difus_in_cents          :integer
+#  ret                     :string(255)
+#  NOMBRE                  :string(255)
+#  nom_ope                 :string(255)
+#  moneda                  :string(255)
+#  fec_sal                 :datetime
+#  DET_PREV                :text(65535)
+#  det_prev2               :string(255)
+#  marca                   :integer
+#  idusumarca              :string(255)
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  marked                  :boolean          default(FALSE)
+#  nombreagencia           :string(255)
+#  viajeroresponsable      :string(255)
+#  status_service          :integer
+#  fec_sen                 :date
+#  imp_sen_in_cents        :integer
+#  fec_pag                 :date
+#  obse_serv               :text(65535)
+#  near_expiring_date      :date
+#  near_expiring_date_type :string(255)
+#  deta                    :text(65535)
+#  ope_with_cc             :boolean          default(FALSE)
+#  operator_category       :string(255)      not null
+#  fec_out                 :date
+#  operator_aptour_id      :integer
+#  fec_in                  :date
+#  provider_aptour_id      :integer
+#
+
+# -----------------------
+# DEBITOS
+# -----------------------
+pesos_debit:
+  id_usu: 1
+  id_res: 1
+  numero: 1
+  operator_aptour_id: 1 # National Operator
+  operator_category: 1
+  ope_with_cc: false
+  ps: "P"
+  fecha: "2016-09-20 00:00:00"
+  fec_sal: "2016-09-20"
+  fec_out: "2016-09-19"
+  fec_sen: "2016-09-18"
+  fec_pag: "2016-09-22"
+  near_expiring_date: "2016-09-18"
+  near_expiring_date_type: 'fec_sen'
+  status_service: 1 #Confirmado
+  leg_ope: 'pesos_debit'
+  apagar_in_cents: 10000000
+  saldo_in_cents: 50000000
+  dif_in_cents: 10000000
+  apagarus_in_cents: 0
+  saldous_in_cents: 0
+  difus_in_cents: 0
+  ret: false
+  NOMBRE: 'agency_name'
+  nom_ope: 'operator_name'
+  moneda: 'P'
+  DET_PREV: ''
+  det_prev2: ''
+  marca: 0
+  idusumarca: ''
+  marked: 1
+  nombreagencia: 'una_agencia'
+  viajeroresponsable: 'Christian Castro'
+  imp_sen_in_cents: 100
+  obse_serv: ''
+  deta: 'un_detalle registro 1'
+
+
+pesos_debit_two:
+  id_usu: 1
+  id_res: 2
+  numero: 1
+  operator_aptour_id: 1 # National Operator
+  operator_category: 1
+  ope_with_cc: false
+  ps: "P"
+  fecha: "2016-09-20 00:00:00"
+  fec_sal: "2016-09-20"
+  fec_out: "2016-09-27"
+  fec_sen: "2016-09-18"
+  fec_pag: "2016-09-22"
+  near_expiring_date: "2016-09-18"
+  near_expiring_date_type: 'fec_sen'
+  status_service: 1 #Confirmado
+  leg_ope: 'pesos_debit_two'
+  apagar_in_cents: 10000000
+  saldo_in_cents: 50000000
+  dif_in_cents: 10000000
+  apagarus_in_cents: 0
+  saldous_in_cents: 0
+  difus_in_cents: 0
+  ret: false
+  NOMBRE: 'agency_name'
+  nom_ope: 'operator_name'
+  moneda: 'P'
+  DET_PREV: ''
+  det_prev2: ''
+  marca: 0
+  idusumarca: ''
+  marked: 1
+  nombreagencia: 'una_agencia'
+  viajeroresponsable: 'Christian Castro'
+  imp_sen_in_cents: 100
+  obse_serv: ''
+  deta: 'un_detalle registro 2'
+
+
+pesos_debit_three:
+  id_usu: 1
+  id_res: 3
+  numero: 1
+  operator_aptour_id: 1 # National Operator
+  ope_with_cc: false
+  operator_category: 1
+  ps: "P"
+  fecha: "2016-09-20 00:00:00"
+  fec_sal: "2016-09-20"
+  fec_out: "2016-09-19"
+  fec_pag: "2016-09-22"
+  near_expiring_date: "2016-09-18"
+  near_expiring_date_type: 'fec_out'
+  status_service: 1 #Confirmado
+  leg_ope: 'pesos_debit_three'
+  apagar_in_cents: 0
+  saldo_in_cents: 0
+  dif_in_cents: 0
+  apagarus_in_cents: 10000000
+  saldous_in_cents: 50000000
+  difus_in_cents: 10000000
+  ret: false
+  NOMBRE: 'agency_name'
+  nom_ope: 'operator_name'
+  moneda: 'D'
+  DET_PREV: ''
+  det_prev2: ''
+  marca: 0
+  idusumarca: ''
+  marked: 0
+  nombreagencia: 'una_agencia'
+  viajeroresponsable: 'Christian Castro'
+  imp_sen_in_cents: 100
+  obse_serv: ''
+  deta: 'un_detalle registro 2'
+
+
+dollars_debit:
+  id_usu: 1
+  id_res: 2
+  numero: 2
+  operator_aptour_id: 1 # National Operator
+  ope_with_cc: false
+  operator_category: 1
+  ps: "P"
+  status_service: 1 #Confirmado
+  fecha: "2016-09-21 00:00:00"
+  fec_sal: "2016-09-21"
+  fec_out: "2016-09-28"
+  fec_pag: "2016-09-23"
+  near_expiring_date: "2016-09-21"
+  near_expiring_date_type: 'fec_sal'
+  leg_ope: 'leg_ope_dollars_debit'
+  apagar_in_cents: 0
+  saldo_in_cents: 0
+  dif_in_cents: 0
+  apagarus_in_cents: 100
+  saldous_in_cents: 500
+  difus_in_cents: 100
+  ret: false
+  NOMBRE: 'agency_name'
+  nom_ope: 'operator_name'
+  moneda: 'D'
+  DET_PREV: ''
+  det_prev2: ''
+  marca: 0
+  idusumarca: ''
+  marked: 0
+  nombreagencia: 'una_agencia'
+  viajeroresponsable: 'Christian Castro'
+  imp_sen_in_cents: 100
+  obse_serv: ''
+  deta: 'un_detalle'
+
+dollars_debit_two:
+  id_usu: 1
+  id_res: 2
+  numero: 3
+  operator_aptour_id: 2 # International Operator
+  ope_with_cc: false
+  operator_category: 2
+  ps: "P"
+  status_service: 1 #Confirmado
+  fecha: "2016-09-21 00:00:00"
+  fec_sal: "2016-09-21"
+  fec_out: "2016-09-28"
+  fec_pag: "2016-09-23"
+  near_expiring_date: "2016-09-21"
+  near_expiring_date_type: 'fec_sal'
+  leg_ope: 'leg_ope_dollars_debit'
+  apagar_in_cents: 0
+  saldo_in_cents: 0
+  dif_in_cents: 0
+  apagarus_in_cents: 100
+  saldous_in_cents: 500
+  difus_in_cents: 100
+  ret: false
+  NOMBRE: 'agency_name'
+  nom_ope: 'operator_name'
+  moneda: 'D'
+  DET_PREV: ''
+  det_prev2: ''
+  marca: 0
+  idusumarca: ''
+  marked: 0
+  nombreagencia: 'una_agencia'
+  viajeroresponsable: 'Christian Castro'
+  imp_sen_in_cents: 100
+  obse_serv: ''
+  deta: 'un_detalle'
+
+
+# -----------------------
+# CREDITOS
+# -----------------------
+pesos_credit:
+  id_usu: 1
+  id_res: 1
+  numero: 2
+  operator_aptour_id: 1 # National Operator
+  ope_with_cc: false
+  operator_category: 1
+  ps: "S"
+  fecha: "2016-09-21 00:00:00"
+  fec_sal: "2016-09-20"
+  fec_out: "2016-10-27"
+  fec_sen: "2016-09-18"
+  fec_pag: "2016-09-22"
+  near_expiring_date: "2016-09-22"
+  near_expiring_date_type: 'fec_pag'
+  leg_ope: 'leg_one'
+  apagar_in_cents: -10000000
+  saldo_in_cents: -50000000
+  dif_in_cents: -10000000
+  apagarus_in_cents: 0
+  saldous_in_cents: 0
+  difus_in_cents: 0
+  ret: false
+  NOMBRE: 'agency_name'
+  nom_ope: 'operator_name'
+  moneda: 'P'
+  DET_PREV: ''
+  det_prev2: ''
+  marca: 0
+  idusumarca: ''
+  marked: 0
+  nombreagencia: 'una_agencia'
+  viajeroresponsable: 'Christian Castro'
+  status_service: 1
+  imp_sen_in_cents: -100
+  obse_serv: ''
+  deta: 'un_detalle'
+
+dollars_credit:
+  id_usu: 1
+  id_res: 2
+  numero: 3
+  operator_aptour_id: 1 # National Operator
+  ope_with_cc: false
+  operator_category: 1
+  ps: "S"
+  fecha: "2016-09-21 00:00:00"
+  fec_sal: "2016-09-20"
+  fec_out: "2016-10-27"
+  fec_sen: "2016-09-18"
+  fec_pag: "2016-09-22"
+  near_expiring_date: "2016-09-22"
+  near_expiring_date_type: 'fec_pag'
+  leg_ope: '123'
+  apagar_in_cents: 0
+  saldo_in_cents: 0
+  dif_in_cents: 0
+  apagarus_in_cents: -21000000
+  saldous_in_cents: -50000000
+  difus_in_cents: -21000000
+  ret: false
+  NOMBRE: 'agency_name'
+  nom_ope: 'operator_name'
+  moneda: 'D'
+  DET_PREV: ''
+  det_prev2: ''
+  marca: 0
+  idusumarca: ''
+  marked: 0
+  nombreagencia: 'una_agencia'
+  viajeroresponsable: 'Christian Castro'
+  status_service: 1
+  imp_sen_in_cents: -100
+  obse_serv: ''
+  deta: 'un_detalle'
+# -----------------------

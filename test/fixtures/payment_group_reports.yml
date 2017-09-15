@@ -1,0 +1,16 @@
+# == Schema Information
+#
+# Table name: payment_group_reports
+#
+#  id               :integer          not null, primary key
+#  payment_group_id :integer
+#  note             :text(65535)
+#  swift            :text(65535)
+#  printable_column :integer          default(1)
+#  euros_difference :float(24)
+#  last_email_date  :datetime
+#
+report:
+  payment_group: payment_group_two
+  note: 'Nota de ejemplo'
+  swift: 'SWIFT de ejemplo'

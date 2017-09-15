@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= f.label 'Cuenta débito',
+      class: 'control-label'
+    %>
+    <%= f.select :bank_account,
+      Account.all_for_refunds.map { |each|
+        [
+          each['nom_cue'].strip,
+          each['id_cue'],
+        ]
+      },
+      {include_blank: 'Elija una cuenta'},
+      {class: 'form-control'}
+    %>
+  </div>
+</div>

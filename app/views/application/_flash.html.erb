@@ -1,0 +1,7 @@
+<% klass = flash ? 'is-active' : '' %>
+
+<section
+  id="js-flash"
+  class="flash <%= klass %>">
+  <%= flash_messages if flash %>
+</section>

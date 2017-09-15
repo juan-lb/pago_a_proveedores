@@ -1,0 +1,25 @@
+<% operator = import.operator %>
+<% reserves = import.wrong_reserves %>
+
+<tr id="<%= dom_id import %>">
+  <td><%= import.id %></td>
+  <td><%= l import.created_at %></td>
+  <td><%= l import.updated_at %></td>
+  <td><%= gateway_label import %></td>
+  <td>
+    <% if operator %>
+      <%= operator.name %>
+    <% else %>
+      <i class="text-muted">Todos</i>
+    <% end %>
+  <td>
+    <% if reserves.any? %>
+      <%= reserves.join(', ').truncate(34) %>
+      <% if reserves.size > 4 %>
+        <i class="fa fa-plus-circle text-primary" title="<%= reserves.join(', ') %>"></i>
+      <% end %>
+    <% else %>
+      <i class="text-muted">Sin errores</i>
+    <% end %>
+  </td>
+</tr>

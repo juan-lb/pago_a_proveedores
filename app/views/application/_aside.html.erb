@@ -1,0 +1,68 @@
+<aside class="main-sidebar">
+  <section class="sidebar">
+    <ul class="sidebar-menu">
+      <!-- Importación -->
+      <li data-toggle="tooltip" data-placement="right" title="Importar">
+        <%= link_to :imports do %>
+          <i class="fa fa-database"></i> <span><%= t :import %></span>
+        <% end if current_user.has_permissions? :imports %>
+      </li>
+
+      <!-- Registros de servicios -->
+      <li data-toggle="tooltip" data-placement="right" title="Registros de servicios">
+        <%= link_to :service_registers do %>
+          <i class="fa fa-archive"></i> <span><%= t :service_registers %></span>
+        <% end if current_user.has_permissions? :service_registers %>
+      </li>
+
+      <!-- Pagos -->
+      <li data-toggle="tooltip" data-placement="right" title="Pagos">
+        <%= link_to :payment_groups do %>
+          <i class="fa fa-book"></i> <span><%= t :payment_groups %></span>
+        <% end if current_user.has_permissions? :payment_groups %>
+      </li>
+
+      <!-- Estadísticas -->
+      <li data-toggle="tooltip" data-placement="right" title="Estadísticas">
+        <%= link_to :statistics do %>
+          <i class="fa fa-bar-chart"></i> <span>Estadísticas</span>
+        <% end if current_user.has_permissions? :statistics %>
+      </li>
+
+      <!-- Flujo de fondos -->
+      <li data-toggle="tooltip" data-placement="right" title="Flujo de fondos">
+        <%= link_to :fund_flow_index do %>
+          <i class="fa fa-area-chart"></i> <span>Flujo de fondos</span>
+        <% end if current_user.has_permissions? :fund_flow %>
+      </li>
+
+      <!-- Operadores -->
+      <li data-toggle="tooltip" data-placement="right" title="Operadores">
+        <%= link_to :operators, data: { no_turbolink: true } do %>
+          <i class="fa fa-users"></i> <span><%= t :operators %></span>
+        <% end if current_user.has_permissions? :operators %>
+      </li>
+
+      <!-- Dinero entrante -->
+      <li data-toggle="tooltip" data-placement="right" title="Dinero entrante">
+        <%= link_to :agency_payments do %>
+          <i class="fa fa-dollar"></i> <span>Dinero entrante</span>
+        <% end if current_user.has_permissions? :agency_payments %>
+      </li>
+
+      <!-- Saldos a favor por operador -->
+      <li data-toggle="tooltip" data-placement="right" title="Saldos a favor">
+        <%= link_to :positive_balances_operators do %>
+          <i class="fa fa-navicon"></i> <span>Saldos a favor</span>
+        <% end if current_user.has_permissions? :operators %>
+      </li>
+
+      <!-- Configuración -->
+      <li data-toggle="tooltip" data-placement="right" title="Opciones">
+        <%= link_to :settings do %>
+          <i class="fa fa-cog"></i> <span><%= t :settings %></span>
+        <% end if current_user.has_permissions? :settings %>
+      </li>
+    </ul>
+  </section>
+</aside>
